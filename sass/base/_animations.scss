@@ -1,0 +1,12 @@
+@keyframes earth-animation {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+@keyframes icon-animation {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(12deg); }
+  75% { transform: rotate(-12deg); }
+  100% { transform: rotate(0); }
+}

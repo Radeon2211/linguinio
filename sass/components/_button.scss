@@ -1,0 +1,39 @@
+.button-intro {
+  width: 32rem;
+  padding: 1.5rem 0;
+  font-size: 1.4rem;
+  font-family: var(--font-primary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 15px;
+  outline: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 2px #000;
+  transition: all .11s;
+
+  &:hover {
+    transform: translateY(2px);
+    box-shadow: 0 0 3px rgba(0,0,0,.5);
+  }
+
+  &--green {
+    background-color: rgb(37, 197, 37);
+    border-bottom: 4px solid green;
+
+    &:hover {
+      background-color: rgb(28, 185, 28);
+    }
+  }
+
+  &--transparent {
+    background-color: transparent;
+    border: 1px solid rgba(19, 20, 36, 0.8);
+    border-bottom: 4px solid rgba(19, 20, 36, 0.8);
+
+    &:hover {
+      background-color: rgba(0,0,0,0.03);
+    }
+  }
+}

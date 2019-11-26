@@ -1,0 +1,54 @@
+// FIRST PAGE
+.introduction-container {
+  background-image: linear-gradient(to bottom, rgb(35, 99, 202),rgb(34, 67, 121));
+  display: grid;
+  grid-template-rows: 15vh minmax(min-content, 85vh) max-content;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  align-self: start;
+}
+
+.intro-main {
+  display: grid;
+  grid-template-columns: minmax(min-content, .75fr) minmax(max-content, 1fr);
+  justify-content: center;
+  column-gap: 8rem;
+  row-gap: 4rem;
+
+  @include size(tab-port) {
+    column-gap: 5rem;
+  }
+
+  @include size(phone) {
+    grid-template-columns: 1fr;
+  }
+
+  &__left {
+    align-self: center;
+    justify-self: center;
+  }
+
+  &__right {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    row-gap: 3rem;
+  }
+
+  &__earth {
+    fill: rgb(40, 209, 40);
+    filter: drop-shadow(0 0 5px #000);
+    width: 25rem;
+    height: 25rem;
+    animation: earth-animation 3s infinite;
+    padding-top: .9rem;
+
+    @include size(phone) {
+      width: 19rem;
+      height: 19rem;
+    }
+  }
+}
