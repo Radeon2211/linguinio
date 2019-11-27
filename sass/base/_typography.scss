@@ -10,20 +10,26 @@ body {
   font-weight: 400;
   font-family: var(--font-secondary);
   text-align: center;
+  line-height: 1;
 }
 
 .heading-1 {
+  @extend %heading;
   font-family: var(--font-h1);
   font-size: 8rem;
   letter-spacing: 3px;
-  text-align: center;
   text-shadow: 0 0 3px #000;
 }
 
 .heading-2 {
   @extend %heading;
   font-size: 4rem;
-  line-height: 1.3;
   padding: 0 1rem;
   text-shadow: 0 0 2px #000;
+}
+
+.heading-3 {
+  font-size: 2.8rem;
+  text-shadow: 0 0 1px #000;
+  letter-spacing: 1px;
 }

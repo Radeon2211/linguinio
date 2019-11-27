@@ -1,21 +1,29 @@
-.button-intro {
-  width: 32rem;
+.button {
+  width: 100%;
   padding: 1.5rem 0;
   font-size: 1.4rem;
   font-family: var(--font-primary);
   letter-spacing: 1px;
+  text-align: center;
   text-transform: uppercase;
+  text-decoration: none;
   border-radius: 15px;
   outline: none;
   border: none;
   color: #fff;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 2px #000;
+  box-shadow: 0 0 2px rgba(0,0,0,.5);
   transition: all .11s;
 
   &:hover {
     transform: translateY(2px);
     box-shadow: 0 0 3px rgba(0,0,0,.5);
+  }
+
+  &:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 5px rgba(0,0,0,.5);
   }
 
   &--green {
@@ -34,6 +42,15 @@
 
     &:hover {
       background-color: rgba(0,0,0,0.03);
+    }
+  }
+
+  &--blue {
+    background-color: rgb(6, 170, 235);
+    border-bottom: 4px solid rgba(12, 130, 226, 0.8);
+
+    &:hover {
+      background-color: rgb(15, 157, 240);
     }
   }
 }

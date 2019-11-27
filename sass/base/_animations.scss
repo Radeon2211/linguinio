@@ -1,12 +1,36 @@
+// EARTH IN INTODUCTION
 @keyframes earth-animation {
   0% { transform: scale(1); }
   50% { transform: scale(0.92); }
   100% { transform: scale(1); }
 }
 
+// LINKEDIN ICON IN FOOTER
 @keyframes icon-animation {
   0% { transform: rotate(0); }
   25% { transform: rotate(12deg); }
   75% { transform: rotate(-12deg); }
   100% { transform: rotate(0); }
+}
+
+// MODALS
+@keyframes modal-animation-hide {
+  0% { opacity: 1; visibility: visible;}
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes modal-animation-show {
+  0% { opacity: 0; }
+  100% { opacity: 1; visibility: visible; }
+}
+
+// MODAL-BOXES
+@keyframes modal-box-animation-show {
+  0% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes modal-box-animation-hide {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(.5); }
 }

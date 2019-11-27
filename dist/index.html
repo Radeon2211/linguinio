@@ -30,8 +30,8 @@
         </div>
         <div class="intro-main__right">
           <h2 class="heading-2">Learn languages for free</h2>
-          <button class="button-intro button-intro--green">Get started</button>
-          <button class="button-intro button-intro--transparent">I already have an account</button>
+          <button class="button button--green intro-main__button" id="button-register">Get started</button>
+          <button class="button button--transparent intro-main__button" id="button-login">I already have an account</button>
         </div>
 
     </main>
@@ -55,8 +55,40 @@
 
   </div>
 
-  <!-- LOGIN MODAL START -->
+  <!-- REGISTER MODAL START -->
+  <div class="modal">
+    <div class="modal-box" id="modal-box-register">
+      <svg class="modal-box__close">
+        <use xlink:href="assets/img/sprite.svg#icon-cross"></use>
+      </svg>
+      <h3 class="heading-3">Sign up</h3>
+      <form class="modal-form" name="form-login">
+        <input type="email" name="email" placeholder="Email" class="modal-form__input">
+        <input type="text" name="nick" placeholder="Nick" class="modal-form__input">
+        <input type="password" name="password" placeholder="Password" class="modal-form__input">
+        <input type="submit" name="submit" class="button button--blue" value="Sign up">
+      </form>
+      <span class="modal-box__caption">Have an account?<span class="modal-box__caption-main-text" id="link-to-login">Log in</span></span>
+    </div>
+  </div>
+  <!-- REGISTER MODAL END -->
 
+  <!-- LOGIN MODAL START -->
+  <div class="modal">
+    <div class="modal-box" id="modal-box-login">
+      <svg class="modal-box__close">
+        <use xlink:href="assets/img/sprite.svg#icon-cross"></use>
+      </svg>
+      <h3 class="heading-3">Log in</h3>
+      <form class="modal-form" name="form-login">
+        <input type="email" name="email" placeholder="Email" class="modal-form__input">
+        <input type="password" name="password" placeholder="Password" class="modal-form__input">
+        <input type="submit" name="submit" class="button button--blue" value="Log in">
+      </form>
+      <span class="modal-box__caption">Don't have an account?<span class="modal-box__caption-main-text" id="link-to-register">Sign
+          up</span></span>
+    </div>
+  </div>
   <!-- LOGIN MODAL END -->
 
 <!-- FIRST PAGE CONTENT END -->

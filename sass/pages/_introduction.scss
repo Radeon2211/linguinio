@@ -1,6 +1,6 @@
 // FIRST PAGE
 .introduction-container {
-  background-image: linear-gradient(to bottom, rgb(35, 99, 202),rgb(34, 67, 121));
+  background-image: linear-gradient(to bottom, rgb(30, 141, 231),rgb(43, 88, 161));
   display: grid;
   grid-template-rows: 15vh minmax(min-content, 85vh) max-content;
   justify-content: center;
@@ -11,6 +11,7 @@
   align-self: start;
 }
 
+// MAIN CONTENT
 .intro-main {
   display: grid;
   grid-template-columns: minmax(min-content, .75fr) minmax(max-content, 1fr);
@@ -31,6 +32,19 @@
     justify-self: center;
   }
 
+  &__earth {
+    fill: rgb(40, 209, 40);
+    filter: drop-shadow(0 0 4px #000);
+    width: 25rem;
+    height: 25rem;
+    animation: earth-animation 3s infinite;
+
+    @include size(phone) {
+      width: 19rem;
+      height: 19rem;
+    }
+  }
+
   &__right {
     display: grid;
     justify-items: center;
@@ -38,17 +52,7 @@
     row-gap: 3rem;
   }
 
-  &__earth {
-    fill: rgb(40, 209, 40);
-    filter: drop-shadow(0 0 5px #000);
-    width: 25rem;
-    height: 25rem;
-    animation: earth-animation 3s infinite;
-    padding-top: .9rem;
-
-    @include size(phone) {
-      width: 19rem;
-      height: 19rem;
-    }
+  &__button {
+    width: 80%;
   }
 }

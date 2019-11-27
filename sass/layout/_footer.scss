@@ -3,7 +3,7 @@
   grid-template-rows: repeat(2, min-content);
   row-gap: 2.5rem;
   padding: 2.5rem 0;
-  border-top: 1px solid rgb(32, 58, 145);
+  border-top: 1px solid rgb(38, 75, 199);
 
   &__content {
     text-align: center;
@@ -30,7 +30,7 @@
     }
 
     &--2 {
-      margin: 0 1.5rem 0 7rem;
+      margin: 0 1rem 0 7rem;
     }
   }
 }
