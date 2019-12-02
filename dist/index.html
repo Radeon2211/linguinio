@@ -12,7 +12,8 @@
 </head>
 <body>
 
-<!-- FIRST PAGE CONTENT START-->
+<!-- INTRODUCTION PAGE CONTENT START-->
+
   <div class="introduction-container">
 
     <header class="header">
@@ -21,17 +22,17 @@
 
     </header>
 
-    <main class="intro-main">
+    <main class="introduction-content">
 
-        <div class="intro-main__left">
-          <svg class="intro-main__earth">
+        <div class="introduction-content__left">
+          <svg class="introduction-content__earth">
             <use xlink:href='assets/img/sprite.svg#icon-earth'></use>
           </svg>
         </div>
-        <div class="intro-main__right">
+        <div class="introduction-content__right">
           <h2 class="heading-2">Learn languages for free</h2>
-          <button class="button button--green intro-main__button" id="button-register">Get started</button>
-          <button class="button button--transparent intro-main__button" id="button-login">I already have an account</button>
+          <button class="button button--green introduction-content__button" id="button-register">Get started</button>
+          <button class="button button--transparent introduction-content__button" id="button-login">I already have an account</button>
         </div>
 
     </main>
@@ -62,7 +63,7 @@
         <use xlink:href="assets/img/sprite.svg#icon-cross"></use>
       </svg>
       <h3 class="heading-3">Sign up</h3>
-      <form class="modal-form" name="form-login">
+      <form class="modal-form" id="form-register">
         <input type="email" name="email" placeholder="Email" class="modal-form__input">
         <input type="text" name="nick" placeholder="Nick" class="modal-form__input">
         <input type="password" name="password" placeholder="Password" class="modal-form__input">
@@ -80,7 +81,7 @@
         <use xlink:href="assets/img/sprite.svg#icon-cross"></use>
       </svg>
       <h3 class="heading-3">Log in</h3>
-      <form class="modal-form" name="form-login">
+      <form class="modal-form" id="form-login" method="POST">
         <input type="email" name="email" placeholder="Email" class="modal-form__input">
         <input type="password" name="password" placeholder="Password" class="modal-form__input">
         <input type="submit" name="submit" class="button button--blue" value="Log in">
@@ -91,8 +92,87 @@
   </div>
   <!-- LOGIN MODAL END -->
 
-<!-- FIRST PAGE CONTENT END -->
+<!-- INTRODUCTION PAGE CONTENT END -->
 
+
+<!-- MAIN PAGES CONTENT START -->
+
+  <!-- CONTAINER FOR ALL PAGES -->
+  <div class="main-container" style="display: none;">
+
+    <div class="topbar">
+
+      <h2 class="heading-2">languinio</h2>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="#" class="nav__link">Create set</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">All sets</a></li>
+          <li class="nav__item"><a href="#" class="nav__link">Your profile</a></li>
+          <li class="nav__item"><a href="#" class="nav__link logout-link">Logout</a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <!-- CONTAINER FOR MAIN PAGE CONTENT -->
+    <div class="home-page mainpage">
+
+      <img src="assets/img/construction.gif" alt="WEBSITE IS UNDER CONSTRUCTION. PLEASE COME BACK LATER">
+
+    </div>
+
+    <footer class="footer footer--main">
+
+      <span class="footer__content">&copy; 2019 by Radosław Mikrut. Inspiration drawn from Duolingo and Quizlet</span>
+      <div class="footer__info-wrapper">
+        <a href="https://www.linkedin.com/in/rados%C5%82aw-mikrut-a8600b198/" target="_blank" class="footer__link">
+          <svg class="footer__icon footer__icon--1 footer__icon--main">
+            <use xlink:href="assets/img/sprite.svg#icon-linkedin"></use>
+          </svg>
+        </a>
+        <svg class="footer__icon footer__icon--2 footer__icon--main">
+          <use xlink:href="assets/img/sprite.svg#icon-mail"></use>
+        </svg>
+        <p class="footer__caption">radoslawmikrut@wp.pl</p>
+      </div>
+
+    </footer>
+
+  </div>
+
+<!-- MAIN PAGES CONTENT END -->
+
+
+
+<!-- SCRIPTS -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDFVazmOfsofTk9gYI7uIkxWvM53YtuUBo",
+      authDomain: "languinioapp.firebaseapp.com",
+      databaseURL: "https://languinioapp.firebaseio.com",
+      projectId: "languinioapp",
+      storageBucket: "languinioapp.appspot.com",
+      messagingSenderId: "846444018288",
+      appId: "1:846444018288:web:2a270f89dde0b89ee012b5",
+      measurementId: "G-W4169R96NG"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    // Auth and firestore references
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
   <script src="./assets/bundle.js"></script>
 </body>
 </html>

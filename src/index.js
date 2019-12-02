@@ -1,3 +1,5 @@
+import authFunctionality from './auth';
+
 // QUERY THE DOM
 const modalBoxLogin = document.querySelector('#modal-box-login');
 const modalBoxRegister = document.querySelector('#modal-box-register');
@@ -70,3 +72,6 @@ linkToModalRegister.addEventListener('click', () => {
 linkToModalLogin.addEventListener('click', () => {
   changeModal(modalBoxRegister, modalBoxLogin);
 });
+
+// CALL AUTH FUNCTIONALITY WITH MODALS AND FUNCTION WHICH HIDES MODALS (AFTER REGISTER AND LOG IN)
+authFunctionality(modalBoxLogin, modalBoxRegister, hideModals);
