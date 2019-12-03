@@ -86,4 +86,10 @@
       color: #999;
     }
   }
+
+  &__error {
+    font-size: 1.3rem;
+    color: red;
+    text-align: center;
+  }
 }

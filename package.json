@@ -15,6 +15,10 @@
     "build:js": "node_modules/.bin/webpack --mode production",
     "build": "npm-run-all build:css build:js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Radeon2211/languinio.git"
+  },
   "author": "Radosław Mikrut",
   "license": "ISC",
   "dependencies": {},
