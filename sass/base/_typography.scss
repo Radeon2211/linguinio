@@ -5,6 +5,12 @@ body {
   line-height: 1.6;
 }
 
+// CONTAINER FOR ALL CONTENT AFTER LOGGING IN
+.main-container {
+  display: grid;
+  grid-template-rows: minmax(100vh, min-content) max-content;
+}
+
 // HEADINGS
 %heading {
   font-weight: 400;

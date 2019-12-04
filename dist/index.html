@@ -105,21 +105,52 @@
     <div class="topbar">
 
       <h2 class="heading-2">languinio</h2>
-      <nav class="nav">
-        <ul class="nav__list">
-          <li class="nav__item"><a href="#" class="nav__link">Create set</a></li>
-          <li class="nav__item"><a href="#" class="nav__link">All sets</a></li>
-          <li class="nav__item"><a href="#" class="nav__link">Your profile</a></li>
-          <li class="nav__item"><a href="javascript:;" class="nav__link logout-link">Logout</a></li>
+      <nav class="top-nav">
+        <ul class="top-nav__list">
+          <li class="top-nav__item"><a href="#" class="top-nav__link">
+            <svg class="top-nav__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-folder-plus"></use>
+            </svg>Create set</a>
+          </li>
+          <li class="top-nav__item"><a href="#" class="top-nav__link">
+            <svg class="top-nav__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-search"></use>
+            </svg>Search sets</a>
+          </li>
+          <li class="top-nav__item"><a href="#" class="top-nav__link">
+            <svg class="top-nav__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-user"></use>
+            </svg>Profile</a>
+          </li>
+          <li class="top-nav__item"><a href="javascript:;" class="top-nav__link logout-link">
+            <svg class="top-nav__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-log-out"></use>
+            </svg>Logout</a>
+          </li>
         </ul>
       </nav>
+
+      <div class="toggler">
+        <input type="checkbox" id="nav-toggle" class="toggler__checkbox">
+        <label for="nav-toggle" class="toggler__button">
+          <span class="toggler__icon"></span>
+        </label>
+        <nav class="side-nav">
+          <ul class="side-nav__list">
+            <li class="side-nav__item"><a href="javascript:;" class="side-nav__link logout-link">
+              <svg class="side-nav__icon">
+                <use xlink:href="assets/img/sprite.svg#icon-log-out"></use>
+              </svg>Logout</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
     </div>
 
     <!-- CONTAINER FOR MAIN PAGE CONTENT -->
     <div class="home-page mainpage">
 
-      <img src="assets/img/construction.gif" alt="WEBSITE IS UNDER CONSTRUCTION. PLEASE COME BACK LATER">
 
     </div>
 

@@ -44,8 +44,14 @@ const authFunctionality = (modalBoxLogin, modalBoxRegister, hideModals) => {
   formRegister.addEventListener('submit', (e) => {
     e.preventDefault();
     const errorField = formRegister.querySelector('.modal-form__error');
+    const nick = formRegister.nick.value.trim();
+    const regex = /^[a-z\d]{4,14}$/;
+    if (!regex.test(nick)) {
+      displayError(errorField, { message: 'Nick should have 4-14 characters, only letters and digits' });
+      return;
+    }
     auth.createUserWithEmailAndPassword(formRegister.email.value.trim(), formRegister.password.value.trim()).then((cred) => db.collection('users').doc(cred.user.uid).set({ // return db.collection ...
-      nick: formRegister.nick.value.trim(),
+      nick,
     })).then(() => {
       formRegister.reset();
       hideModals(modalBoxRegister);
@@ -73,10 +79,12 @@ const authFunctionality = (modalBoxLogin, modalBoxRegister, hideModals) => {
   // LOGIN END
 
   // LOGOUT
-  const logoutLink = document.querySelector('.logout-link');
-  logoutLink.addEventListener('click', () => {
-    auth.signOut().then(() => {
+  const logoutLinks = document.querySelectorAll('.logout-link');
+  logoutLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      auth.signOut().then(() => {
 
+      });
     });
   });
 };
