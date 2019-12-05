@@ -102,44 +102,70 @@
   <!-- CONTAINER FOR ALL PAGES -->
   <div class="main-container hide">
 
+    <!-- TOPBAR START -->
     <div class="topbar">
 
       <h2 class="heading-2">languinio</h2>
       <nav class="top-nav">
-        <ul class="top-nav__list">
-          <li class="top-nav__item"><a href="#" class="top-nav__link">
+        <ul class="top-nav__list nav-list">
+          <li class="top-nav__item"><a href="#" data-target=".create-set-page" class="top-nav__link create-set-link">
             <svg class="top-nav__icon">
               <use xlink:href="assets/img/sprite.svg#icon-folder-plus"></use>
             </svg>Create set</a>
           </li>
-          <li class="top-nav__item"><a href="#" class="top-nav__link">
+          <li class="top-nav__item"><a href="#" data-target=".search-sets-page" class="top-nav__link">
             <svg class="top-nav__icon">
               <use xlink:href="assets/img/sprite.svg#icon-search"></use>
             </svg>Search sets</a>
           </li>
-          <li class="top-nav__item"><a href="#" class="top-nav__link">
+          <li class="top-nav__item"><a href="#" data-target=".profile-page" class="top-nav__link">
             <svg class="top-nav__icon">
               <use xlink:href="assets/img/sprite.svg#icon-user"></use>
             </svg>Profile</a>
           </li>
-          <li class="top-nav__item"><a href="javascript:;" class="top-nav__link logout-link">
+          <li class="top-nav__item"><a href="#" data-target=".admin-page" class="top-nav__link">
             <svg class="top-nav__icon">
-              <use xlink:href="assets/img/sprite.svg#icon-log-out"></use>
+              <use xlink:href="assets/img/sprite.svg#icon-user"></use>
+            </svg>Admin panel</a>
+          </li>
+          <li class="top-nav__item"><a href="javascript:;" class="top-nav__link logout-link not-page-link">
+            <svg class="top-nav__icon not-page-link">
+              <use xlink:href="assets/img/sprite.svg#icon-log-out" class="not-page-link"></use>
             </svg>Logout</a>
           </li>
         </ul>
       </nav>
 
       <div class="toggler">
-        <input type="checkbox" id="nav-toggle" class="toggler__checkbox">
-        <label for="nav-toggle" class="toggler__button">
+        <input type="checkbox" id="nav-toggler" class="toggler__checkbox">
+        <label for="nav-toggler" class="toggler__button">
           <span class="toggler__icon"></span>
         </label>
         <nav class="side-nav">
-          <ul class="side-nav__list">
-            <li class="side-nav__item"><a href="javascript:;" class="side-nav__link logout-link">
+          <ul class="side-nav__list nav-list">
+            <li class="side-nav__item"><a href="#" data-target=".create-set-page" class="side-nav__link create-set-link">
               <svg class="side-nav__icon">
-                <use xlink:href="assets/img/sprite.svg#icon-log-out"></use>
+                <use xlink:href="assets/img/sprite.svg#icon-folder-plus"></use>
+              </svg>Create set</a>
+            </li>
+            <li class="side-nav__item"><a href="#" data-target=".search-sets-page" class="side-nav__link">
+              <svg class="side-nav__icon">
+                <use xlink:href="assets/img/sprite.svg#icon-search"></use>
+              </svg>Search sets</a>
+            </li>
+            <li class="side-nav__item"><a href="#" data-target=".profile-page" class="side-nav__link">
+              <svg class="side-nav__icon">
+                <use xlink:href="assets/img/sprite.svg#icon-user"></use>
+              </svg>Profile</a>
+            </li>
+            <li class="side-nav__item"><a href="#" data-target=".admin-page" class="side-nav__link">
+              <svg class="side-nav__icon">
+                <use xlink:href="assets/img/sprite.svg#icon-user"></use>
+              </svg>Admin panel</a>
+            </li>
+            <li class="side-nav__item"><a href="javascript:;" class="side-nav__link logout-link not-page-link">
+              <svg class="side-nav__icon not-page-link">
+                <use xlink:href="assets/img/sprite.svg#icon-log-out" class="not-page-link"></use>
               </svg>Logout</a>
             </li>
           </ul>
@@ -147,13 +173,51 @@
       </div>
 
     </div>
+    <!-- TOPBAR END -->
 
-    <!-- CONTAINER FOR MAIN PAGE CONTENT -->
-    <div class="home-page mainpage">
 
+    <!-- MAIN PAGE CONTENT START -->
+    <div class="main-page home-page">
+
+      HOME PAGE
 
     </div>
+    <!-- MAIN PAGE CONTENT START -->
 
+    <!-- CREATE SET PAGE CONTENT START -->
+    <div class="main-page create-set-page hide">
+
+      CREATE SET PAGE
+
+    </div>
+    <!-- CREATE SET PAGE CONTENT START -->
+
+    <!-- SEARCH SETS PAGE CONTENT START -->
+    <div class="main-page search-sets-page hide">
+
+      SEARCH SETS PAGE
+
+    </div>
+    <!-- SEARCH SETS PAGE CONTENT START -->
+
+    <!-- PROFILE PAGE CONTENT START -->
+    <div class="main-page admin-page hide">
+
+      ADMIN PAGE
+
+    </div>
+    <!-- PROFILE PAGE CONTENT START -->
+
+    <!-- PROFILE PAGE CONTENT START -->
+    <div class="main-page profile-page hide">
+
+      PROFILE PAGE
+
+    </div>
+    <!-- PROFILE PAGE CONTENT START -->
+
+
+    <!-- FOOTER START -->
     <footer class="footer footer--main">
 
       <span class="footer__content">&copy; 2019 by Radosław Mikrut. Inspiration drawn from Duolingo and Quizlet</span>
@@ -170,11 +234,11 @@
       </div>
 
     </footer>
+    <!-- FOOTER END -->
 
   </div>
 
 <!-- MAIN PAGES CONTENT END -->
-
 
 
 <!-- SCRIPTS -->

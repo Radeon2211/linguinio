@@ -53,6 +53,7 @@ const authFunctionality = (modalBoxLogin, modalBoxRegister, hideModals) => {
     auth.createUserWithEmailAndPassword(formRegister.email.value.trim(), formRegister.password.value.trim()).then((cred) => db.collection('users').doc(cred.user.uid).set({ // return db.collection ...
       nick,
     })).then(() => {
+      window.location.reload(true);
       formRegister.reset();
       hideModals(modalBoxRegister);
       hideError(errorField);
@@ -69,6 +70,7 @@ const authFunctionality = (modalBoxLogin, modalBoxRegister, hideModals) => {
     e.preventDefault();
     const errorField = formLogin.querySelector('.modal-form__error');
     auth.signInWithEmailAndPassword(formLogin.email.value.trim(), formLogin.password.value.trim()).then((cred) => {
+      window.location.reload(true);
       formLogin.reset();
       hideModals(modalBoxLogin);
       hideError(errorField);
@@ -83,7 +85,7 @@ const authFunctionality = (modalBoxLogin, modalBoxRegister, hideModals) => {
   logoutLinks.forEach((link) => {
     link.addEventListener('click', () => {
       auth.signOut().then(() => {
-
+        window.location.reload(true);
       });
     });
   });

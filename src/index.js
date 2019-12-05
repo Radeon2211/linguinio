@@ -73,5 +73,31 @@ linkToModalLogin.addEventListener('click', () => {
   changeModal(modalBoxRegister, modalBoxLogin);
 });
 
+
+// DISPLAYING PAGES MANAGEMENT
+const mainPages = document.querySelectorAll('.main-page'); // all pages
+const navLists = document.querySelectorAll('.nav-list'); // navigations
+const navToggler = document.querySelector('#nav-toggler');
+
+navLists.forEach((list) => {
+  list.addEventListener('click', (e) => { // attach onclick event
+    if (e.target.classList.contains('not-page-link')) { // if it's logout link, do nothing
+      return;
+    }
+    // if tagname of target or his parent/parent.parent
+    if (e.target.tagName === 'A' || e.target.parentElement === 'A' || e.target.parentElement.parentElement === 'A') {
+      const pageToShow = document.querySelector(e.target.getAttribute('data-target')); // get page to show based on link's data-target
+      mainPages.forEach((page) => { // hide all pages
+        if (!page.classList.contains('hide')) {
+          page.classList.add('hide');
+        }
+      });
+      pageToShow.classList.remove('hide'); // show chosen page
+      navToggler.checked = false;
+    }
+  });
+});
+
+
 // CALL AUTH FUNCTIONALITY WITH MODALS AND FUNCTION WHICH HIDES MODALS (AFTER REGISTER AND LOG IN)
 authFunctionality(modalBoxLogin, modalBoxRegister, hideModals);
