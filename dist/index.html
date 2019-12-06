@@ -63,7 +63,7 @@
         <use xlink:href="assets/img/sprite.svg#icon-cross"></use>
       </svg>
       <h3 class="heading-3">Sign up</h3>
-      <form class="modal-form" id="form-register">
+      <form class="modal-form" id="form-register" method="POST">
         <input type="email" name="email" placeholder="Email" class="modal-form__input">
         <input type="text" name="nick" placeholder="Nick" class="modal-form__input">
         <input type="password" name="password" placeholder="Password" class="modal-form__input">
@@ -182,7 +182,7 @@
       HOME PAGE
 
     </div>
-    <!-- MAIN PAGE CONTENT START -->
+    <!-- MAIN PAGE CONTENT END -->
 
     <!-- CREATE SET PAGE CONTENT START -->
     <div class="main-page create-set-page hide">
@@ -190,7 +190,7 @@
       CREATE SET PAGE
 
     </div>
-    <!-- CREATE SET PAGE CONTENT START -->
+    <!-- CREATE SET PAGE CONTENT END -->
 
     <!-- SEARCH SETS PAGE CONTENT START -->
     <div class="main-page search-sets-page hide">
@@ -198,15 +198,22 @@
       SEARCH SETS PAGE
 
     </div>
-    <!-- SEARCH SETS PAGE CONTENT START -->
+    <!-- SEARCH SETS PAGE CONTENT END -->
 
-    <!-- PROFILE PAGE CONTENT START -->
+    <!-- ADMIN PAGE CONTENT START -->
     <div class="main-page admin-page hide">
 
-      ADMIN PAGE
+      <div class="admin-forms-container">
+        <div class="admin-form-box">
+          <p class="admin-form-box__caption">Add admin</p>
+          <form class="admin-form-box__form" id="form-add-admin" method="POST">
+            <input type="email" name="email" class="admin-form-box__input" placeholder="Email">
+          </form>
+        </div>
+      </div>
 
     </div>
-    <!-- PROFILE PAGE CONTENT START -->
+    <!-- ADMIN PAGE CONTENT END -->
 
     <!-- PROFILE PAGE CONTENT START -->
     <div class="main-page profile-page hide">
@@ -214,7 +221,7 @@
       PROFILE PAGE
 
     </div>
-    <!-- PROFILE PAGE CONTENT START -->
+    <!-- PROFILE PAGE CONTENT END -->
 
 
     <!-- FOOTER START -->
@@ -246,6 +253,7 @@
   <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-functions.js"></script>
 
   <!-- TODO: Add SDKs for Firebase products that you want to use
       https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -269,6 +277,7 @@
     // Auth and firestore references
     const auth = firebase.auth();
     const db = firebase.firestore();
+    const functions = firebase.functions();
   </script>
   <script src="./assets/bundle.js"></script>
 </body>

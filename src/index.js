@@ -1,103 +1,116 @@
-import authFunctionality from './auth';
+import displayingModals, { modalBoxRegister, modalBoxLogin, hideModals } from './modals';
 
-// QUERY THE DOM
-const modalBoxLogin = document.querySelector('#modal-box-login');
-const modalBoxRegister = document.querySelector('#modal-box-register');
-const modalCloses = document.querySelectorAll('.modal-box__close');
-const buttonRegister = document.querySelector('#button-register');
-const buttonLogin = document.querySelector('#button-login');
-const linkToModalLogin = document.querySelector('#link-to-login');
-const linkToModalRegister = document.querySelector('#link-to-register');
+displayingModals();
 
-// SHOW MODALS ON CLICK BUTTON LOGIN/REGISTER
-const displayModals = (modal) => {
-  // if elements have hide class, remove it
-  if (modal.classList.contains('hide-modal-box')) {
-    modal.classList.remove('hide-modal-box');
+// GET INTRO AND MAIN CONTAINERS TO SHOW / HIDE THEM
+const introductionContainer = document.querySelector('.introduction-container');
+const mainContainer = document.querySelector('.main-container');
+
+// LISTEN FOR AUTH STATUS CHANGED
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    if (!introductionContainer.classList.contains('hide')) {
+      introductionContainer.classList.add('hide');
+    }
+    if (mainContainer.classList.contains('hide')) {
+      mainContainer.classList.remove('hide');
+    }
+  } else {
+    if (introductionContainer.classList.contains('hide')) {
+      introductionContainer.classList.remove('hide');
+    }
+    if (!mainContainer.classList.contains('hide')) {
+      mainContainer.classList.add('hide');
+    }
   }
-  if (modal.parentElement.classList.contains('hide-modal')) {
-    modal.parentElement.classList.remove('hide-modal');
+});
+
+
+// FUNCTION WHICH DISPLAYS ERROR IN FORMS (field where error displays, error)
+const displayError = (field, error) => {
+  const fieldError = field;
+  fieldError.innerHTML = error.message;
+  if (fieldError.classList.contains('hide')) {
+    fieldError.classList.remove('hide');
   }
-  // add show class
-  modal.classList.add('show-modal-box');
-  modal.parentElement.classList.add('show-modal');
 };
 
-// LISTEN FOR CLICK EVENTS
-buttonRegister.addEventListener('click', () => {
-  displayModals(modalBoxRegister);
-});
-
-buttonLogin.addEventListener('click', () => {
-  displayModals(modalBoxLogin);
-});
-
-// HIDE MODAL ON CLICK THE MODAL CLOSE AND MODAL BACKGROUND
-const hideModals = (modal) => {
-  // remove show class
-  modal.parentElement.classList.remove('show-modal');
-  modal.classList.remove('show-modal-box');
-  // add hide class
-  modal.parentElement.classList.add('hide-modal');
-  modal.classList.add('hide-modal-box');
+// FUNCTION WHICH HIDES FIELD WITH ERROR AFTER SUCCESSFUL LOGIN AND REGISTERATION
+const hideError = (field) => {
+  if (!field.classList.contains('hide')) {
+    field.classList.add('hide');
+  }
 };
 
-modalCloses.forEach((close) => {
-  const closeParent = close.parentElement;
-  close.addEventListener('click', () => {
-    hideModals(closeParent);
-  });
-  closeParent.parentElement.addEventListener('click', (e) => {
-    // if clicked element has class modal, hide modal
-    if (e.target.classList.contains('modal')) {
-      hideModals(closeParent);
-    }
+// REGISTER START
+const formRegister = document.querySelector('#form-register');
+formRegister.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const errorField = formRegister.querySelector('.modal-form__error');
+  const nick = formRegister.nick.value.trim();
+  const regex = /^[a-z\d]{4,14}$/;
+  if (!regex.test(nick)) {
+    displayError(errorField, { message: 'Nick should have 4-14 characters, only letters and digits' });
+    return;
+  }
+  const email = formRegister.email.value.trim();
+  const password = formRegister.password.value.trim();
+  auth.createUserWithEmailAndPassword(email, password).then((cred) => db.collection('users').doc(cred.user.uid).set({ // return db.collection ...
+    nick,
+  })).then(() => {
+    window.location.reload(true);
+    formRegister.reset();
+    hideModals(modalBoxRegister);
+    hideError(errorField);
+  }).catch((error) => {
+    displayError(errorField, error);
   });
 });
+// REGISTER END
 
-// CHANGE MODAL ON CLICK TO LINK ON THE BOTTOM OF MODAL-BOX
-const changeModal = (removeModal, addModal) => {
-  removeModal.classList.remove('show-modal-box');
-  removeModal.parentElement.classList.remove('show-modal');
-  addModal.classList.remove('hide-modal-box');
-  addModal.parentElement.classList.remove('hide-modal');
-  addModal.classList.add('show-modal-box');
-  addModal.parentElement.classList.add('show-modal');
-};
 
-linkToModalRegister.addEventListener('click', () => {
-  changeModal(modalBoxLogin, modalBoxRegister);
+// LOGIN START
+const formLogin = document.querySelector('#form-login');
+formLogin.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const errorField = formLogin.querySelector('.modal-form__error');
+  const email = formLogin.email.value.trim();
+  const password = formLogin.password.value.trim();
+  auth.signInWithEmailAndPassword(email, password).then((cred) => {
+    window.location.reload(true);
+    formLogin.reset();
+    hideModals(modalBoxLogin);
+    hideError(errorField);
+  }).catch((error) => {
+    displayError(errorField, error);
+  });
 });
+// LOGIN END
 
-linkToModalLogin.addEventListener('click', () => {
-  changeModal(modalBoxRegister, modalBoxLogin);
-});
-
-
-// DISPLAYING PAGES MANAGEMENT
-const mainPages = document.querySelectorAll('.main-page'); // all pages
-const navLists = document.querySelectorAll('.nav-list'); // navigations
-const navToggler = document.querySelector('#nav-toggler');
-
-navLists.forEach((list) => {
-  list.addEventListener('click', (e) => { // attach onclick event
-    if (e.target.classList.contains('not-page-link')) { // if it's logout link, do nothing
-      return;
-    }
-    // if tagname of target or his parent/parent.parent
-    if (e.target.tagName === 'A' || e.target.parentElement === 'A' || e.target.parentElement.parentElement === 'A') {
-      const pageToShow = document.querySelector(e.target.getAttribute('data-target')); // get page to show based on link's data-target
-      mainPages.forEach((page) => { // hide all pages
-        if (!page.classList.contains('hide')) {
-          page.classList.add('hide');
-        }
-      });
-      pageToShow.classList.remove('hide'); // show chosen page
-      navToggler.checked = false;
-    }
+// LOGOUT
+const logoutLinks = document.querySelectorAll('.logout-link');
+logoutLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    auth.signOut().then(() => {
+      window.location.reload(true);
+    });
   });
 });
 
-
-// CALL AUTH FUNCTIONALITY WITH MODALS AND FUNCTION WHICH HIDES MODALS (AFTER REGISTER AND LOG IN)
-authFunctionality(modalBoxLogin, modalBoxRegister, hideModals);
+// ADD ADMIN ROLE
+const formAddAdmin = document.querySelector('#form-add-admin');
+formAddAdmin.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = formAddAdmin.email.value.trim();
+  const addAdminRole = functions.httpsCallable('addAdminRole'); // get function which adds admin
+  addAdminRole({ email }).then((result) => {
+    console.log(result);
+    formAddAdmin.reset();
+    if (auth.currentUser.email === email) { // if current user equals email in form, reload the page
+      window.location.reload(true);
+      console.log('sdfsdf');
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+});
