@@ -6,8 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Languinio - learn languages for free</title>
   <link rel="shortcut icon" href="assets/img/logo.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css?family=Acme|Indie+Flower|Lato&display=swap&subset=latin-ext"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme|Indie+Flower|Lato|Solway:300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -30,7 +29,7 @@
           </svg>
         </div>
         <div class="introduction-content__right">
-          <h2 class="heading-2">Learn languages for free</h2>
+          <h2 class="heading-2 heading-2--logo">Learn languages for free</h2>
           <button class="button button--green introduction-content__button" id="button-register">Get started</button>
           <button class="button button--transparent introduction-content__button" id="button-login">I already have an account</button>
         </div>
@@ -105,15 +104,20 @@
     <!-- TOPBAR START -->
     <div class="topbar">
 
-      <h2 class="heading-2">languinio</h2>
+      <h2 class="heading-2 heading-2--logo">languinio</h2>
       <nav class="top-nav">
         <ul class="top-nav__list nav-list">
-          <li class="top-nav__item"><a href="#" data-target=".create-set-page" class="top-nav__link create-set-link">
+          <li class="top-nav__item not-at-home-item hide"><a href="#" data-target=".home-page" class="top-nav__link">
+            <svg class="top-nav__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-home"></use>
+            </svg>Home</a>
+          </li>
+          <li class="top-nav__item not-at-home-item hide"><a href="#" data-target=".create-set-page" class="top-nav__link">
             <svg class="top-nav__icon">
               <use xlink:href="assets/img/sprite.svg#icon-folder-plus"></use>
             </svg>Create set</a>
           </li>
-          <li class="top-nav__item"><a href="#" data-target=".search-sets-page" class="top-nav__link">
+          <li class="top-nav__item not-at-home-item hide"><a href="#" data-target=".search-sets-page" class="top-nav__link">
             <svg class="top-nav__icon">
               <use xlink:href="assets/img/sprite.svg#icon-search"></use>
             </svg>Search sets</a>
@@ -123,7 +127,7 @@
               <use xlink:href="assets/img/sprite.svg#icon-user"></use>
             </svg>Profile</a>
           </li>
-          <li class="top-nav__item"><a href="#" data-target=".admin-page" class="top-nav__link">
+          <li class="top-nav__item admin-item hide"><a href="#" data-target=".admin-page" class="top-nav__link">
             <svg class="top-nav__icon">
               <use xlink:href="assets/img/sprite.svg#icon-user-tie"></use>
             </svg>Admin panel</a>
@@ -143,12 +147,17 @@
         </label>
         <nav class="side-nav">
           <ul class="side-nav__list nav-list">
-            <li class="side-nav__item"><a href="#" data-target=".create-set-page" class="side-nav__link create-set-link">
+            <li class="side-nav__item not-at-home-item hide"><a href="#" data-target=".home-page" class="side-nav__link">
+              <svg class="side-nav__icon">
+                <use xlink:href="assets/img/sprite.svg#icon-home"></use>
+              </svg>Home</a>
+            </li>
+            <li class="side-nav__item not-at-home-item hide"><a href="#" data-target=".create-set-page" class="side-nav__link">
               <svg class="side-nav__icon">
                 <use xlink:href="assets/img/sprite.svg#icon-folder-plus"></use>
               </svg>Create set</a>
             </li>
-            <li class="side-nav__item"><a href="#" data-target=".search-sets-page" class="side-nav__link">
+            <li class="side-nav__item not-at-home-item hide"><a href="#" data-target=".search-sets-page" class="side-nav__link">
               <svg class="side-nav__icon">
                 <use xlink:href="assets/img/sprite.svg#icon-search"></use>
               </svg>Search sets</a>
@@ -158,7 +167,7 @@
                 <use xlink:href="assets/img/sprite.svg#icon-user"></use>
               </svg>Profile</a>
             </li>
-            <li class="side-nav__item"><a href="#" data-target=".admin-page" class="side-nav__link">
+            <li class="side-nav__item admin-item hide"><a href="#" data-target=".admin-page" class="side-nav__link">
               <svg class="side-nav__icon">
                 <use xlink:href="assets/img/sprite.svg#icon-user-tie"></use>
               </svg>Admin panel</a>
@@ -179,7 +188,22 @@
     <!-- MAIN PAGE CONTENT START -->
     <div class="main-page home-page">
 
-      HOME PAGE
+      <div class="home-page-grid">
+        <div class="big-panels">
+          <button class="panel panel--big panel--orange create-set-link">
+            <h2 class="heading-2">Create your own set</h2>
+          </button>
+          <button class="panel panel--big panel--blue search-sets-link">
+            <h2 class="heading-2">View other people's sets</h2>
+          </button>
+        </div>
+        <div class="small-panels">
+          <button class="panel panel--small">Recent set</button>
+          <button class="panel panel--small">Recent set</button>
+          <button class="panel panel--small">Recent set</button>
+          <button class="panel panel--small">Recent set</button>
+        </div>
+      </div>
 
     </div>
     <!-- MAIN PAGE CONTENT END -->

@@ -1,0 +1,33 @@
+.panel {
+  text-align: center;
+  color: #fff;
+  padding: 3rem;
+  border-radius: 7px;
+  align-items: center;
+  box-shadow: 0 0 7px rgba(0,0,0,.25);
+  cursor: pointer;
+  outline: none;
+  border: none;
+
+  &--big {
+    padding: 3rem;
+  }
+
+  &--small {
+    padding: 2rem;
+    font-size: 2rem;
+    background-image: linear-gradient(to right, rgb(82, 177, 19),rgb(56, 221, 41));
+  }
+
+  &:hover {
+    animation: panels-animation .5s;
+  }
+
+  &--orange {
+    background-image: linear-gradient(to right, rgb(255, 94, 0), rgb(255, 146, 56));
+  }
+
+  &--blue {
+    background-image: linear-gradient(to right, rgb(0, 119, 255), rgb(62, 178, 255));
+  }
+}

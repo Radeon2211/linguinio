@@ -5,10 +5,20 @@ displayingModals();
 // GET INTRO AND MAIN CONTAINERS TO SHOW / HIDE THEM
 const introductionContainer = document.querySelector('.introduction-container');
 const mainContainer = document.querySelector('.main-container');
+const adminItems = document.querySelectorAll('.admin-item');
 
 // LISTEN FOR AUTH STATUS CHANGED
 auth.onAuthStateChanged((user) => {
   if (user) {
+    user.getIdTokenResult().then((idTokenResult) => {
+      user.admin = idTokenResult.claims.admin;
+      if (user.admin) { // if user is admin, show admin items
+        adminItems.forEach((item) => {
+          item.classList.remove('hide');
+        });
+      }
+    });
+
     if (!introductionContainer.classList.contains('hide')) {
       introductionContainer.classList.add('hide');
     }
@@ -108,7 +118,6 @@ formAddAdmin.addEventListener('submit', (e) => {
     formAddAdmin.reset();
     if (auth.currentUser.email === email) { // if current user equals email in form, reload the page
       window.location.reload(true);
-      console.log('sdfsdf');
     }
   }).catch((error) => {
     console.log(error);

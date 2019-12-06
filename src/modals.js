@@ -74,29 +74,65 @@ const displayingModals = () => {
   });
 
 
-  // DISPLAYING PAGES MANAGEMENT
+  // DISPLAYING PAGES AND NAV ITEMS MANAGEMENT
   const mainPages = document.querySelectorAll('.main-page'); // all pages
   const navLists = document.querySelectorAll('.nav-list'); // navigations
   const navToggler = document.querySelector('#nav-toggler'); // side navigation toggler
+  const notAtHomeItems = document.querySelectorAll('.not-at-home-item'); // nav items which shouldn 't display at home page
+
+  // HIDING ALL PAGES AND SHOWING WHICH USER WANTS
+  const hideAllPagesAndShowOne = (pageToShow) => {
+    // hide all pages
+    mainPages.forEach((page) => {
+      if (!page.classList.contains('hide')) {
+        page.classList.add('hide');
+      }
+    });
+    // show page to show
+    pageToShow.classList.remove('hide');
+
+    // if page to show is home page, hide not home items from navs
+    if (pageToShow.classList.contains('home-page')) {
+      notAtHomeItems.forEach((item) => {
+        item.classList.add('hide');
+      });
+    } else {
+      notAtHomeItems.forEach((item) => { // else, show them
+        item.classList.remove('hide');
+      });
+    }
+
+    // set sidenav toggler checkbox to false
+    navToggler.checked = false;
+  };
+
+  // show create set page by clicking the panel at home page
+  const linkToCreateSet = document.querySelector('.create-set-link');
+  const createSetPage = document.querySelector('.create-set-page');
+  linkToCreateSet.addEventListener('click', () => {
+    hideAllPagesAndShowOne(createSetPage);
+  });
+
+  // show search sets page by clicking the panel at home page
+  const linkToSearchSets = document.querySelector('.search-sets-link');
+  const searchSetsPage = document.querySelector('.search-sets-page');
+  linkToSearchSets.addEventListener('click', () => {
+    hideAllPagesAndShowOne(searchSetsPage);
+  });
 
   navLists.forEach((list) => {
     list.addEventListener('click', (e) => { // attach onclick event
-      if (e.target.classList.contains('not-page-link')) { // if it's logout link, do nothing
+      if (e.target.classList.contains('not-page-link')) { // if it's a logout link, do nothing
         return;
       }
+
       // get page to show based on link's data-target
       let pageToShow = null;
       if (e.target.tagName === 'A') pageToShow = document.querySelector(e.target.getAttribute('data-target'));
       else if (e.target.parentElement.tagName === 'A') pageToShow = document.querySelector(e.target.parentElement.getAttribute('data-target'));
       else if (e.target.parentElement.parentElement.tagName === 'A') pageToShow = document.querySelector(e.target.parentElement.parentElement.getAttribute('data-target'));
       if (pageToShow) {
-        mainPages.forEach((page) => { // hide all pages
-          if (!page.classList.contains('hide')) {
-            page.classList.add('hide');
-          }
-        });
-        pageToShow.classList.remove('hide'); // show chosen page
-        navToggler.checked = false;
+        hideAllPagesAndShowOne(pageToShow);
       }
     });
   });

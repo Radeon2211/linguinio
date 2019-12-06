@@ -1,8 +1,8 @@
 .footer {
   display: grid;
   grid-template-rows: repeat(2, min-content);
-  row-gap: 2.5rem;
-  padding: 2.5rem;
+  row-gap: 3rem;
+  padding: 4rem 2.5rem;
   position: relative;
   z-index: 10;
 
@@ -42,7 +42,7 @@
     display: flex;
     justify-self: center;
     align-items: center;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 
   &__icon {

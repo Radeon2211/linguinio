@@ -1,0 +1,30 @@
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-page-grid {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  max-width: 120rem;
+  width: 100%;
+  row-gap: 6rem;
+}
+
+.big-panels {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+  column-gap: 8rem;
+  row-gap: 4rem;
+}
+
+.small-panels {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  column-gap: 4rem;
+  row-gap: 4rem;
+}
