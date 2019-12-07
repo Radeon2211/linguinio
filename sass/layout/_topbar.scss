@@ -176,12 +176,13 @@
     right: 0;
     top: 0;
     width: 100%;
-    background-color: #eee;
+    background-color: #e6e6e6;
     z-index: 10;
     transform: translateX(100%);
     transition: all .4s;
 
     @include size(tab-port) {
+      height: 91vh;
       margin-top: 9vh;
     }
 

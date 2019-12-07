@@ -7,9 +7,10 @@
 @import 'base/typography';
 @import 'base/utilities';
 
-@import 'components/bigpanel';
+@import 'components/panel';
 @import 'components/button';
 @import 'components/modal';
+@import 'components/set';
 
 @import 'layout/footer';
 @import 'layout/mainpage';
@@ -18,3 +19,4 @@
 @import 'pages/admin';
 @import 'pages/home';
 @import 'pages/introduction';
+@import 'pages/profile';

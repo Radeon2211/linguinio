@@ -3,4 +3,9 @@
   color: #111;
   padding: 6rem 2rem;
   margin-top: 8vh;
+  background-color: #eee;
+
+  @include size(tab-port) {
+    margin-top: 9vh;
+  }
 }
