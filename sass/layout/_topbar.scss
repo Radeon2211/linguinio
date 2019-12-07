@@ -3,8 +3,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(6, 171, 146);
-  margin-bottom: 1px solid rgb(8, 117, 93);
+  background-color: var(--color-green-4);
+  margin-bottom: 1px solid var(--color-green-5);
   overflow: hidden;
   padding: 0 3rem;
   position: fixed;
@@ -59,7 +59,7 @@
 
   &__link {
     text-decoration: none;
-    color: #fefefe;
+    color: var(--color-light-1);
     height: 100%;
     transition: all .12s;
     display: flex;
@@ -67,16 +67,16 @@
     padding: 0 1rem;
 
     &:hover {
-      background-color: rgb(8, 165, 143);
+      background-color: var(--color-green-5);
     }
   }
 
   &__icon {
-    fill: #fff;
+    fill: var(--color-light-1);
     width: 2.6rem;
     height: 2.6rem;
     margin-right: 1rem;
-    filter: drop-shadow(0 0 1px rgba(0,0,0,.3));
+    filter: var(--drop-shadow-1);
 
     @include size(tab-land) {
       width: 2.5rem;
@@ -124,7 +124,7 @@
       width: 4.2rem;
       display: inline-block;
       height: 2px;
-      background-color: #fff;
+      background-color: var(--color-light-1);
     }
 
     &::before,
@@ -176,7 +176,7 @@
     right: 0;
     top: 0;
     width: 100%;
-    background-color: #e6e6e6;
+    background-color: var(--color-light-3);
     z-index: 10;
     transform: translateX(100%);
     transition: all .4s;
@@ -201,25 +201,25 @@
     }
 
     &__link {
-      color: #111;
+      color: var(--color-dark-1);
       text-decoration: none;
       display: flex;
       align-items: center;
       font-size: 2.2rem;
-      color: rgb(6, 171, 146);
+      color: var(--color-green-4);
       padding: 2rem 5rem;
       justify-content: center;
       border-radius: 20px;
       transition: all .12s;
-      background-color: #ebebeb;
-      border: 1px solid #e2e2e2;
+      background-color: var(--color-light-2);
+      border: 1px solid var(--color-light-4);
 
       @include size(phone) {
         font-size: 2rem;
       }
 
       &:hover {
-        background-color: #eaeaea;
+        background-color: var(--color-light-3);
       }
     }
 
@@ -227,8 +227,8 @@
       width: 3rem;
       height: 3rem;
       margin-right: 1rem;
-      fill: rgb(255, 136, 0);
-      filter: drop-shadow(0 0 1px rgba(0,0,0,.2));
+      fill: var(--color-orange-2);
+      filter: var(--drop-shadow-1);
     }
   }
 

@@ -4,4 +4,40 @@
   --font-secondary: 'Solway', serif;
   --font-secondary-logo: 'Acme', sans-serif;
   --font-h1: 'Indie Flower', cursive;
+
+  // COLORS (EACH COLOR LIGHT TO DARK)
+  --color-light-1: rgba(255, 255, 255);
+  --color-light-2: rgb(244, 244, 244);
+  --color-light-3: rgb(237, 237, 237);
+  --color-light-4: rgb(229, 229, 229);
+
+  --color-grey-1: rgb(153, 153, 153);
+  --color-grey-2: rgb(85, 85, 85);
+
+  --color-dark-1: rgb(17, 17, 17);
+  --color-dark-2: rgb(0, 0, 0);
+
+  --color-orange-1: rgb(255, 146, 56);
+  --color-orange-2: rgb(255, 126, 0);
+  --color-orange-3: rgb(255, 94, 0);
+
+  --color-blue-1: rgb(62, 178, 255);
+  --color-blue-2: rgb(6, 170, 235);
+  --color-blue-3: rgb(46, 140, 248);
+  --color-blue-4: rgb(0, 119, 255);
+  --color-blue-5: rgb(14, 118, 168);
+
+  --color-violet-1: rgb(84, 24, 226);
+  --color-violet-2: rgb(71, 48, 187);
+  --color-violet-3: rgba(58, 18, 235, .1);
+
+  --color-green-1: rgb(56, 221, 41);
+  --color-green-2: rgb(37, 197, 37);
+  --color-green-3: rgb(28, 185, 28);
+  --color-green-4: rgb(6, 171, 146);
+  --color-green-5: rgb(8, 165, 143);
+  --color-green-6: rgb(7, 110, 90);
+
+  // DROP SHADOW
+  --drop-shadow-1: drop-shadow(0 0 1px rgba(0, 0, 0, .3));
 }

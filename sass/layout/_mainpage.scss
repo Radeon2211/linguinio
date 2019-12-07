@@ -1,9 +1,9 @@
 // STYLING ALL CONTENT IN PAGES AFTER LOGGING IN
 .main-page {
-  color: #111;
+  color: var(--color-dark-1);
   padding: 6rem 2rem;
   margin-top: 8vh;
-  background-color: #eee;
+  background-color: var(--color-light-3);
 
   @include size(tab-port) {
     margin-top: 9vh;

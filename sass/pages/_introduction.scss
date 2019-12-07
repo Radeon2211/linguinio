@@ -1,14 +1,10 @@
 // INTRODUCTION PAGE
 .introduction-container {
-  background-image: linear-gradient(to bottom, rgb(33, 137, 223),rgb(95, 19, 236));
+  background-image: linear-gradient(to bottom, var(--color-blue-4), var(--color-violet-1));
   display: grid;
   grid-template-rows: 15vh minmax(min-content, 85vh) max-content;
   justify-content: center;
   align-items: center;
-}
-
-.hide {
-  display: none;
 }
 
 .header {
@@ -37,7 +33,7 @@
   }
 
   &__earth {
-    fill: rgb(40, 209, 40);
+    fill: var(--color-green-2);
     filter: drop-shadow(0 0 4px #000);
     width: 25rem;
     height: 25rem;

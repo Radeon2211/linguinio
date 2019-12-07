@@ -25,14 +25,14 @@
   position: relative;
   display: grid;
   row-gap: 2.5rem;
-  background-color: #fefefe;
+  background-color: var(--color-light-3);
   padding: 3rem;
   border-radius: 10px;
   box-shadow: 0 0 7px rgba(0,0,0,.4);
   width: 60rem;
   min-width: 30rem;
   margin: 0 2rem;
-  color: #555;
+  color: var(--color-grey-2);
   z-index: 10;
   opacity: 0;
 
@@ -43,7 +43,7 @@
     padding: 1.3rem;
     width: 2.5rem;
     height: 2.5rem;
-    fill: #555;
+    fill: var(--color-grey-2);
     cursor: pointer;
     box-sizing: content-box;
   }
@@ -55,7 +55,7 @@
   }
 
   &__caption-main-text {
-    color: rgb(6, 170, 235);
+    color: var(--color-blue-2);
     text-transform: uppercase;
     cursor: pointer;
     margin-left: 1rem;
@@ -78,12 +78,12 @@
     padding: 1.5rem 2rem;
     border-radius: 5px;
     font-size: 1.7rem;
-    border:1px solid #999;
+    border: 1px solid var(--color-light-4);
     outline: none;
-    background-color: #eee;
+    background-color: var(--color-light-2);
 
     &::-webkit-input-placeholder {
-      color: #999;
+      color: var(--color-grey-1);
     }
   }
 

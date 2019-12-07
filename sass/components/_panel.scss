@@ -1,10 +1,10 @@
 .panel {
   text-align: center;
-  color: #fff;
+  color: var(--color-light-1);
   padding: 3rem;
   border-radius: 7px;
   align-items: center;
-  box-shadow: 0 0 7px rgba(0,0,0,.25);
+  box-shadow: 0 0 7px rgba(0,0,0,.4);
   cursor: pointer;
   outline: none;
   border: none;
@@ -16,7 +16,7 @@
   &--small {
     padding: 2rem;
     font-size: 2rem;
-    background-image: linear-gradient(to right, rgb(82, 177, 19),rgb(56, 221, 41));
+    background-image: linear-gradient(to right, var(--color-green-3), var(--color-green-1));
   }
 
   &:hover {
@@ -24,10 +24,10 @@
   }
 
   &--orange {
-    background-image: linear-gradient(to right, rgb(255, 94, 0), rgb(255, 146, 56));
+    background-image: linear-gradient(to right, var(--color-orange-3), var(--color-orange-1));
   }
 
   &--blue {
-    background-image: linear-gradient(to right, rgb(0, 119, 255), rgb(62, 178, 255));
+    background-image: linear-gradient(to right, var(--color-blue-4), var(--color-blue-1));
   }
 }

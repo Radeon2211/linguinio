@@ -13,13 +13,13 @@
     left: 0;
     width: 100%;
     height: 1px;
-    background-image: linear-gradient(to right, rgba(58, 18, 235, .1) 0%, rgb(65, 54, 119) 50%, rgba(58, 18, 235, .1) 100%);
+    background-image: linear-gradient(to right, var(--color-violet-3) 0%, var(--color-violet-2) 50%, var(--color-violet-3) 100%);
   }
 
   // OTHER STYLES FOR FOOTER IN MAIN PAGES - START
   &--main {
-    background-color: #e6e6e6;
-    color: #111;
+    background-color: var(--color-light-4);
+    color: var(--color-dark-1);
 
     &::before {
       content: '';
@@ -52,7 +52,7 @@
 
     // OTHER STYLING FOR ICON - START
     &--main {
-      fill: #0e76a8;
+      fill: var(--color-blue-5);
     }
     // END
 

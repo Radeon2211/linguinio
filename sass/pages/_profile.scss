@@ -1,29 +1,48 @@
 .profile-page {
   display: grid;
-  grid-template-rows: 25vh;
-  padding: 0;
   justify-items: center;
+  row-gap: 6rem;
+}
+
+.hide {
+  display: none;
 }
 
 .profile-heading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #f4f4f4;
-  justify-self: stretch;
+
+  &__shape {
+    background-color: var(--color-light-2);
+    padding: 2rem 3rem;
+    border-radius: 90px;
+    border: 1px solid var(--color-light-4);
+    align-self: stretch;
+  }
 
   &__text {
-    font-size: 4.5rem;
-    color: #333;
+    font-size: 4rem;
+    color: var(--color-green-4);
     letter-spacing: 1px;
     font-weight: 300;
+    background-color: var(--color-light-2);
+    word-break: break-all;
 
     @supports (background-clip: text) or (-webkit-background-clip: text) {
       -webkit-background-clip: text;
       background-clip: text;
-      background-image: linear-gradient(to right, rgb(14, 151, 131),rgb(14, 206, 164));
+      background-image: linear-gradient(to right, var(--color-green-5),var(--color-green-2));
       color: transparent;
+    }
+
+    @include size(tab-port) {
+      font-size: 3.5rem;
+    }
+
+    @include size(phone) {
+      font-size: 3.3rem;
+    }
+
+    @media only screen and (max-width: 360px){
+      font-size: 2.9rem;
     }
   }
 }
@@ -37,24 +56,22 @@
 .profile-sets {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(34rem, 1fr));
   align-items: start;
   justify-items: center;
   column-gap: 6rem;
   row-gap: 6rem;
-  padding: 6rem 0;
 
   &__side {
     display: grid;
     row-gap: 3rem;
-    padding: 2rem;
     width: 100%;
   }
 
   &__heading {
     text-align: center;
     font-size: 2.2rem;
-    color: #444;
+    color: var(--color-grey-2);
   }
 
   &__column {

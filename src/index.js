@@ -19,6 +19,7 @@ auth.onAuthStateChanged((user) => {
       }
     });
 
+    // hide introduction page and show main page
     if (!introductionContainer.classList.contains('hide')) {
       introductionContainer.classList.add('hide');
     }
@@ -26,6 +27,7 @@ auth.onAuthStateChanged((user) => {
       mainContainer.classList.remove('hide');
     }
   } else {
+    // show introduction container and hide main page
     if (introductionContainer.classList.contains('hide')) {
       introductionContainer.classList.remove('hide');
     }
