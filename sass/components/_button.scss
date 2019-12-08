@@ -13,17 +13,16 @@
   color: var(--color-light-1);
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 2px rgba(0,0,0,.5);
-  transition: all .11s;
+  box-shadow: var(--box-shadow-1);
+  transition: all .12s;
 
   &:hover {
     transform: translateY(2px);
-    box-shadow: 0 0 3px rgba(0,0,0,.5);
   }
 
   &:active {
     transform: translateY(4px);
-    box-shadow: 0 0 5px rgba(0,0,0,.5);
+    box-shadow: var(--box-shadow-2);
   }
 
   &--green {
@@ -37,11 +36,11 @@
 
   &--transparent {
     background-color: transparent;
-    border: 1px solid rgba(19, 20, 36, 0.8);
-    border-bottom: 4px solid rgba(19, 20, 36, 0.8);
+    border: 1px solid var(--color-dark-1-transparent);
+    border-bottom: 4px solid var(--color-dark-1-transparent);
 
     &:hover {
-      background-color: rgba(0,0,0,0.03);
+      background-color: rgba(0, 0, 0, 0.03);
     }
   }
 

@@ -24,18 +24,4 @@
   &__form {
     width: 100%;
   }
-
-  &__input {
-    font-size: 2rem;
-    width: 100%;
-    padding: 1.5rem;
-    outline: none;
-    border-radius: 10px;
-    background-color: var(--color-light-2);
-    border: 1px solid var(--color-light-4);
-
-    &::-webkit-input-placeholder {
-      color: var(--color-grey-1);
-    }
-  }
 }

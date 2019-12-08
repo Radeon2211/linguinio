@@ -5,6 +5,7 @@
   padding: 4rem 2.5rem;
   position: relative;
   z-index: 10;
+  color: var(--color-light-4);
 
   &::before {
     content: '';
@@ -28,7 +29,7 @@
       left: 0;
       width: 100%;
       height: 1px;
-      background-image: linear-gradient(to right, rgba(204, 196, 240, 0.1) 0%, rgb(195, 193, 197) 50%, rgba(204, 196, 240, .1) 100%);
+      background-image: linear-gradient(to right, var(--color-grey-1-transparent) 0%, var(--color-light-5) 50%, var(--color-grey-1-transparent) 100%);
     }
   }
   // END
@@ -48,13 +49,16 @@
   &__icon {
     width: 3.5rem;
     height: 3.5rem;
-    fill: rgb(175, 180, 187);
 
-    // OTHER STYLING FOR ICON - START
+    // STYLING IN INTRO
+    &--intro {
+      fill: var(--color-light-4);
+    }
+
+    // STYLING IN MAIN
     &--main {
       fill: var(--color-blue-5);
     }
-    // END
 
     &--1 {
 

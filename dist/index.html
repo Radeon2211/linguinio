@@ -41,11 +41,11 @@
       <span class="footer__content">&copy; 2019 by Radosław Mikrut. Inspiration drawn from Duolingo and Quizlet</span>
       <div class="footer__info-wrapper">
         <a href="https://www.linkedin.com/in/rados%C5%82aw-mikrut-a8600b198/" target="_blank" class="footer__link">
-          <svg class="footer__icon footer__icon--1">
+          <svg class="footer__icon footer__icon--1 footer__icon--intro">
             <use xlink:href="assets/img/sprite.svg#icon-linkedin"></use>
           </svg>
         </a>
-        <svg class="footer__icon footer__icon--2">
+        <svg class="footer__icon footer__icon--2 footer__icon--intro">
           <use xlink:href="assets/img/sprite.svg#icon-mail"></use>
         </svg>
         <p class="footer__caption">radoslawmikrut@wp.pl</p>
@@ -63,9 +63,9 @@
       </svg>
       <h3 class="heading-3">Sign up</h3>
       <form class="modal-form" id="form-register" method="POST">
-        <input type="email" name="email" placeholder="Email" class="modal-form__input">
-        <input type="text" name="nick" placeholder="Nick" class="modal-form__input">
-        <input type="password" name="password" placeholder="Password" class="modal-form__input">
+        <input type="email" name="email" placeholder="Email" class="standard-input">
+        <input type="text" name="nick" placeholder="Nick" class="standard-input">
+        <input type="password" name="password" placeholder="Password" class="standard-input" autocomplete="off">
         <input type="submit" name="submit" class="button button--blue" value="Sign up">
         <span class="modal-form__error hide"></span>
       </form>
@@ -82,8 +82,8 @@
       </svg>
       <h3 class="heading-3">Log in</h3>
       <form class="modal-form" id="form-login" method="POST">
-        <input type="email" name="email" placeholder="Email" class="modal-form__input">
-        <input type="password" name="password" placeholder="Password" class="modal-form__input">
+        <input type="email" name="email" placeholder="Email" class="standard-input">
+        <input type="password" name="password" placeholder="Password" class="standard-input" autocomplete="off">
         <input type="submit" name="submit" class="button button--blue" value="Log in">
         <span class="modal-form__error hide"></span>
       </form>
@@ -104,7 +104,7 @@
     <!-- TOPBAR START -->
     <div class="topbar">
 
-      <h2 class="heading-2 heading-2--logo">languinio</h2>
+      <h2 class="heading-2 heading-2--logo" id="header-link-to-home">languinio</h2>
       <nav class="top-nav">
         <ul class="top-nav__list nav-list">
           <li class="top-nav__item not-at-home-item hide"><a href="#" data-target=".home-page" class="top-nav__link">
@@ -231,7 +231,7 @@
         <div class="admin-form-box">
           <p class="admin-form-box__caption">Add admin</p>
           <form class="admin-form-box__form" id="form-add-admin" method="POST">
-            <input type="email" name="email" class="admin-form-box__input" placeholder="Email">
+            <input type="email" name="email" class="standard-input" placeholder="Email">
           </form>
         </div>
       </div>
@@ -342,7 +342,7 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
-    // Auth and firestore references
+    // Auth and Firestore references
     const auth = firebase.auth();
     const db = firebase.firestore();
     const functions = firebase.functions();

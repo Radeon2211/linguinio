@@ -10,12 +10,16 @@
   --color-light-2: rgb(244, 244, 244);
   --color-light-3: rgb(237, 237, 237);
   --color-light-4: rgb(229, 229, 229);
+  --color-light-5: rgb(195, 193, 197);
 
   --color-grey-1: rgb(153, 153, 153);
+  --color-grey-1-transparent: rgba(153, 153, 153, 0.08);
   --color-grey-2: rgb(85, 85, 85);
 
   --color-dark-1: rgb(17, 17, 17);
+  --color-dark-1-transparent: rgba(17, 17, 17, .6);
   --color-dark-2: rgb(0, 0, 0);
+  --color-dark-2-transparent: rgba(0, 0, 0, .45);
 
   --color-orange-1: rgb(255, 146, 56);
   --color-orange-2: rgb(255, 126, 0);
@@ -40,4 +44,10 @@
 
   // DROP SHADOW
   --drop-shadow-1: drop-shadow(0 0 1px rgba(0, 0, 0, .3));
+
+  // BOX SHADOW (SMALL TO BIG)
+  --box-shadow-1: 0 0 2px rgba(0, 0, 0, .4);
+  --box-shadow-2: 0 0 5px rgba(0, 0, 0, .4);
+  --box-shadow-3: 0 0 7px rgba(0, 0, 0, .4);
+  --box-shadow-4: 0 0 15px rgba(0, 0, 0, .4);
 }
