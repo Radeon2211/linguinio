@@ -1,4 +1,5 @@
 import displayingModals, { modalBoxRegister, modalBoxLogin, hideModals } from './modals';
+import UI from './ui';
 
 displayingModals();
 
@@ -6,6 +7,12 @@ displayingModals();
 const introductionContainer = document.querySelector('.introduction-container');
 const mainContainer = document.querySelector('.main-container');
 const adminItems = document.querySelectorAll('.admin-item');
+
+// GET ELEMENTS NEEDED TO UI CLASS
+const credsField = document.querySelector('.profile-heading__shape');
+
+// CREATE INSTANCE OF UI CLASS
+const ui = new UI(credsField);
 
 // LISTEN FOR AUTH STATUS CHANGED
 auth.onAuthStateChanged((user) => {
@@ -18,6 +25,9 @@ auth.onAuthStateChanged((user) => {
         });
       }
     });
+
+    // SETUP UI
+    ui.displayUserCred(user);
 
     // hide introduction page and show main page
     if (!introductionContainer.classList.contains('hide')) {
