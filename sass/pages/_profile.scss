@@ -4,14 +4,11 @@
   row-gap: 6rem;
 }
 
-.hide {
-  display: none;
-}
-
 .profile-heading {
 
   &__shape {
     display: grid;
+    row-gap: 1rem;
     background-color: var(--color-light-2);
     padding: 2rem 3rem;
     border-radius: 90px;
@@ -27,6 +24,7 @@
     font-weight: 300;
     background-color: var(--color-light-2);
     word-break: break-all;
+    line-height: 1;
 
     @supports (background-clip: text) or (-webkit-background-clip: text) {
       -webkit-background-clip: text;
@@ -56,7 +54,6 @@
 .profile-sets-container {
   max-width: 120rem;
   width: 100%;
-  margin: 0 auto;
 }
 
 .profile-sets {

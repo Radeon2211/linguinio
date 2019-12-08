@@ -1,0 +1,16 @@
+.search-sets-page {
+  display: flex;
+  justify-content: center;
+}
+
+.search-sets-container {
+  max-width: 120rem;
+  width: 100%;
+}
+
+.search-sets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(34rem, 1fr));
+  column-gap: 6rem;
+  row-gap: 2rem;
+}

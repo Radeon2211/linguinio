@@ -6,8 +6,10 @@ export default class UI {
   displayUserCred(user) {
     db.collection('users').doc(user.uid).get().then((doc) => {
       this.credsField.innerHTML = `
-        <span class="profile-heading__nick">${doc.data().nick}</span>
-        <span class="profile-heading__email">${user.email}</span>
+        <div class="profile-heading__shape">
+          <span class="profile-heading__nick">${doc.data().nick}</span>
+          <span class="profile-heading__email">${user.email}</span>
+        </div>
       `;
     });
   }

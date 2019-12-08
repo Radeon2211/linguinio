@@ -9,7 +9,7 @@ const mainContainer = document.querySelector('.main-container');
 const adminItems = document.querySelectorAll('.admin-item');
 
 // GET ELEMENTS NEEDED TO UI CLASS
-const credsField = document.querySelector('.profile-heading__shape');
+const credsField = document.querySelector('.profile-heading');
 
 // CREATE INSTANCE OF UI CLASS
 const ui = new UI(credsField);
@@ -25,9 +25,6 @@ auth.onAuthStateChanged((user) => {
         });
       }
     });
-
-    // SETUP UI
-    ui.displayUserCred(user);
 
     // hide introduction page and show main page
     if (!introductionContainer.classList.contains('hide')) {
@@ -141,7 +138,6 @@ formAddAdmin.addEventListener('submit', (e) => {
 
 // DISPLAYING PAGES AND NAV ITEMS MANAGEMENT
 const mainPages = document.querySelectorAll('.main-page'); // all pages
-const navLists = document.querySelectorAll('.nav-list'); // navigations
 const navToggler = document.querySelector('#nav-toggler'); // side navigation toggler
 const notAtHomeItems = document.querySelectorAll('.not-at-home-item'); // nav items which shouldn 't display at home page
 
@@ -171,39 +167,51 @@ const hideAllPagesAndShowOne = (pageToShow) => {
   navToggler.checked = false;
 };
 
-// reload the page by clicking the heading in topbar
-const headerLinkToHome = document.querySelector('#header-link-to-home');
-headerLinkToHome.addEventListener('click', () => {
-  window.location.reload(true);
+
+// HOME PAGE by clicking the nav link
+const linksToHomePage = document.querySelectorAll('.home-link');
+const homePage = document.querySelector('.home-page');
+linksToHomePage.forEach((link) => {
+  link.addEventListener('click', () => {
+    hideAllPagesAndShowOne(homePage);
+  });
 });
 
-// show create set page by clicking the panel at home page
-const linkToCreateSet = document.querySelector('.create-set-link');
+// CREATE SET PAGE by clicking the panel at home page or nav link
+const linksToCreateSet = document.querySelectorAll('.create-set-link');
 const createSetPage = document.querySelector('.create-set-page');
-linkToCreateSet.addEventListener('click', () => {
-  hideAllPagesAndShowOne(createSetPage);
+linksToCreateSet.forEach((link) => {
+  link.addEventListener('click', () => {
+    hideAllPagesAndShowOne(createSetPage);
+  });
 });
 
-// show search sets page by clicking the panel at home page
-const linkToSearchSets = document.querySelector('.search-sets-link');
+// SEARCH SETS PAGE by clicking the nav link
+const linksToSearchSets = document.querySelectorAll('.search-sets-link');
 const searchSetsPage = document.querySelector('.search-sets-page');
-linkToSearchSets.addEventListener('click', () => {
-  hideAllPagesAndShowOne(searchSetsPage);
+linksToSearchSets.forEach((link) => {
+  link.addEventListener('click', () => {
+    hideAllPagesAndShowOne(searchSetsPage);
+  });
 });
 
-navLists.forEach((list) => {
-  list.addEventListener('click', (e) => { // attach onclick event
-    if (e.target.classList.contains('not-page-link')) { // if it's a logout link, do nothing
-      return;
+// PROFILE PAGE by clicking the nav link
+const linksToProfilePage = document.querySelectorAll('.profile-link');
+const profilePage = document.querySelector('.profile-page');
+linksToProfilePage.forEach((link) => {
+  link.addEventListener('click', () => {
+    hideAllPagesAndShowOne(profilePage);
+    if (auth.currentUser) {
+      ui.displayUserCred(auth.currentUser);
     }
+  });
+});
 
-    // get page to show based on link's data-target
-    let pageToShow = null;
-    if (e.target.tagName === 'A') pageToShow = document.querySelector(e.target.getAttribute('data-target'));
-    else if (e.target.parentElement.tagName === 'A') pageToShow = document.querySelector(e.target.parentElement.getAttribute('data-target'));
-    else if (e.target.parentElement.parentElement.tagName === 'A') pageToShow = document.querySelector(e.target.parentElement.parentElement.getAttribute('data-target'));
-    if (pageToShow) {
-      hideAllPagesAndShowOne(pageToShow);
-    }
+// ADMIN PAGE by clicking the nav link
+const linksToAdminPage = document.querySelectorAll('.admin-link');
+const adminPage = document.querySelector('.admin-page');
+linksToAdminPage.forEach((link) => {
+  link.addEventListener('click', () => {
+    hideAllPagesAndShowOne(adminPage);
   });
 });
