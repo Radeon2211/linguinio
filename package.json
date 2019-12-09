@@ -21,7 +21,9 @@
   },
   "author": "Radosław Mikrut",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@babel/polyfill": "^7.7.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",
