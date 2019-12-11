@@ -8,6 +8,24 @@
   width: 100%;
 
   &::-webkit-input-placeholder {
-    color: var(--color-grey-1);
+    color: var(--color-light-5);
+  }
+
+  &--create-set {
+    border: none;
+    background-color: transparent;
+    padding: 0 0 1.5rem;
+    border-bottom: 2px solid var(--color-grey-1);
+    border-radius: 0;
+    transition: all .35s;
+    font-size: 1.9rem;
+
+    @include size(phone) {
+      font-size: 1.6rem;
+    }
+
+    &:focus {
+      border-color: var(--color-orange-1);
+    }
   }
 }

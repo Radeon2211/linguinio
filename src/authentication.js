@@ -63,7 +63,7 @@ export default class Authentication {
     addAdminRole({ email }).then((result) => {
       console.log(result);
       form.reset();
-      if (auth.currentUser.email === email) { // if current user equals email in form, reload the page
+      if (auth.currentUser.email === email) { // if actual user equals email in form,reload the page
         window.location.reload(true);
       }
     }).catch((error) => {

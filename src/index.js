@@ -23,7 +23,8 @@ const adminItems = document.querySelectorAll('.admin-item');
 auth.onAuthStateChanged((user) => {
   if (user) {
     user.getIdTokenResult().then((idTokenResult) => {
-      user.admin = idTokenResult.claims.admin;
+      const userToEdit = user;
+      userToEdit.admin = idTokenResult.claims.admin;
       if (user.admin) { // if user is admin, show admin items
         adminItems.forEach((item) => {
           item.classList.remove('hide');
@@ -32,7 +33,7 @@ auth.onAuthStateChanged((user) => {
     });
 
     // display user credentials
-    ui.displayUserCreds(user);
+    // ui.displayUserCreds(user); !!! UNCOMMENT THIS !!!
 
     // hide introduction page and show main page
     if (!introductionContainer.classList.contains('hide')) {

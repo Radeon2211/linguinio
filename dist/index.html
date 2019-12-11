@@ -186,7 +186,7 @@
 
 
     <!-- MAIN PAGE CONTENT START -->
-    <div class="main-page home-page">
+    <div class="main-page home-page hide">
 
       <div class="home-page-grid">
         <div class="big-panels">
@@ -209,10 +209,40 @@
     <!-- MAIN PAGE CONTENT END -->
 
     <!-- CREATE SET PAGE CONTENT START -->
-    <div class="main-page create-set-page hide">
+    <div class="main-page create-set-page">
 
-      CREATE SET PAGE
-
+      <div class="create-set">
+        <h3 class="heading-3 create-set__heading">Create a new set</h3>
+        <div class="create-set__second-row">
+          <form method="POST" class="create-set__form-title">
+            <input type="text" name="title" class="standard-input standard-input--create-set" placeholder="Title of your set" autocomplete="off">
+          </form>
+          <div class="create-set__button-box">
+            <button class="create-set__button create-set__button--top">Create</button>
+          </div>
+        </div>
+        <form method="POST" class="create-set__form-add-term">
+          <div class="create-set__inputs-group">
+            <input type="text" name="term" class="standard-input standard-input--create-set" placeholder="Term" autocomplete="off">
+            <input type="text" name="definition" class="standard-input standard-input--create-set" placeholder="Definition" autocomplete="off">
+          </div>
+          <input type="submit" value="Add" class="create-set__button create-set__button--add-term">
+        </form>
+        <!--
+        <div class="list-of-terms">
+          <div class="list-of-terms__term">
+            gfsdgdfg
+          </div>
+          <div class="list-of-terms__term">
+            gfsdgdfsdfasd
+          </div>
+          <div class="list-of-terms__term">
+            gfsdgdfgdsvvv
+          </div>
+        </div>
+        -->
+        <button class="create-set__button">Create</button>
+      </div>
     </div>
     <!-- CREATE SET PAGE CONTENT END -->
 

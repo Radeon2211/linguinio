@@ -1,0 +1,94 @@
+.create-set-page {
+  display: flex;
+  justify-content: center;
+}
+
+.create-set {
+  display: grid;
+  width: 100%;
+  max-width: 120rem;
+  row-gap: 4.5rem;
+  grid-template-rows: repeat(5, max-content);
+
+  &__heading {
+    text-shadow: none;
+    color: var(--color-grey-2);
+    align-self: start;
+  }
+
+  &__second-row {
+    display: flex;
+    justify-content: space-between;
+
+    @include size(tab-port) {
+      flex-direction: column;
+    }
+  }
+
+  &__button-box {
+    display: flex;
+
+    @include size(tab-port) {
+      order: 1;
+      margin-bottom: 4.5rem;
+      justify-content: flex-end;
+    }
+  }
+
+  &__button {
+    justify-self: right;
+    width: 15rem;
+    font-size: 1.6rem;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: var(--color-light-1);
+    padding: 1.5rem 2rem;
+    background-color: var(--color-orange-1);
+    cursor: pointer;
+
+    &--add-term {
+      justify-self: center;
+    }
+  }
+
+  &__form-title {
+    width: 60rem;
+
+    @include size(tab-port) {
+      order: 2;
+    }
+
+    @include size(phone) {
+      width: 100%;
+    }
+  }
+
+  &__form-add-term {
+    display: grid;
+    row-gap: 3.5rem;
+    padding: 3.5rem 2rem;
+    border-radius: 5px;
+    border: 1px solid var(--color-light-4);
+    box-shadow: var(--box-shadow-2-light);
+  }
+
+  &__inputs-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(31rem, 1fr));
+    column-gap: 4rem;
+    row-gap: 3.5rem;
+  }
+}
+
+.list-of-terms {
+  display: grid;
+  row-gap: 2rem;
+
+  &__term {
+    background-color: var(--color-light-2);
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+  }
+}
+
