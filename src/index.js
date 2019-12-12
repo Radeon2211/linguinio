@@ -2,17 +2,21 @@ import '@babel/polyfill';
 import displayingModals, { modalBoxRegister, modalBoxLogin, hideModals } from './modals';
 import Authentication from './authentication';
 import UI from './ui';
+import Set from './set';
 
 displayingModals();
+
+// AUTHENTICATION CLASS - CREATE INSTANCE
+const authentication = new Authentication();
 
 // GET ELEMENTS NEEDED TO UI CLASS
 const credsField = document.querySelector('.profile-heading');
 
-// CREATE INSTANCE OF AUTHENTICATION CLASS
-const authentication = new Authentication();
-
-// CREATE INSTANCE OF UI CLASS
+// UI CLASS - CREATE INSTANCE
 const ui = new UI(credsField);
+
+// SET CLASS - CREATE INSTANCE
+const set = new Set();
 
 // GET INTRO AND MAIN CONTAINERS TO SHOW / HIDE THEM
 const introductionContainer = document.querySelector('.introduction-container');
@@ -34,6 +38,33 @@ auth.onAuthStateChanged((user) => {
 
     // display user credentials
     // ui.displayUserCreds(user); !!! UNCOMMENT THIS !!!
+
+    // LISTEN FOR ACTIONS AT CREATE SET PAGE - START
+
+    // title
+    const formSetTitle = document.querySelector('.create-set__form-title');
+    formSetTitle.addEventListener('submit', (e) => {
+      e.preventDefault();
+    });
+
+    // create set
+    const buttonsCreateSet = document.querySelectorAll('.create-set-button');
+    buttonsCreateSet.forEach((button) => {
+      button.addEventListener('click', () => {
+        const title = formSetTitle.title.value.trim();
+        set.createSet(title, user.uid);
+      });
+    });
+
+    // add term
+    const formAddTerm = document.querySelector('.create-set__form-add-term');
+    formAddTerm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const origin = formAddTerm.origin.value.trim();
+      const definition = formAddTerm.definition.value.trim();
+      set.addTerm(origin, definition);
+    });
+    // LISTEN FOR ACTIONS AT CREATE SET PAGE - END
 
     // hide introduction page and show main page
     if (!introductionContainer.classList.contains('hide')) {

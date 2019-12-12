@@ -8,7 +8,7 @@ export default class Authentication {
     }
   }
 
-  // FUNCTION WHICH HIDES FIELD WITH ERROR AFTER SUCCESSFUL LOGIN AND REGISTERATION
+  // HIDES FIELD WITH ERROR AFTER SUCCESSFUL LOGIN AND REGISTERATION
   hideError(field) {
     if (!field.classList.contains('hide')) {
       field.classList.add('hide');

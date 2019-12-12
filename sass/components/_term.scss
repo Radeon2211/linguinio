@@ -1,0 +1,22 @@
+.term {
+  display: grid;
+  background-color: var(--color-light-2);
+  padding: .8rem 2rem;
+  font-size: 1.4rem;
+  grid-template-columns: max-content 1fr;
+  column-gap: 2rem;
+
+  &__number {
+    font-weight: bold;
+    align-self: center;
+  }
+
+  &__words {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
+    column-gap: 5rem;
+    row-gap: .9rem;
+    align-items: center;
+    word-break: break-all;
+  }
+}
