@@ -8,6 +8,7 @@
   width: 100%;
   max-width: 120rem;
   row-gap: 4.5rem;
+  grid-auto-rows: min-content;
 
   &__heading {
     text-shadow: none;
@@ -36,6 +37,7 @@
 
   &__button {
     justify-self: right;
+    align-self: center;
     width: 15rem;
     font-size: 1.6rem;
     outline: none;
@@ -88,10 +90,11 @@
     font-size: 1.4rem;
     color: red;
     text-align: center;
+    justify-self: center;
   }
-}
 
-.list-of-terms {
-  display: grid;
-  row-gap: 2rem;
+  &__list-of-terms {
+    display: grid;
+    row-gap: 2rem;
+  }
 }

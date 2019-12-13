@@ -37,7 +37,7 @@ auth.onAuthStateChanged((user) => {
     });
 
     // display user credentials
-    // ui.displayUserCreds(user); !!! UNCOMMENT THIS !!!
+    ui.displayUserCreds(user);
 
     // LISTEN FOR ACTIONS AT CREATE SET PAGE - START
 
@@ -58,11 +58,10 @@ auth.onAuthStateChanged((user) => {
 
     // add term
     const formAddTerm = document.querySelector('.create-set__form-add-term');
+    const listOfTerms = document.querySelector('.create-set__list-of-terms');
     formAddTerm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const origin = formAddTerm.origin.value.trim();
-      const definition = formAddTerm.definition.value.trim();
-      set.addTerm(origin, definition);
+      set.addTerm(formAddTerm, listOfTerms);
     });
     // LISTEN FOR ACTIONS AT CREATE SET PAGE - END
 
