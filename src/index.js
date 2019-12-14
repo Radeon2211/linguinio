@@ -1,7 +1,7 @@
 import '@babel/polyfill';
 import displayingModals, { modalBoxRegister, modalBoxLogin, hideModals } from './modals';
 import Authentication from './authentication';
-import UI from './ui';
+import Profile from './profile';
 import Create from './create';
 import Search from './search';
 import View from './view';
@@ -11,11 +11,8 @@ displayingModals();
 // AUTHENTICATION CLASS - CREATE INSTANCE
 const authentication = new Authentication();
 
-// GET ELEMENTS NEEDED TO UI CLASS
-const credsField = document.querySelector('.profile-heading');
-
 // UI CLASS - CREATE INSTANCE
-const ui = new UI(credsField);
+const profile = new Profile();
 
 // SET CLASS - CREATE INSTANCE
 const create = new Create();
@@ -44,8 +41,8 @@ auth.onAuthStateChanged((user) => {
       }
     });
 
-    // display user credentials
-    // ui.displayUserCreds(user);
+    // USER CREDENTIALS DISPLAY
+    profile.displayUserCreds(user);
 
     // CREATE SET PAGE ACTIONS - LISTEN START
     // title
