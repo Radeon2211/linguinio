@@ -36,7 +36,7 @@ export default class Set {
       const userInfo = await db.collection('users').doc(uid).get();
 
       const set = {
-        name: title,
+        title,
         creator: userInfo.data().nick,
         terms_number: this.counter,
         created_at: firebase.firestore.Timestamp.fromDate(new Date()),

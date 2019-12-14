@@ -3,6 +3,7 @@ import displayingModals, { modalBoxRegister, modalBoxLogin, hideModals } from '.
 import Authentication from './authentication';
 import UI from './ui';
 import Set from './set';
+import Search from './search';
 
 displayingModals();
 
@@ -17,6 +18,9 @@ const ui = new UI(credsField);
 
 // SET CLASS - CREATE INSTANCE
 const set = new Set();
+
+// SEARCH CLASS - CREATE INSTANCE
+const search = new Search();
 
 // GET INTRO AND MAIN CONTAINERS TO SHOW / HIDE THEM
 const introductionContainer = document.querySelector('.introduction-container');
@@ -37,7 +41,7 @@ auth.onAuthStateChanged((user) => {
     });
 
     // display user credentials
-    ui.displayUserCreds(user);
+    // ui.displayUserCreds(user);
 
     // LISTEN FOR ACTIONS AT CREATE SET PAGE - START
 
@@ -130,7 +134,6 @@ formAddAdmin.addEventListener('submit', (e) => {
 // DISPLAYING PAGES AND NAV ITEMS MANAGEMENT
 const mainPages = document.querySelectorAll('.main-page'); // all pages
 const navToggler = document.querySelector('#nav-toggler'); // side navigation toggler
-const notAtHomeItems = document.querySelectorAll('.not-at-home-item'); // nav items which shouldn 't display at home page
 
 // HIDING ALL PAGES AND SHOWING WHICH USER WANTS
 const hideAllPagesAndShowOne = (pageToShow) => {
@@ -142,17 +145,6 @@ const hideAllPagesAndShowOne = (pageToShow) => {
   });
   // show page to show
   pageToShow.classList.remove('hide');
-
-  // if page to show is home page, hide not home items from navs
-  if (pageToShow.classList.contains('home-page')) {
-    notAtHomeItems.forEach((item) => {
-      item.classList.add('hide');
-    });
-  } else {
-    notAtHomeItems.forEach((item) => { // else, show them
-      item.classList.remove('hide');
-    });
-  }
 
   // set sidenav toggler checkbox to false
   navToggler.checked = false;
@@ -177,6 +169,16 @@ linksToCreateSet.forEach((link) => {
   });
 });
 
+// SEARCH SETS PAGE by clicking the panel at home page nav link
+const linksToSearchSets = document.querySelectorAll('.search-sets-link');
+const searchSetsPage = document.querySelector('.search-sets-page');
+linksToSearchSets.forEach((link) => {
+  link.addEventListener('click', () => {
+    hideAllPagesAndShowOne(searchSetsPage);
+    search.displayAllSets();
+  });
+});
+
 // PROFILE PAGE by clicking the nav link
 const linksToProfilePage = document.querySelectorAll('.profile-link');
 const profilePage = document.querySelector('.profile-page');
@@ -192,14 +194,5 @@ const adminPage = document.querySelector('.admin-page');
 linksToAdminPage.forEach((link) => {
   link.addEventListener('click', () => {
     hideAllPagesAndShowOne(adminPage);
-  });
-});
-
-// SEARCH SETS PAGE by clicking the panel at home page nav link
-const linksToSearchSets = document.querySelectorAll('.search-sets-link');
-const searchSetsPage = document.querySelector('.search-sets-page');
-linksToSearchSets.forEach((link) => {
-  link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(searchSetsPage);
   });
 });
