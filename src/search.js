@@ -9,10 +9,10 @@ export default class Search {
       sets.forEach((doc) => {
         const data = doc.data();
         searchSetsContainer.innerHTML += `
-        <div class="set set-view-link" data-id="${doc.id}">
-          <div class="set__title set-view-link">${data.title}</div>
-          <div class="set__terms set-view-link">${data.terms_number} terms</div>
-          <div class="set__creator set-view-link">${data.creator}</div>
+        <div class="set set-view-link" data-id="${doc.id}" data-title="${data.title}" data-terms_number="${data.terms_number}" data-creator="${data.creator}">
+          <div class="set__title">${data.title}</div>
+          <div class="set__terms">${data.terms_number} terms</div>
+          <div class="set__creator">${data.creator}</div>
         </div>
       `;
       });

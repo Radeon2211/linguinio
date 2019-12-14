@@ -1,7 +1,7 @@
 // GET DOM ELEMENTS
 const listOfTerms = document.querySelector('.create-set__list-of-terms');
 
-export default class Set {
+export default class Create {
   constructor() {
     this.terms = []; // THERE ARE STORED THE TERMS
     this.counter = 0; // COUNTER OF TERMS

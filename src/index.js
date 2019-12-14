@@ -2,8 +2,9 @@ import '@babel/polyfill';
 import displayingModals, { modalBoxRegister, modalBoxLogin, hideModals } from './modals';
 import Authentication from './authentication';
 import UI from './ui';
-import Set from './set';
+import Create from './create';
 import Search from './search';
+import View from './view';
 
 displayingModals();
 
@@ -17,10 +18,13 @@ const credsField = document.querySelector('.profile-heading');
 const ui = new UI(credsField);
 
 // SET CLASS - CREATE INSTANCE
-const set = new Set();
+const create = new Create();
 
 // SEARCH CLASS - CREATE INSTANCE
 const search = new Search();
+
+// VIEW CLASS - CREATE INSTANCE
+const view = new View();
 
 // GET INTRO AND MAIN CONTAINERS TO SHOW / HIDE THEM
 const introductionContainer = document.querySelector('.introduction-container');
@@ -43,8 +47,7 @@ auth.onAuthStateChanged((user) => {
     // display user credentials
     // ui.displayUserCreds(user);
 
-    // LISTEN FOR ACTIONS AT CREATE SET PAGE - START
-
+    // CREATE SET PAGE ACTIONS - LISTEN START
     // title
     const formSetTitle = document.querySelector('.create-set__form-title');
     formSetTitle.addEventListener('submit', (e) => {
@@ -56,18 +59,17 @@ auth.onAuthStateChanged((user) => {
     buttonsCreateSet.forEach((button) => {
       button.addEventListener('click', () => {
         const title = formSetTitle.title.value.trim();
-        set.createSet(title, user.uid);
+        create.createSet(title, user.uid);
       });
     });
 
     // add term
     const formAddTerm = document.querySelector('.create-set__form-add-term');
-
     formAddTerm.addEventListener('submit', (e) => {
       e.preventDefault();
-      set.addTerm(formAddTerm);
+      create.addTerm(formAddTerm);
     });
-    // LISTEN FOR ACTIONS AT CREATE SET PAGE - END
+    // CREATE SET PAGE ACTIONS - LISTEN
 
     // hide introduction page and show main page
     if (!introductionContainer.classList.contains('hide')) {
@@ -86,7 +88,7 @@ auth.onAuthStateChanged((user) => {
     }
   }
 });
-// LISTEN FOR AUTH STATUS CHANGED END
+// AUTH STATUS CHANGED - LISTEN END
 
 
 // REGISTER START
@@ -98,7 +100,6 @@ formRegister.addEventListener('submit', (e) => {
 });
 // REGISTER END
 
-
 // LOGIN START
 const formLogin = document.querySelector('#form-login');
 formLogin.addEventListener('submit', (e) => {
@@ -107,7 +108,6 @@ formLogin.addEventListener('submit', (e) => {
   authentication.login(formLogin, hideModals, modalBoxLogin);
 });
 // LOGIN END
-
 
 // LOGOUT START
 const logoutLinks = document.querySelectorAll('.logout-link');
@@ -118,7 +118,6 @@ logoutLinks.forEach((link) => {
   });
 });
 // LOGOUT END
-
 
 // ADD ADMIN ROLE START
 const formAddAdmin = document.querySelector('#form-add-admin');
@@ -196,3 +195,28 @@ linksToAdminPage.forEach((link) => {
     hideAllPagesAndShowOne(adminPage);
   });
 });
+
+
+// SET CLICK - LISTEN START
+const setViewPage = document.querySelector('.set-view-page');
+const listOfSets = document.querySelector('.search-sets');
+listOfSets.addEventListener('click', (e) => {
+  // CHECK IF CLICKED ELEMENT IS A SET
+  let clickedElement = null;
+  if (e.target.classList.contains('set-view-link')) {
+    clickedElement = e.target;
+  } else if (e.target.parentElement.classList.contains('set-view-link')) {
+    clickedElement = e.target.parentElement;
+  }
+  if (clickedElement) {
+    hideAllPagesAndShowOne(setViewPage);
+    // GET INFO ABOUT SET FROM DATA ATTRIBUTES
+    const id = clickedElement.getAttribute('data-id');
+    const title = clickedElement.getAttribute('data-title');
+    const termsNumber = clickedElement.getAttribute('data-terms_number');
+    const creator = clickedElement.getAttribute('data-creator');
+    // WRITE ALL INFO IN SET VIEW PAGE
+    view.writeSetInfo(id, title, termsNumber, creator);
+  }
+});
+// SET CLICK - LISTEN END

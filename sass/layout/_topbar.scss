@@ -193,7 +193,7 @@
     background-color: var(--color-light-3);
     z-index: 10;
     transform: translateX(100%);
-    transition: all .4s;
+    transition: all .35s;
 
     @include size(tab-port) {
       height: 91vh;

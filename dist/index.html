@@ -190,18 +190,24 @@
 
       <div class="home-page-grid">
         <div class="big-panels">
-          <button class="panel panel--big panel--orange create-set-link">
+          <div class="panel panel--big panel--orange create-set-link">
+            <svg class="panel__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-folder-plus"></use>
+            </svg>
             <h2 class="heading-2">Create your own set</h2>
-          </button>
-          <button class="panel panel--big panel--blue search-sets-link">
+          </div>
+          <div class="panel panel--big panel--blue search-sets-link">
+            <svg class="panel__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-search"></use>
+            </svg>
             <h2 class="heading-2">View other people's sets</h2>
-          </button>
+          </div>
         </div>
         <div class="small-panels">
-          <button class="panel panel--small">Recent set</button>
-          <button class="panel panel--small">Recent set</button>
-          <button class="panel panel--small">Recent set</button>
-          <button class="panel panel--small">Recent set</button>
+          <div class="panel panel--small">Recent set</div>
+          <div class="panel panel--small">Recent set</div>
+          <div class="panel panel--small">Recent set</div>
+          <div class="panel panel--small">Recent set</div>
         </div>
       </div>
 
@@ -232,7 +238,7 @@
           </div>
           <input type="submit" value="Add" class="create-set__button create-set__button--add-term">
         </form>
-        <div class="create-set__list-of-terms hide"></div>
+        <div class="list-of-terms create-set__list-of-terms hide"></div>
         <button class="create-set__button create-set-button">Create</button>
       </div>
     </div>
@@ -247,6 +253,40 @@
 
     </div>
     <!-- SEARCH SETS PAGE CONTENT END -->
+
+    <!-- SET VIEW PAGE CONTENT START -->
+    <div class="main-page set-view-page hide">
+
+      <div class="set-view">
+        <h3 class="heading-3 set-view__heading"></h3>
+        <div class="set-view__panels">
+          <div class="panel panel--big panel--orange">
+            <svg class="panel__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-pencil2"></use>
+            </svg>
+            <h2 class="heading-2">Write</h2>
+          </div>
+          <div class="panel panel--big panel--blue">
+            <svg class="panel__icon">
+              <use xlink:href="assets/img/sprite.svg#icon-file-text2"></use>
+            </svg>
+            <h2 class="heading-2">Test</h2>
+          </div>
+        </div>
+        <div class="set-view__creator">
+          <div class="set-view__creator-box">
+            <span class="set-view__creator-label">Created by</span>
+            <span class="set-view__creator-nick"></span>
+          </div>
+        </div>
+        <div class="set-view__terms-counter">
+          Terms in this set <span class="set-view__terms-number"></span>
+        </div>
+        <div class="list-of-terms set-view__list-of-terms"></div>
+      </div>
+
+    </div>
+    <!-- SET VIEW PAGE CONTENT END -->
 
     <!-- ADMIN PAGE CONTENT START -->
     <div class="main-page admin-page hide">
