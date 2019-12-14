@@ -1,3 +1,6 @@
+// GET DOM ELEMENTS
+const listOfTerms = document.querySelector('.create-set__list-of-terms');
+
 export default class Set {
   constructor() {
     this.terms = []; // THERE ARE STORED THE TERMS
@@ -7,8 +10,8 @@ export default class Set {
       forms: document.querySelector('.create-set-error-forms'),
     };
     this.regex = { // REGEXES TO CHECK TITLE AND TERM FORM
-      first: /^[^@#$%^&*'"\n\t`~<>]/,
-      second: /[^@#$%^&*'"\n\t`~<>]$/,
+      start: /^[^@#$%^&*'"\n\t`~<>]/,
+      end: /[^@#$%^&*'"\n\t`~<>]$/,
     };
   }
 
@@ -22,7 +25,7 @@ export default class Set {
       this.displayError(this.errorFields.forms, 'Please enter the title');
       return;
     }
-    if (!this.regex.first.test(title) || !this.regex.second.test(title) || title.length > 60) {
+    if (!this.regex.start.test(title) || !this.regex.end.test(title) || title.length > 60) {
       this.displayError(this.errorFields.forms, 'Maximum 60 characters expected, strange characters not allowed');
       return;
     }
@@ -32,13 +35,11 @@ export default class Set {
       // GET NICK OF CURRENT USER
       const userInfo = await db.collection('users').doc(uid).get();
 
-      const now = new Date();
-
       const set = {
         name: title,
         creator: userInfo.data().nick,
         terms_number: this.counter,
-        created_at: firebase.firestore.Timestamp.fromDate(now),
+        created_at: firebase.firestore.Timestamp.fromDate(new Date()),
       };
 
       // WRITE INFO ABOUT SET
@@ -55,7 +56,7 @@ export default class Set {
     this.displayError(this.errorFields.database, 'Set created successfully');
   }
 
-  addTerm(formAddTerm, listOfTerms) {
+  addTerm(formAddTerm) {
     const origin = formAddTerm.origin.value.trim();
     const definition = formAddTerm.definition.value.trim();
     // CHECK FOR UNACCEPTABLE THINGS IN FORM
@@ -63,8 +64,8 @@ export default class Set {
       this.displayError(this.errorFields.forms, 'Both fields must be filled');
       return;
     }
-    if ((!this.regex.first.test(origin)) || (!this.regex.first.test(definition))
-    || (!this.regex.second.test(definition)) || (!this.regex.second.test(definition))
+    if ((!this.regex.start.test(origin)) || (!this.regex.start.test(definition))
+    || (!this.regex.end.test(definition)) || (!this.regex.end.test(definition))
     || (origin.length > 60) || (definition.length > 60)) {
       this.displayError(this.errorFields.forms, 'Maximum 60 characters expected, strange characters not allowed');
       return;
@@ -72,34 +73,38 @@ export default class Set {
     // PUSH TERM TO ARRAY, INCREMENT THE COUNTER OF TERMS, SHOW TERM, RESET THE FROM
     this.terms.push({ origin, definition });
     this.counter += 1;
-    this.showAddedTerm(origin, definition, listOfTerms);
+    this.showAddedTerm(origin, definition);
     formAddTerm.reset();
   }
 
-  showAddedTerm(origin, definition, listOfTerms) {
-    const list = listOfTerms;
+  showAddedTerm(origin, definition) {
     if (this.counter === 1) {
-      list.classList.remove('hide');
+      // SHOW LIST OF TERMS
+      listOfTerms.classList.remove('hide');
     }
-    list.innerHTML += `
-      <div class="term">
-        <span class="term__number">${this.counter}.</span>
-        <div class="term__words">
-          <span class="term__word">${origin}</span>
-          <span class="term__word">${definition}</span>
-        </div>
+
+    // SHOW ADDED TERMS
+    const element = document.createElement('div');
+    element.classList.add('term');
+    element.innerHTML = `
+      <span class="term__number">${this.counter}.</span>
+      <div class="term__words">
+        <span class="term__word">${origin}</span>
+        <span class="term__word">${definition}</span>
       </div>
     `;
+    listOfTerms.prepend(element);
   }
 
   displayError(field, error) {
-    // DISPLAY ERROR AND HIDE IT AFTER 3 SECONDS
+    // SCROLL TO THE TOP, DISPLAY ERROR AND HIDE IT AFTER 3 SECONDS
+    window.scrollTo(0, 0);
     const errorField = field;
     errorField.innerHTML = error;
     errorField.classList.remove('hide');
     setTimeout(() => {
       errorField.classList.add('hide');
       errorField.innerHTML = '';
-    }, 5000);
+    }, 3000);
   }
 }

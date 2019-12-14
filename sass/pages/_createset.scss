@@ -60,9 +60,11 @@
 
   &__form-title {
     width: 60rem;
+    align-self: center;
 
     @include size(tab-port) {
       order: 2;
+      align-self: flex-start;
     }
 
     @include size(phone) {

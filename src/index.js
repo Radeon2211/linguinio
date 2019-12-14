@@ -58,10 +58,10 @@ auth.onAuthStateChanged((user) => {
 
     // add term
     const formAddTerm = document.querySelector('.create-set__form-add-term');
-    const listOfTerms = document.querySelector('.create-set__list-of-terms');
+
     formAddTerm.addEventListener('submit', (e) => {
       e.preventDefault();
-      set.addTerm(formAddTerm, listOfTerms);
+      set.addTerm(formAddTerm);
     });
     // LISTEN FOR ACTIONS AT CREATE SET PAGE - END
 
@@ -177,15 +177,6 @@ linksToCreateSet.forEach((link) => {
   });
 });
 
-// SEARCH SETS PAGE by clicking the nav link
-const linksToSearchSets = document.querySelectorAll('.search-sets-link');
-const searchSetsPage = document.querySelector('.search-sets-page');
-linksToSearchSets.forEach((link) => {
-  link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(searchSetsPage);
-  });
-});
-
 // PROFILE PAGE by clicking the nav link
 const linksToProfilePage = document.querySelectorAll('.profile-link');
 const profilePage = document.querySelector('.profile-page');
@@ -201,5 +192,14 @@ const adminPage = document.querySelector('.admin-page');
 linksToAdminPage.forEach((link) => {
   link.addEventListener('click', () => {
     hideAllPagesAndShowOne(adminPage);
+  });
+});
+
+// SEARCH SETS PAGE by clicking the panel at home page nav link
+const linksToSearchSets = document.querySelectorAll('.search-sets-link');
+const searchSetsPage = document.querySelector('.search-sets-page');
+linksToSearchSets.forEach((link) => {
+  link.addEventListener('click', () => {
+    hideAllPagesAndShowOne(searchSetsPage);
   });
 });
