@@ -63,9 +63,9 @@
       </svg>
       <h3 class="heading-3">Sign up</h3>
       <form class="modal-form" id="form-register" method="POST">
-        <input type="email" name="email" placeholder="Email" class="standard-input">
-        <input type="text" name="nick" placeholder="Nick" class="standard-input">
-        <input type="password" name="password" placeholder="Password" class="standard-input" autocomplete="off">
+        <input type="email" name="email" placeholder="Email" class="standard-input" autocapitalize="off">
+        <input type="text" name="nick" placeholder="Nick" class="standard-input" autocapitalize="off">
+        <input type="password" name="password" placeholder="Password" class="standard-input" autocomplete="off" autocapitalize="off">
         <input type="submit" name="submit" class="button button--blue" value="Sign up">
         <span class="modal-form__error hide"></span>
       </form>
@@ -82,8 +82,8 @@
       </svg>
       <h3 class="heading-3">Log in</h3>
       <form class="modal-form" id="form-login" method="POST">
-        <input type="email" name="email" placeholder="Email" class="standard-input">
-        <input type="password" name="password" placeholder="Password" class="standard-input" autocomplete="off">
+        <input type="email" name="email" placeholder="Email" class="standard-input" autocapitalize="off">
+        <input type="password" name="password" placeholder="Password" class="standard-input" autocomplete="off" autocapitalize="off">
         <input type="submit" name="submit" class="button button--blue" value="Log in">
         <span class="modal-form__error hide"></span>
       </form>
@@ -222,7 +222,7 @@
         <h3 class="heading-3 create-set__heading">Create a new set</h3>
         <div class="create-set__second-row">
           <form method="POST" class="create-set__form-title">
-            <input type="text" name="title" class="standard-input standard-input--create-set" placeholder="Title of your set" autocomplete="off">
+            <input type="text" name="title" class="standard-input standard-input--create-set-and-test" placeholder="Title of your set" autocomplete="off" autocapitalize="off">
           </form>
           <div class="create-set__button-box">
             <button class="create-set__button create-set__button--top create-set-button">Create</button>
@@ -231,10 +231,8 @@
         <span class="create-set__error create-set-error-forms hide"></span>
         <form method="POST" class="create-set__form-add-term">
           <div class="create-set__inputs-group">
-            <input type="text" name="origin" class="standard-input standard-input--create-set" placeholder="Term"
-              autocomplete="off">
-            <input type="text" name="definition" class="standard-input standard-input--create-set" placeholder="Definition"
-              autocomplete="off">
+            <input type="text" name="origin" class="standard-input standard-input--create-set-and-test" placeholder="Term" autocomplete="off" autocapitalize="off">
+            <input type="text" name="definition" class="standard-input standard-input--create-set-and-test" placeholder="Definition" autocomplete="off" autocapitalize="off">
           </div>
           <input type="submit" value="Add" class="create-set__button create-set__button--add-term">
         </form>
@@ -260,13 +258,13 @@
       <div class="set-view">
         <h3 class="heading-3 set-view__heading"></h3>
         <div class="set-view__panels">
-          <div class="panel panel--big panel--orange panel-write">
+          <div class="panel panel--big panel--orange panel-write-test">
             <svg class="panel__icon">
               <use xlink:href="assets/img/sprite.svg#icon-pencil2"></use>
             </svg>
             <h2 class="heading-2">Write</h2>
           </div>
-          <div class="panel panel--big panel--blue panel-test">
+          <div class="panel panel--big panel--blue panel-selection-test">
             <svg class="panel__icon">
               <use xlink:href="assets/img/sprite.svg#icon-file-text2"></use>
             </svg>
@@ -288,6 +286,47 @@
     </div>
     <!-- SET VIEW PAGE CONTENT END -->
 
+    <!-- TEST PAGE CONTENT START -->
+    <div class="main-page test-page hide">
+      <div class="test-container">
+        <!-- WRITE TEST -->
+        <div class="test test-write hide">
+          <div class="test__back">
+            <svg class="test__back-icon">
+              <use xlink:href="assets/img/sprite.svg#icon-undo2"></use>
+            </svg>
+            <span class="test__back-text">Back to set view</span>
+          </div>
+          <div class="test__counter">4 / 10</div>
+          <div class="test__words-write">
+            <div class="test__word-write">ograniczony, o wąskich horyzontach</div>
+            <div class="test__word-write test__word-write-correct">narrow-minded</div>
+          </div>
+          <form method="POST" class="test__form">
+            <input type="text" name="definition" class="standard-input standard-input--create-set-and-test" placeholder="Definition" autocomplete="off" autocapitalize="off">
+          </form>
+        </div>
+        <!-- SELECTION TEST -->
+        <div class="test test-selection hide">
+          <div class="test__back">
+            <svg class="test__back-icon">
+              <use xlink:href="assets/img/sprite.svg#icon-undo2"></use>
+            </svg>
+            <span class="test__back-text">Back to set view</span>
+          </div>
+          <div class="test__counter">7 / 10</div>
+          <div class="test__word">przejrzeć notatki</div>
+          <div class="test__answers">
+            <div class="test__answer test__answer--green">go over one's notes</div>
+            <div class="test__answer test__answer--red">sleep rough</div>
+            <div class="test__answer">self-confident</div>
+            <div class="test__answer">hit the roof</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- TEST PAGE CONTENT END -->
+
     <!-- ADMIN PAGE CONTENT START -->
     <div class="main-page admin-page hide">
 
@@ -295,7 +334,7 @@
         <div class="admin-form-box">
           <p class="admin-form-box__caption">Add admin</p>
           <form class="admin-form-box__form" id="form-add-admin" method="POST">
-            <input type="email" name="email" class="standard-input" placeholder="Email" autocomplete="off">
+            <input type="email" name="email" class="standard-input" placeholder="Email" autocomplete="off" autocapitalize="off">
           </form>
         </div>
       </div>

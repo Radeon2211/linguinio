@@ -220,3 +220,26 @@ listsOfSets.forEach((list) => {
   });
 });
 // SET CLICK - LISTEN END
+
+// SET VIEW ACTIONS START
+const testPage = document.querySelector('.test-page');
+
+const panelWriteTest = document.querySelector('.panel-write-test');
+panelWriteTest.addEventListener('click', () => {
+  hideAllPagesAndShowOne(testPage);
+  view.selectionTest('write', testPage);
+});
+
+const panelSelectionTest = document.querySelector('.panel-selection-test');
+panelSelectionTest.addEventListener('click', () => {
+  hideAllPagesAndShowOne(testPage);
+  view.selectionTest('selection', testPage);
+});
+
+const testBackLinks = document.querySelectorAll('.test__back');
+testBackLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    hideAllPagesAndShowOne(setViewPage);
+  });
+});
+// SET VIEW ACTIONS END
