@@ -73,11 +73,11 @@ export default class Create {
     // PUSH TERM TO ARRAY, INCREMENT THE COUNTER OF TERMS, SHOW TERM, RESET THE FROM
     this.terms.push({ origin, definition });
     this.counter += 1;
-    this.showAddedTerm(origin, definition);
+    this.displayAddedTerm(origin, definition);
     formAddTerm.reset();
   }
 
-  showAddedTerm(origin, definition) {
+  displayAddedTerm(origin, definition) {
     if (this.counter === 1) {
       // SHOW LIST OF TERMS
       listOfTerms.classList.remove('hide');

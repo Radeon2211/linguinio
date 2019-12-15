@@ -248,7 +248,7 @@
     <div class="main-page search-sets-page hide">
 
       <div class="search-sets-container">
-        <div class="search-sets"></div>
+        <div class="search-sets list-of-sets"></div>
       </div>
 
     </div>
@@ -260,13 +260,13 @@
       <div class="set-view">
         <h3 class="heading-3 set-view__heading"></h3>
         <div class="set-view__panels">
-          <div class="panel panel--big panel--orange">
+          <div class="panel panel--big panel--orange panel-write">
             <svg class="panel__icon">
               <use xlink:href="assets/img/sprite.svg#icon-pencil2"></use>
             </svg>
             <h2 class="heading-2">Write</h2>
           </div>
-          <div class="panel panel--big panel--blue">
+          <div class="panel panel--big panel--blue panel-test">
             <svg class="panel__icon">
               <use xlink:href="assets/img/sprite.svg#icon-file-text2"></use>
             </svg>
@@ -309,41 +309,17 @@
       <div class="profile-heading"></div>
 
       <div class="profile-sets-container">
-        <div class="profile-sets">
+        <div class="profile-sets list-of-sets">
           <div class="profile-sets__side">
             <span class="profile-sets__heading">Started sets</span>
-            <div class="profile-sets__column">
-              <div class="set">
-                <div class="set__title">Matura Focus 3 Unit 8 do State and society</div>
-                <div class="set__terms">110 terms</div>
-                <div class="set__creator">Radeon2211</div>
-              </div>
-              <div class="set">
-                <div class="set__title">Angielski Matura Focus 3 Unit 8 od State and society do końca</div>
-                <div class="set__terms">53 terms</div>
-                <div class="set__creator">Radeon2211</div>
-              </div>
-              <div class="set">
-                <div class="set__title">Alles Klar 1 Kapitel 14</div>
-                <div class="set__terms">117 terms</div>
-                <div class="set__creator">renfor75</div>
-              </div>
-            </div>
+            <div class="profile-sets__column profile-sets-started"></div>
           </div>
           <div class="profile-sets__side">
             <span class="profile-sets__heading">Created sets</span>
-            <div class="profile-sets__column">
-              <div class="set">
-                <div class="set__title">Matura Focus 3 Unit 8 do State and society</div>
-                <div class="set__terms">53 terms</div>
-                <div class="set__creator">Radeon2211</div>
-              </div>
-              <div class="set">
-                <div class="set__title">Angielski Matura Focus 3 Unit 8 od State and society do końca</div>
-                <div class="set__terms">110 terms</div>
-                <div class="set__creator">Radeon2211</div>
-              </div>
-            </div>
+            <span class="profile-sets__info profile-sets-info-created hide">You have no created sets yet.
+              <a href="#" class="profile-sets__link create-set-link">Create a set</a>
+            </span>
+            <div class="profile-sets__column profile-sets-created"></div>
           </div>
         </div>
       </div>

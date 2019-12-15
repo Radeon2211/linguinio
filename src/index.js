@@ -11,7 +11,7 @@ displayingModals();
 // AUTHENTICATION CLASS - CREATE INSTANCE
 const authentication = new Authentication();
 
-// UI CLASS - CREATE INSTANCE
+// PROFILE CLASS - CREATE INSTANCE
 const profile = new Profile();
 
 // SET CLASS - CREATE INSTANCE
@@ -141,7 +141,6 @@ const hideAllPagesAndShowOne = (pageToShow) => {
   });
   // show page to show
   pageToShow.classList.remove('hide');
-
   // set sidenav toggler checkbox to false
   navToggler.checked = false;
 };
@@ -181,6 +180,7 @@ const profilePage = document.querySelector('.profile-page');
 linksToProfilePage.forEach((link) => {
   link.addEventListener('click', () => {
     hideAllPagesAndShowOne(profilePage);
+    profile.displayCreatedSets();
   });
 });
 
@@ -196,24 +196,27 @@ linksToAdminPage.forEach((link) => {
 
 // SET CLICK - LISTEN START
 const setViewPage = document.querySelector('.set-view-page');
-const listOfSets = document.querySelector('.search-sets');
-listOfSets.addEventListener('click', (e) => {
-  // CHECK IF CLICKED ELEMENT IS A SET
-  let clickedElement = null;
-  if (e.target.classList.contains('set-view-link')) {
-    clickedElement = e.target;
-  } else if (e.target.parentElement.classList.contains('set-view-link')) {
-    clickedElement = e.target.parentElement;
-  }
-  if (clickedElement) {
-    hideAllPagesAndShowOne(setViewPage);
-    // GET INFO ABOUT SET FROM DATA ATTRIBUTES
-    const id = clickedElement.getAttribute('data-id');
-    const title = clickedElement.getAttribute('data-title');
-    const termsNumber = clickedElement.getAttribute('data-terms_number');
-    const creator = clickedElement.getAttribute('data-creator');
-    // WRITE ALL INFO IN SET VIEW PAGE
-    view.writeSetInfo(id, title, termsNumber, creator);
-  }
+// GET ALL LIST OF SETS (AT PROFILE AND SEARCH SETS PAGE)
+const listsOfSets = document.querySelectorAll('.list-of-sets');
+listsOfSets.forEach((list) => {
+  list.addEventListener('click', (e) => {
+    // CHECK IF CLICKED ELEMENT IS A SET
+    let clickedElement = null;
+    if (e.target.classList.contains('set-view-link')) {
+      clickedElement = e.target;
+    } else if (e.target.parentElement.classList.contains('set-view-link')) {
+      clickedElement = e.target.parentElement;
+    }
+    if (clickedElement) {
+      hideAllPagesAndShowOne(setViewPage);
+      // GET INFO ABOUT SET FROM DATA ATTRIBUTES
+      const id = clickedElement.getAttribute('data-id');
+      const title = clickedElement.getAttribute('data-title');
+      const termsNumber = clickedElement.getAttribute('data-terms_number');
+      const creator = clickedElement.getAttribute('data-creator');
+      // WRITE ALL INFO IN SET VIEW PAGE
+      view.writeSetInfo(id, title, termsNumber, creator);
+    }
+  });
 });
 // SET CLICK - LISTEN END

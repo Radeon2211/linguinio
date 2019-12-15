@@ -11,8 +11,9 @@ export default class View {
 
   // WRITE INFO ABOUT SET
   async writeSetInfo(id, title, termsNumber, creator) {
-    // CLEAR LIST OF TERMS
+    // CLEAR LIST OF TERMS AND RESET NUMBER OF TERMS
     listOfTerms.innerHTML = '';
+    this.number = 0;
     // WRITE BASIC INFO AND SET NUMBER OF TERMS
     setTitle.innerHTML = title;
     setTermsNumber.innerHTML = `(${termsNumber})`;
