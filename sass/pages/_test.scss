@@ -3,13 +3,13 @@
   justify-content: center;
   padding: 4rem 2rem;
 
-  // ANIMATION AFTER CHOOSING OPTION OR SUBMIT THE FORM
+  // ANIMATIONS AFTER CHOOSING OPTION OR SUBMIT THE FORM
   &--correct {
-    animation: test-background-animation-correct .4s 1s;
+    animation: test-background-animation-correct .4s .1s;
   }
 
   &--incorrect {
-    animation: test-background-animation-incorrect .4s 1s;
+    animation: test-background-animation-incorrect .4s .1s;
   }
 }
 
@@ -99,7 +99,6 @@
     }
   }
 
-
   &__form {
     justify-self: center;
     width: 80%;
@@ -121,5 +120,11 @@
     color: var(--color-green-3);
     padding-top: 1.5rem;
     border-top: 1px solid var(--color-light-5);
+  }
+
+  &__fail-button {
+    max-width: 50rem;
+    justify-self: center;
+    grid-column: 1 / -1;
   }
 }

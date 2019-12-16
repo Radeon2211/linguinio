@@ -278,7 +278,7 @@
           </div>
         </div>
         <div class="set-view__terms-counter">
-          Terms in this set <span class="set-view__terms-number"></span>
+          Terms in this set (<span class="set-view__terms-number"></span>)
         </div>
         <div class="list-of-terms set-view__list-of-terms"></div>
       </div>
@@ -297,14 +297,15 @@
             </svg>
             <span class="test__back-text">Back to set view</span>
           </div>
-          <div class="test__counter">4 / 10</div>
+          <div class="test__counter write-counter"></div>
           <div class="test__words-write">
-            <div class="test__word-write">ograniczony, o wąskich horyzontach</div>
-            <div class="test__word-write test__word-write-correct">narrow-minded</div>
+            <div class="test__word-write"></div>
+            <div class="test__word-write test__word-write-correct hide"></div>
           </div>
           <form method="POST" class="test__form">
             <input type="text" name="definition" class="standard-input standard-input--create-set-and-test" placeholder="Definition" autocomplete="off" autocapitalize="off">
           </form>
+          <button class="button button--blue test__fail-button write-button hide">I understand</button>
         </div>
         <!-- SELECTION TEST -->
         <div class="test test-selection hide">
@@ -314,13 +315,14 @@
             </svg>
             <span class="test__back-text">Back to set view</span>
           </div>
-          <div class="test__counter">7 / 10</div>
+          <div class="test__counter selection-counter">7 / 10</div>
           <div class="test__word">przejrzeć notatki</div>
           <div class="test__answers">
             <div class="test__answer test__answer--green">go over one's notes</div>
             <div class="test__answer test__answer--red">sleep rough</div>
-            <div class="test__answer">self-confident</div>
-            <div class="test__answer">hit the roof</div>
+            <div class="test__answer">prisoner</div>
+            <div class="test__answer">prison guard</div>
+            <button class="button button--blue test__fail-button selection-button hide">I understand</button>
           </div>
         </div>
       </div>

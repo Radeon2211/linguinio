@@ -143,6 +143,15 @@ const hideAllPagesAndShowOne = (pageToShow) => {
   pageToShow.classList.remove('hide');
   // set sidenav toggler checkbox to false
   navToggler.checked = false;
+
+  // IF PAGE TO SHOW ISN'T A TEST PAGE && TERMS TO TEST IS EMPTY - CLEAR VIEW CLASS && TEST PAGE UI
+  if (!pageToShow.classList.contains('test-page') && view.termsToTest.length > 0) {
+    view.clear();
+  }
+  // IF PAGE TO SHOW ISN'T TEST OR SET VIEW PAGE, VIEW TERMS > 0 - CLEAR TERMS ARRAY && THEIR NUMBER
+  if (!pageToShow.classList.contains('test-page') && !pageToShow.classList.contains('set-view-page') && view.terms.length > 0) {
+    view.clearBasicAttributes();
+  }
 };
 
 
@@ -227,19 +236,33 @@ const testPage = document.querySelector('.test-page');
 const panelWriteTest = document.querySelector('.panel-write-test');
 panelWriteTest.addEventListener('click', () => {
   hideAllPagesAndShowOne(testPage);
-  view.selectionTest('write', testPage);
+  view.writeTest();
 });
 
 const panelSelectionTest = document.querySelector('.panel-selection-test');
 panelSelectionTest.addEventListener('click', () => {
   hideAllPagesAndShowOne(testPage);
-  view.selectionTest('selection', testPage);
+  view.selectionTest();
 });
 
+// BACK TO SET VIEW LINKS CLICK
 const testBackLinks = document.querySelectorAll('.test__back');
 testBackLinks.forEach((link) => {
   link.addEventListener('click', () => {
     hideAllPagesAndShowOne(setViewPage);
   });
+});
+
+// SUBMIT THE WRITE TEST FORM
+const writeForm = document.querySelector('.test__form');
+writeForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  view.checkWriteAnswer(writeForm);
+});
+
+// CLICK ON THE WRITE BUTTON
+const writeButtonIndex = document.querySelector('.write-button');
+writeButtonIndex.addEventListener('click', () => {
+  view.writeGoToNextTerm();
 });
 // SET VIEW ACTIONS END
