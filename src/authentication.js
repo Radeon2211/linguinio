@@ -2,7 +2,7 @@ export default class Authentication {
   // FUNCTION WHICH DISPLAYS ERROR IN FORMS (field where error displays, error)
   displayError(field, { message }) {
     const fieldError = field;
-    fieldError.innerHTML = message;
+    fieldError.textContent = message;
     if (fieldError.classList.contains('hide')) {
       fieldError.classList.remove('hide');
     }

@@ -128,3 +128,22 @@
     grid-column: 1 / -1;
   }
 }
+
+.test-summary {
+  display: grid;
+  grid-auto-rows: min-content;
+  align-self: center;
+  justify-items: center;
+  row-gap: 6rem;
+
+  &__score-box {
+    font-size: 7rem;
+    line-height: 1;
+    letter-spacing: 1px;
+    color: var(--color-green-4);
+  }
+
+  &__button {
+    max-width: 50rem;
+  }
+}

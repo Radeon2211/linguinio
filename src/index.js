@@ -144,13 +144,19 @@ const hideAllPagesAndShowOne = (pageToShow) => {
   // set sidenav toggler checkbox to false
   navToggler.checked = false;
 
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+
   // IF PAGE TO SHOW ISN'T A TEST PAGE && TERMS TO TEST IS EMPTY - CLEAR VIEW CLASS && TEST PAGE UI
   if (!pageToShow.classList.contains('test-page') && view.termsToTest.length > 0) {
     view.clear();
   }
   // IF PAGE TO SHOW ISN'T TEST OR SET VIEW PAGE, VIEW TERMS > 0 - CLEAR TERMS ARRAY && THEIR NUMBER
   if (!pageToShow.classList.contains('test-page') && !pageToShow.classList.contains('set-view-page') && view.terms.length > 0) {
-    view.clearBasicAttributes();
+    view.clearBasicAndSetViewUI();
   }
 };
 
@@ -246,7 +252,7 @@ panelSelectionTest.addEventListener('click', () => {
 });
 
 // BACK TO SET VIEW LINKS CLICK
-const testBackLinks = document.querySelectorAll('.test__back');
+const testBackLinks = document.querySelectorAll('.test-back-link');
 testBackLinks.forEach((link) => {
   link.addEventListener('click', () => {
     hideAllPagesAndShowOne(setViewPage);

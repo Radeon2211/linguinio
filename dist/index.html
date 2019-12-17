@@ -218,7 +218,8 @@
     <div class="main-page create-set-page hide">
 
       <div class="create-set">
-        <span class="create-set__error create-set-error-database hide"></span>
+        <span class="create-set__message create-set__message--error create-set-error-database hide"></span>
+        <span class="create-set__message create-set__message--success create-set-success hide"></span>
         <h3 class="heading-3 create-set__heading">Create a new set</h3>
         <div class="create-set__second-row">
           <form method="POST" class="create-set__form-title">
@@ -228,7 +229,7 @@
             <button class="create-set__button create-set__button--top create-set-button">Create</button>
           </div>
         </div>
-        <span class="create-set__error create-set-error-forms hide"></span>
+        <span class="create-set__message create-set__message--error create-set-error-forms hide"></span>
         <form method="POST" class="create-set__form-add-term">
           <div class="create-set__inputs-group">
             <input type="text" name="origin" class="standard-input standard-input--create-set-and-test" placeholder="Term" autocomplete="off" autocapitalize="off">
@@ -287,11 +288,11 @@
     <!-- SET VIEW PAGE CONTENT END -->
 
     <!-- TEST PAGE CONTENT START -->
-    <div class="main-page test-page hide">
+    <div class="main-page test-page">
       <div class="test-container">
         <!-- WRITE TEST -->
         <div class="test test-write hide">
-          <div class="test__back">
+          <div class="test__back test-back-link">
             <svg class="test__back-icon">
               <use xlink:href="assets/img/sprite.svg#icon-undo2"></use>
             </svg>
@@ -309,7 +310,7 @@
         </div>
         <!-- SELECTION TEST -->
         <div class="test test-selection hide">
-          <div class="test__back">
+          <div class="test__back test-back-link">
             <svg class="test__back-icon">
               <use xlink:href="assets/img/sprite.svg#icon-undo2"></use>
             </svg>
@@ -324,6 +325,11 @@
             <div class="test__answer">prison guard</div>
             <button class="button button--blue test__fail-button selection-button hide">I understand</button>
           </div>
+        </div>
+        <!-- TEST SUMMARY -->
+        <div class="test-summary hide">
+          <div class="test-summary__score-box"><span class="test-summary__score-value"></span>%</div>
+          <button class="button button--blue test-summary__button test-back-link">Back to set view</button>
         </div>
       </div>
     </div>
