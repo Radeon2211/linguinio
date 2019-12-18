@@ -17,6 +17,12 @@ const writeWordCorrect = testWriteSection.querySelector('.test__word-write-corre
 const writeFormGlobal = testWriteSection.querySelector('.test__form');
 const writeButtonView = testWriteSection.querySelector('.write-button');
 
+const selectionCounter = testSelectionSection.querySelector('.selection-counter');
+const selectionWord = testSelectionSection.querySelector('.test__word-selection');
+const selectionButtonView = testSelectionSection.querySelector('.selection-button');
+const selectionAnswersBox = testSelectionSection.querySelector('.test__answers');
+const selectionAnswers = testSelectionSection.querySelectorAll('.test__answer');
+
 const summaryScoreValue = summarySection.querySelector('.test-summary__score-value');
 
 export default class View {
@@ -63,8 +69,8 @@ export default class View {
     }
   }
 
-  // !!! WRITE SECTION START !!!
-  writeTest() {
+  // INIT GENREAL THE CLASS AFTER CHOOSING THE TEST TYPE
+  initClassInGeneral(type) {
     // IF TERMS ARE <= 10 COPY ORIGINAL ARRAY TO TERMS TO TEST ARRAY
     if (this.terms.length <= 10) {
       this.termsToTest = [...this.terms];
@@ -78,23 +84,46 @@ export default class View {
       }
     }
 
-    // COPY THE TERMS TO TEST, GET LENGTH OF THAT, WRITE OUT COUNTER CONTENT (1 / NUMBER OF TERMS)
+    // COPY THE TERMS TO TEST, GET LENGTH OF THAT
     this.termsToRandom = [...this.termsToTest];
     this.numberOfActualTerms = this.termsToRandom.length;
-    writeCounter.textContent = `1 / ${this.numberOfActualTerms}`;
 
-    // SHOW WRITE SECTION AND HIDE SELECTION SECTION
-    testWriteSection.classList.remove('hide');
-    if (!testSelectionSection.classList.contains('hide')) {
-      testSelectionSection.classList.add('hide');
+    // SHOW PROPER SECTION, RANDOM AND DISPLAY TERM
+    if (type === 'write') {
+      testWriteSection.classList.remove('hide');
+      this.writeRandomAndDisplayTerm();
+    } else {
+      testSelectionSection.classList.remove('hide');
+      this.selectionRandomAndDisplayTerm();
     }
-
-    // CALL RANDOM AND DISPLAY TERM FUNCTION
-    this.writeRandomAndDisplayTerm();
   }
 
-  // RANDOM TERM AND DISPLAY IT
+  // WRITE TEST - RANDOM TERM AND SETUP UI
   writeRandomAndDisplayTerm() {
+    // GIVEN ANSWERS COUNTER INCREMENT
+    this.counterGivenAnswers += 1;
+
+    if (this.counterGivenAnswers > this.numberOfActualTerms) {
+      this.displaySummary();
+      return;
+    }
+
+    // RANDOM AN INDEX OF TERM AND ASSIGN THIS ELEMENT TO VARIABLE, REMOVE FROM ARRAY TO RANDOMING
+    const indexOfMainTerm = Math.floor(Math.random() * (this.termsToRandom.length));
+    this.actualTerm = this.termsToRandom[indexOfMainTerm];
+    this.termsToRandom.splice(indexOfMainTerm, 1);
+
+    // WRITE OUT ALL CONTENT
+    writeCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`; // COUNTER
+    writeWord.textContent = this.actualTerm.origin; // ORIGIN WORD
+    writeWordCorrect.textContent = this.actualTerm.definition; // DEFINITION WORD
+
+    // FOCUS WRITE BUTTON
+    writeButtonView.focus();
+  }
+
+  // SELECTION TEST - RANDOM TERM AND SETUP UI
+  selectionRandomAndDisplayTerm() {
     // GIVEN ANSWERS COUNTER INCREMENT
     this.counterGivenAnswers += 1;
 
@@ -108,12 +137,41 @@ export default class View {
     this.actualTerm = this.termsToRandom[indexOfTerm];
     this.termsToRandom.splice(indexOfTerm, 1);
 
-    // WRITE OUT ALL CONTENT
-    writeCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`; // COUNTER
-    writeWord.textContent = this.actualTerm.origin; // ORIGIN
-    writeWordCorrect.textContent = this.actualTerm.definition; // DEFINITION
+    // INDEXES OF TERMS TO DISPLAY
+    const answersIndexesToDisplay = [];
+    // GET INDEX OF ACTUAL TERM
+    const indexOfActualTerm = this.terms.findIndex((index) => index === this.actualTerm);
+    // PUT THAT INDEX TO ARRAY OF INDEXES
+    answersIndexesToDisplay.push(indexOfActualTerm);
 
-    // WRITE BUTTON FOCUS
+    // RANDOM 3 ADDITIONAL TERMS TO DISPLAY
+    for (let i = 0; i < 3; i += 1) {
+      let isGood = false;
+      // WHILE INDEX OF TERM IS IN ARRAY OF INDEXES
+      while (!isGood) {
+        let isGoodInside = true;
+        // RANDOM THE INDEX
+        const indexOfAdditionalTerm = Math.floor(Math.random() * (this.terms.length));
+        // CHECK IF RANDOMED INDEX IS ALREADY IN ARRAY OF INDEXES
+        answersIndexesToDisplay.forEach((index) => {
+          if (index === indexOfAdditionalTerm) {
+            isGoodInside = false;
+          }
+        });
+        // IF RANDOMED INDEX IN NEW - PUT IT TO ARRAY OF INDEXES
+        if (isGoodInside) {
+          answersIndexesToDisplay.push(indexOfAdditionalTerm);
+          isGood = true;
+        }
+      }
+    }
+
+
+    // WRITE OUT ALL CONTENT
+    selectionCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`; // COUNTER
+    selectionWord.textContent = this.actualTerm.origin; // ORIGIN WORD
+
+    // FOCUS WRITE BUTTON
     writeButtonView.focus();
   }
 
@@ -158,25 +216,11 @@ export default class View {
     writeFormGlobal.definition.removeAttribute('disabled'); // INPUT DISABLED FALSE
     this.writeRandomAndDisplayTerm(); // GO NEXT
   }
-  // !!! WRITE SECTION END !!!
-
-  selectionTest() {
-    // SHOW SELECTION SECTION AND HIDE WRITE SECTION
-    testSelectionSection.classList.remove('hide');
-    if (!testWriteSection.classList.contains('hide')) {
-      testWriteSection.classList.add('hide');
-    }
-  }
 
   // SUMMARY OF TEST
   displaySummary() {
     // HIDE TESTS SECTION AND SHOW SUMMARY SECTION
-    if (!testWriteSection.classList.contains('hide')) {
-      testWriteSection.classList.add('hide');
-    }
-    if (!testSelectionSection.classList.contains('hide')) {
-      testSelectionSection.classList.add('hide');
-    }
+    this.hideTestSections();
     summarySection.classList.remove('hide');
 
     const percentageScoreValue = (100 / this.numberOfActualTerms) * this.counterCorrect;
@@ -191,6 +235,15 @@ export default class View {
     }, 10);
   }
 
+  hideTestSections() {
+    if (!testWriteSection.classList.contains('hide')) {
+      testWriteSection.classList.add('hide');
+    }
+    if (!testSelectionSection.classList.contains('hide')) {
+      testSelectionSection.classList.add('hide');
+    }
+  }
+
   // CLEAR CLASS ATTRIBUTES AND DOM ELEMENTS (SOMETIMES EXCEPT ALL TERMS AND THEIR NUMBER)
   clear() {
     // ATTRIBUTES
@@ -202,12 +255,7 @@ export default class View {
     this.numberOfActualTerms = 0;
 
     // DOM
-    if (!testSelectionSection.classList.contains('hide')) {
-      testSelectionSection.classList.add('hide');
-    }
-    if (!testWriteSection.classList.contains('hide')) {
-      testWriteSection.classList.add('hide');
-    }
+    this.hideTestSections();
     if (!summarySection.classList.contains('hide')) {
       summarySection.classList.add('hide');
     }

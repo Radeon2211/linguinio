@@ -242,13 +242,13 @@ const testPage = document.querySelector('.test-page');
 const panelWriteTest = document.querySelector('.panel-write-test');
 panelWriteTest.addEventListener('click', () => {
   hideAllPagesAndShowOne(testPage);
-  view.writeTest();
+  view.initClassInGeneral('write');
 });
 
 const panelSelectionTest = document.querySelector('.panel-selection-test');
 panelSelectionTest.addEventListener('click', () => {
   hideAllPagesAndShowOne(testPage);
-  view.selectionTest();
+  view.initClassInGeneral('selection');
 });
 
 // BACK TO SET VIEW LINKS CLICK
