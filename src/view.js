@@ -78,7 +78,7 @@ export default class View {
       // ELSE RANDOM 10 TERMS TO TEST
       const termsToRandomToTest = [...this.terms]; // ARRAY FROM WHICH TERMS WILL BE RANDOMIZING
       for (let i = 0; i < 10; i += 1) {
-        const indexOfTerm = Math.floor(Math.random() * (termsToRandomToTest.length)); // RAND INDEX
+        const indexOfTerm = Math.floor(Math.random() * termsToRandomToTest.length); // RAND INDEX
         this.termsToTest.push(termsToRandomToTest[indexOfTerm]); // PUSH TERMS TO PROPER ARRAY
         termsToRandomToTest.splice(indexOfTerm, 1); // DELETE RANDOMED TERM FROM ARRAY TO RANDOMIZE
       }
@@ -98,9 +98,7 @@ export default class View {
     }
   }
 
-  // WRITE TEST - RANDOM TERM AND SETUP UI
   writeRandomAndDisplayTerm() {
-    // GIVEN ANSWERS COUNTER INCREMENT
     this.counterGivenAnswers += 1;
 
     if (this.counterGivenAnswers > this.numberOfActualTerms) {
@@ -109,7 +107,7 @@ export default class View {
     }
 
     // RANDOM AN INDEX OF TERM AND ASSIGN THIS ELEMENT TO VARIABLE, REMOVE FROM ARRAY TO RANDOMING
-    const indexOfMainTerm = Math.floor(Math.random() * (this.termsToRandom.length));
+    const indexOfMainTerm = Math.floor(Math.random() * this.termsToRandom.length);
     this.actualTerm = this.termsToRandom[indexOfMainTerm];
     this.termsToRandom.splice(indexOfMainTerm, 1);
 
@@ -132,79 +130,74 @@ export default class View {
       return;
     }
 
-    // RANDOM AN INDEX OF TERM AND ASSIGN THIS ELEMENT TO VARIABLE, REMOVE FROM ARRAY TO RANDOMING
-    const indexOfTerm = Math.floor(Math.random() * (this.termsToRandom.length));
+    // RANDOM AN ACTUAL TERM
+    const indexOfTerm = Math.floor(Math.random() * this.termsToRandom.length);
     this.actualTerm = this.termsToRandom[indexOfTerm];
     this.termsToRandom.splice(indexOfTerm, 1);
 
-    // INDEXES OF TERMS TO DISPLAY
-    const answersIndexesToDisplay = [];
-    // GET INDEX OF ACTUAL TERM
-    const indexOfActualTerm = this.terms.findIndex((index) => index === this.actualTerm);
-    // PUT THAT INDEX TO ARRAY OF INDEXES
-    answersIndexesToDisplay.push(indexOfActualTerm);
+    // RANDOM ADDITIONAL TERMS
+    const termsToRandomToDisplay = [...this.terms];
+    const termsToDisplay = [];
+    const indexActualTerm = termsToRandomToDisplay.findIndex((index) => index === this.actualTerm);
 
-    // RANDOM 3 ADDITIONAL TERMS TO DISPLAY
+    termsToRandomToDisplay.splice(indexActualTerm, 1);
+
     for (let i = 0; i < 3; i += 1) {
-      let isGood = false;
-      // WHILE INDEX OF TERM IS IN ARRAY OF INDEXES
-      while (!isGood) {
-        let isGoodInside = true;
-        // RANDOM THE INDEX
-        const indexOfAdditionalTerm = Math.floor(Math.random() * (this.terms.length));
-        // CHECK IF RANDOMED INDEX IS ALREADY IN ARRAY OF INDEXES
-        answersIndexesToDisplay.forEach((index) => {
-          if (index === indexOfAdditionalTerm) {
-            isGoodInside = false;
-          }
-        });
-        // IF RANDOMED INDEX IN NEW - PUT IT TO ARRAY OF INDEXES
-        if (isGoodInside) {
-          answersIndexesToDisplay.push(indexOfAdditionalTerm);
-          isGood = true;
-        }
-      }
+      const indexOfAdditional = Math.floor(Math.random() * termsToRandomToDisplay.length);
+      termsToDisplay.push(termsToRandomToDisplay[indexOfAdditional]);
+      termsToRandomToDisplay.splice(indexOfAdditional, 1);
     }
 
+    // DISPLAY TERMS
+    const numberOfBox = Math.floor(Math.random() * selectionAnswers.length);
+    selectionAnswers[numberOfBox].textContent = this.actualTerm.definition;
+    selectionAnswers[numberOfBox].classList.add('correct');
 
-    // WRITE OUT ALL CONTENT
-    selectionCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`; // COUNTER
-    selectionWord.textContent = this.actualTerm.origin; // ORIGIN WORD
+    selectionAnswers.forEach((answer) => {
+      if (answer.textContent === '') {
+        const indexOfAdditional = Math.floor(Math.random() * termsToDisplay.length);
+        const box = answer;
+        box.textContent = termsToDisplay[indexOfAdditional].definition;
+        if (box.classList.contains('correct')) {
+          box.classList.remove('correct');
+        }
+        termsToDisplay.splice(indexOfAdditional, 1);
+      }
+    });
 
-    // FOCUS WRITE BUTTON
+    selectionCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`;
+    selectionWord.textContent = this.actualTerm.origin;
+
     writeButtonView.focus();
   }
 
-  // CHECK IF GIVEN DEFINITION IS CORRECT
   checkWriteAnswer(writeForm) {
     // RETURN IF THE TEST IS NOT IN PROGRESS
     if (!this.termsToTest.length > 0) {
       return;
     }
 
-    // GET DEFINITION, RESET FORM, SET INPUT DISABLED TO TRUE
     const definition = writeForm.definition.value.trim().toLowerCase();
     writeForm.reset();
     writeForm.definition.setAttribute('disabled', true);
 
-    // CORRECT - ADD GREEN BACKGROUND ANIMATION
     if (this.actualTerm.definition.toLowerCase() === definition) {
       testPage.classList.add('test-page--correct'); // GREEN BACKGROUND ANIMATION
       setTimeout(() => {
         testPage.classList.remove('test-page--correct');
       }, 600);
-      writeForm.definition.removeAttribute('disabled'); // INPUT DISABLED FALSE
-      this.counterCorrect += 1; // INCREMENT OF CORRECT ANSWERS NUMBER
-      this.writeRandomAndDisplayTerm(); // GO NEXT
+      writeForm.definition.removeAttribute('disabled');
+      this.counterCorrect += 1;
+      this.writeRandomAndDisplayTerm();
     } else {
       // INCORRECT
       testPage.classList.add('test-page--incorrect'); // RED BACKGROUND ANIMATION
       setTimeout(() => {
         testPage.classList.remove('test-page--incorrect');
       }, 600);
-      writeWordCorrect.classList.remove('hide'); // CORRECT DEFINITION - SHOW
-      writeForm.classList.add('hide'); // FORM - HIDE
-      writeButtonView.classList.remove('hide'); // WRITE BUTTON - SHOW
+      writeWordCorrect.classList.remove('hide');
+      writeForm.classList.add('hide');
+      writeButtonView.classList.remove('hide');
       writeButtonView.focus();
     }
   }
@@ -263,6 +256,21 @@ export default class View {
     writeCounter.textContent = '';
     writeWord.textContent = '';
     writeWordCorrect.textContent = '';
+    selectionCounter.textContent = '';
+    selectionWord.textContent = '';
+    selectionAnswers.forEach((answer) => {
+      const box = answer;
+      box.textContent = '';
+      if (box.classList.contains('correct')) {
+        box.classList.remove('correct');
+      }
+      if (box.classList.contains('test__answer--green')) {
+        box.classList.remove('test__answer--green');
+      }
+      if (box.classList.contains('test__answer--red')) {
+        box.classList.remove('test__answer--red');
+      }
+    });
     summaryScoreValue.textContent = '';
     if (!writeWordCorrect.classList.contains('hide')) {
       writeWordCorrect.classList.add('hide');
