@@ -8,19 +8,10 @@ import View from './view';
 
 displayingModals();
 
-// AUTHENTICATION CLASS - CREATE INSTANCE
 const authentication = new Authentication();
-
-// PROFILE CLASS - CREATE INSTANCE
 const profile = new Profile();
-
-// SET CLASS - CREATE INSTANCE
 const create = new Create();
-
-// SEARCH CLASS - CREATE INSTANCE
 const search = new Search();
-
-// VIEW CLASS - CREATE INSTANCE
 const view = new View();
 
 // GET INTRO AND MAIN CONTAINERS TO SHOW / HIDE THEM
@@ -41,17 +32,14 @@ auth.onAuthStateChanged((user) => {
       }
     });
 
-    // USER CREDENTIALS DISPLAY
     profile.displayUserCreds(user);
 
     // CREATE SET PAGE ACTIONS - LISTEN START
-    // title
     const formSetTitle = document.querySelector('.create-set__form-title');
     formSetTitle.addEventListener('submit', (e) => {
       e.preventDefault();
     });
 
-    // create set
     const buttonsCreateSet = document.querySelectorAll('.create-set-button');
     buttonsCreateSet.forEach((button) => {
       button.addEventListener('click', () => {
@@ -60,13 +48,12 @@ auth.onAuthStateChanged((user) => {
       });
     });
 
-    // add term
     const formAddTerm = document.querySelector('.create-set__form-add-term');
     formAddTerm.addEventListener('submit', (e) => {
       e.preventDefault();
       create.addTerm(formAddTerm);
     });
-    // CREATE SET PAGE ACTIONS - LISTEN
+    // CREATE SET PAGE ACTIONS - LISTEN END
 
     // hide introduction page and show main page
     if (!introductionContainer.classList.contains('hide')) {
@@ -87,63 +74,48 @@ auth.onAuthStateChanged((user) => {
 });
 // AUTH STATUS CHANGED - LISTEN END
 
-
-// REGISTER START
+// REGISTER
 const formRegister = document.querySelector('#form-register');
 formRegister.addEventListener('submit', (e) => {
   e.preventDefault();
-  // call register method
   authentication.register(formRegister, hideModals, modalBoxRegister);
 });
-// REGISTER END
 
-// LOGIN START
+// LOGIN
 const formLogin = document.querySelector('#form-login');
 formLogin.addEventListener('submit', (e) => {
   e.preventDefault();
-  // call login method
   authentication.login(formLogin, hideModals, modalBoxLogin);
 });
-// LOGIN END
 
-// LOGOUT START
+// LOGOUT
 const logoutLinks = document.querySelectorAll('.logout-link');
 logoutLinks.forEach((link) => {
   link.addEventListener('click', () => {
-    // call logout method
     authentication.logOut();
   });
 });
-// LOGOUT END
 
-// ADD ADMIN ROLE START
+// ADD ADMIN ROLE
 const formAddAdmin = document.querySelector('#form-add-admin');
 formAddAdmin.addEventListener('submit', (e) => {
   e.preventDefault();
   const email = formAddAdmin.email.value.trim();
-  // call addAdmin method
   authentication.addAdmin(email, formAddAdmin);
 });
-// ADD ADMIN ROLE END
-
 
 // DISPLAYING PAGES AND NAV ITEMS MANAGEMENT
 const mainPages = document.querySelectorAll('.main-page'); // all pages
 const navToggler = document.querySelector('#nav-toggler'); // side navigation toggler
 
-// HIDING ALL PAGES AND SHOWING WHICH USER WANTS
 const hideAllPagesAndShowOne = (pageToShow) => {
-  // hide all pages
   mainPages.forEach((page) => {
     if (!page.classList.contains('hide')) {
       page.classList.add('hide');
     }
   });
-  // show page to show
   pageToShow.classList.remove('hide');
-  // set sidenav toggler checkbox to false
   navToggler.checked = false;
-
   window.scroll({
     top: 0,
     left: 0,
@@ -160,8 +132,7 @@ const hideAllPagesAndShowOne = (pageToShow) => {
   }
 };
 
-
-// HOME PAGE by clicking the nav link
+// HOME PAGE
 const linksToHomePage = document.querySelectorAll('.home-link');
 const homePage = document.querySelector('.home-page');
 linksToHomePage.forEach((link) => {
@@ -170,7 +141,7 @@ linksToHomePage.forEach((link) => {
   });
 });
 
-// CREATE SET PAGE by clicking the panel at home page or nav link
+// CREATE SET PAGE
 const linksToCreateSet = document.querySelectorAll('.create-set-link');
 const createSetPage = document.querySelector('.create-set-page');
 linksToCreateSet.forEach((link) => {
@@ -179,7 +150,7 @@ linksToCreateSet.forEach((link) => {
   });
 });
 
-// SEARCH SETS PAGE by clicking the panel at home page nav link
+// SEARCH SETS PAGE
 const linksToSearchSets = document.querySelectorAll('.search-sets-link');
 const searchSetsPage = document.querySelector('.search-sets-page');
 linksToSearchSets.forEach((link) => {
@@ -189,7 +160,7 @@ linksToSearchSets.forEach((link) => {
   });
 });
 
-// PROFILE PAGE by clicking the nav link
+// PROFILE PAGE
 const linksToProfilePage = document.querySelectorAll('.profile-link');
 const profilePage = document.querySelector('.profile-page');
 linksToProfilePage.forEach((link) => {
@@ -199,7 +170,7 @@ linksToProfilePage.forEach((link) => {
   });
 });
 
-// ADMIN PAGE by clicking the nav link
+// ADMIN PAGE
 const linksToAdminPage = document.querySelectorAll('.admin-link');
 const adminPage = document.querySelector('.admin-page');
 linksToAdminPage.forEach((link) => {
@@ -209,9 +180,8 @@ linksToAdminPage.forEach((link) => {
 });
 
 
-// SET CLICK - LISTEN START
+// SET ONCLICK
 const setViewPage = document.querySelector('.set-view-page');
-// GET ALL LIST OF SETS (AT PROFILE AND SEARCH SETS PAGE)
 const listsOfSets = document.querySelectorAll('.list-of-sets');
 listsOfSets.forEach((list) => {
   list.addEventListener('click', (e) => {
@@ -224,19 +194,16 @@ listsOfSets.forEach((list) => {
     }
     if (clickedElement) {
       hideAllPagesAndShowOne(setViewPage);
-      // GET INFO ABOUT SET FROM DATA ATTRIBUTES
       const id = clickedElement.getAttribute('data-id');
       const title = clickedElement.getAttribute('data-title');
       const termsNumber = clickedElement.getAttribute('data-terms_number');
       const creator = clickedElement.getAttribute('data-creator');
-      // WRITE ALL INFO IN SET VIEW PAGE
       view.writeSetInfo(id, title, termsNumber, creator);
     }
   });
 });
-// SET CLICK - LISTEN END
 
-// SET VIEW ACTIONS START
+// SET VIEW ACTIONS
 const testPage = document.querySelector('.test-page');
 
 const panelWriteTest = document.querySelector('.panel-write-test');
@@ -251,7 +218,6 @@ panelSelectionTest.addEventListener('click', () => {
   view.initClassInGeneral('selection');
 });
 
-// BACK TO SET VIEW LINKS CLICK
 const testBackLinks = document.querySelectorAll('.test-back-link');
 testBackLinks.forEach((link) => {
   link.addEventListener('click', () => {
@@ -259,16 +225,31 @@ testBackLinks.forEach((link) => {
   });
 });
 
-// SUBMIT THE WRITE TEST FORM
 const writeForm = document.querySelector('.test__form');
 writeForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  view.checkWriteAnswer(writeForm);
+  if (view.termsToTest.length > 0) {
+    view.checkWriteAnswer(writeForm);
+  }
 });
 
-// CLICK ON THE WRITE BUTTON
 const writeButtonIndex = document.querySelector('.write-button');
 writeButtonIndex.addEventListener('click', () => {
-  view.writeGoToNextTerm();
+  if (!view.goNextBlocker) {
+    view.writeGoToNextTerm();
+  }
 });
-// SET VIEW ACTIONS END
+
+const selectionAnswersBox = document.querySelector('.test__answers');
+selectionAnswersBox.addEventListener('click', (e) => {
+  if (e.target.classList.contains('test__answer') && view.termsToTest.length > 0) {
+    view.checkSelectionAnswer(e);
+  }
+});
+
+const selectionButtonIndex = document.querySelector('.selection-button');
+selectionButtonIndex.addEventListener('click', () => {
+  if (!view.goNextBlocker) {
+    view.selectionGoToNextTerm();
+  }
+});

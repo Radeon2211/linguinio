@@ -19,9 +19,8 @@ const writeButtonView = testWriteSection.querySelector('.write-button');
 
 const selectionCounter = testSelectionSection.querySelector('.selection-counter');
 const selectionWord = testSelectionSection.querySelector('.test__word-selection');
-const selectionButtonView = testSelectionSection.querySelector('.selection-button');
-const selectionAnswersBox = testSelectionSection.querySelector('.test__answers');
 const selectionAnswers = testSelectionSection.querySelectorAll('.test__answer');
+const selectionButtonView = testSelectionSection.querySelector('.selection-button');
 
 const summaryScoreValue = summarySection.querySelector('.test-summary__score-value');
 
@@ -35,19 +34,19 @@ export default class View {
     this.counterCorrect = 0; // HOW MANY ANSWERS ARE CORRECT
     this.counterGivenAnswers = 0; // HOW MANY ANSWERS ARE GIVEN
     this.numberOfActualTerms = 0; // CURRENT TEST'S TERMS NUMBER
+    this.checkBlocker = false; // BLOCK CHECKING ANSWER JUST AFTER SELECTING ANSWER
+    this.goNextBlocker = true; // BLOCK GO NEXT BUTTON WHEN THEY ARE DEFAULT HIDE
   }
 
   // WRITE INFO ABOUT SET
   async writeSetInfo(id, title, termsNumber, creator) {
-    // CLEAR LIST OF TERMS AND RESET NUMBER OF TERMS
     listOfTerms.innerHTML = '';
 
-    // WRITE BASIC INFO AND SET NUMBER OF TERMS
     setTitle.textContent = title;
     setTermsNumber.textContent = `${termsNumber}`;
     setCreator.textContent = creator;
 
-    // GET TERMS FROM DATABASE
+    // GET TERMS FROM DATABASE AND DISPLAY THEM
     try {
       const data = await db.collection('sets').doc(id).collection('terms').get();
       data.forEach((doc) => {
@@ -71,6 +70,8 @@ export default class View {
 
   // INIT GENREAL THE CLASS AFTER CHOOSING THE TEST TYPE
   initClassInGeneral(type) {
+    this.checkBlocker = false;
+    this.goNextBlocker = true;
     // IF TERMS ARE <= 10 COPY ORIGINAL ARRAY TO TERMS TO TEST ARRAY
     if (this.terms.length <= 10) {
       this.termsToTest = [...this.terms];
@@ -98,42 +99,37 @@ export default class View {
     }
   }
 
+  randomActualTerm() {
+    const indexOfMainTerm = Math.floor(Math.random() * this.termsToRandom.length);
+    this.actualTerm = this.termsToRandom[indexOfMainTerm];
+    this.termsToRandom.splice(indexOfMainTerm, 1);
+  }
+
   writeRandomAndDisplayTerm() {
     this.counterGivenAnswers += 1;
-
     if (this.counterGivenAnswers > this.numberOfActualTerms) {
       this.displaySummary();
       return;
     }
 
-    // RANDOM AN INDEX OF TERM AND ASSIGN THIS ELEMENT TO VARIABLE, REMOVE FROM ARRAY TO RANDOMING
-    const indexOfMainTerm = Math.floor(Math.random() * this.termsToRandom.length);
-    this.actualTerm = this.termsToRandom[indexOfMainTerm];
-    this.termsToRandom.splice(indexOfMainTerm, 1);
+    this.randomActualTerm();
 
     // WRITE OUT ALL CONTENT
     writeCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`; // COUNTER
     writeWord.textContent = this.actualTerm.origin; // ORIGIN WORD
     writeWordCorrect.textContent = this.actualTerm.definition; // DEFINITION WORD
-
-    // FOCUS WRITE BUTTON
     writeButtonView.focus();
   }
 
   // SELECTION TEST - RANDOM TERM AND SETUP UI
   selectionRandomAndDisplayTerm() {
-    // GIVEN ANSWERS COUNTER INCREMENT
     this.counterGivenAnswers += 1;
-
     if (this.counterGivenAnswers > this.numberOfActualTerms) {
       this.displaySummary();
       return;
     }
 
-    // RANDOM AN ACTUAL TERM
-    const indexOfTerm = Math.floor(Math.random() * this.termsToRandom.length);
-    this.actualTerm = this.termsToRandom[indexOfTerm];
-    this.termsToRandom.splice(indexOfTerm, 1);
+    this.randomActualTerm();
 
     // RANDOM ADDITIONAL TERMS
     const termsToRandomToDisplay = [...this.terms];
@@ -149,34 +145,30 @@ export default class View {
     }
 
     // DISPLAY TERMS
+    selectionAnswers.forEach((answer) => {
+      if (answer.classList.contains('correct')) {
+        answer.classList.remove('correct');
+      }
+    });
     const numberOfBox = Math.floor(Math.random() * selectionAnswers.length);
     selectionAnswers[numberOfBox].textContent = this.actualTerm.definition;
     selectionAnswers[numberOfBox].classList.add('correct');
 
     selectionAnswers.forEach((answer) => {
-      if (answer.textContent === '') {
+      if (!answer.classList.contains('correct')) {
         const indexOfAdditional = Math.floor(Math.random() * termsToDisplay.length);
         const box = answer;
         box.textContent = termsToDisplay[indexOfAdditional].definition;
-        if (box.classList.contains('correct')) {
-          box.classList.remove('correct');
-        }
         termsToDisplay.splice(indexOfAdditional, 1);
       }
     });
 
     selectionCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`;
     selectionWord.textContent = this.actualTerm.origin;
-
-    writeButtonView.focus();
+    selectionButtonView.focus();
   }
 
   checkWriteAnswer(writeForm) {
-    // RETURN IF THE TEST IS NOT IN PROGRESS
-    if (!this.termsToTest.length > 0) {
-      return;
-    }
-
     const definition = writeForm.definition.value.trim().toLowerCase();
     writeForm.reset();
     writeForm.definition.setAttribute('disabled', true);
@@ -188,9 +180,11 @@ export default class View {
       }, 600);
       writeForm.definition.removeAttribute('disabled');
       this.counterCorrect += 1;
-      this.writeRandomAndDisplayTerm();
+      setTimeout(() => {
+        this.writeRandomAndDisplayTerm();
+      }, 300);
     } else {
-      // INCORRECT
+      this.goNextBlocker = false;
       testPage.classList.add('test-page--incorrect'); // RED BACKGROUND ANIMATION
       setTimeout(() => {
         testPage.classList.remove('test-page--incorrect');
@@ -202,17 +196,63 @@ export default class View {
     }
   }
 
-  writeGoToNextTerm() {
-    writeWordCorrect.classList.add('hide'); // HIDE CORRECT WORD
-    writeButtonView.classList.add('hide'); // HIDE WRITE BUTTON
-    writeFormGlobal.classList.remove('hide'); // SHOW FORM
-    writeFormGlobal.definition.removeAttribute('disabled'); // INPUT DISABLED FALSE
-    this.writeRandomAndDisplayTerm(); // GO NEXT
+  checkSelectionAnswer(e) {
+    if (this.checkBlocker) {
+      return;
+    }
+    const selectedAnswer = e.target;
+    if (selectedAnswer.classList.contains('correct')) {
+      this.checkBlocker = true;
+      selectedAnswer.classList.add('test__answer--green');
+      this.counterCorrect += 1;
+      setTimeout(() => {
+        selectedAnswer.classList.remove('test__answer--green');
+        this.checkBlocker = false;
+        this.selectionRandomAndDisplayTerm();
+      }, 300);
+    } else {
+      this.checkBlocker = true;
+      this.goNextBlocker = false;
+      selectedAnswer.classList.add('test__answer--red');
+      testSelectionSection.querySelector('.correct').classList.add('test__answer--green');
+      selectionAnswers.forEach((answer) => {
+        if (!answer.classList.contains('test__answer--green') && !answer.classList.contains('test__answer--red')) {
+          answer.classList.add('hide');
+        }
+      });
+      selectionButtonView.classList.remove('hide');
+      selectionButtonView.focus();
+    }
   }
 
-  // SUMMARY OF TEST
+  writeGoToNextTerm() {
+    this.goNextBlocker = true;
+    writeWordCorrect.classList.add('hide');
+    writeButtonView.classList.add('hide');
+    writeFormGlobal.classList.remove('hide');
+    writeFormGlobal.definition.removeAttribute('disabled');
+    this.writeRandomAndDisplayTerm();
+  }
+
+  selectionGoToNextTerm() {
+    this.goNextBlocker = true;
+    this.checkBlocker = false;
+    selectionButtonView.classList.add('hide');
+    selectionAnswers.forEach((answer) => {
+      if (answer.classList.contains('hide')) {
+        answer.classList.remove('hide');
+      }
+      if (answer.classList.contains('test__answer--green')) {
+        answer.classList.remove('test__answer--green');
+      }
+      if (answer.classList.contains('test__answer--red')) {
+        answer.classList.remove('test__answer--red');
+      }
+    });
+    this.selectionRandomAndDisplayTerm();
+  }
+
   displaySummary() {
-    // HIDE TESTS SECTION AND SHOW SUMMARY SECTION
     this.hideTestSections();
     summarySection.classList.remove('hide');
 
@@ -239,15 +279,15 @@ export default class View {
 
   // CLEAR CLASS ATTRIBUTES AND DOM ELEMENTS (SOMETIMES EXCEPT ALL TERMS AND THEIR NUMBER)
   clear() {
-    // ATTRIBUTES
     this.termsToTest = [];
     this.termsToRandom = [];
     this.actualTerm = {};
     this.counterCorrect = 0;
     this.counterGivenAnswers = 0;
     this.numberOfActualTerms = 0;
+    this.checkBlocker = false;
+    this.goNextBlocker = true;
 
-    // DOM
     this.hideTestSections();
     if (!summarySection.classList.contains('hide')) {
       summarySection.classList.add('hide');
@@ -261,30 +301,19 @@ export default class View {
     selectionAnswers.forEach((answer) => {
       const box = answer;
       box.textContent = '';
-      if (box.classList.contains('correct')) {
-        box.classList.remove('correct');
-      }
-      if (box.classList.contains('test__answer--green')) {
-        box.classList.remove('test__answer--green');
-      }
-      if (box.classList.contains('test__answer--red')) {
-        box.classList.remove('test__answer--red');
-      }
+      if (box.classList.contains('correct')) box.classList.remove('correct');
+      if (box.classList.contains('test__answer--green')) box.classList.remove('test__answer--green');
+      if (box.classList.contains('test__answer--red')) box.classList.remove('test__answer--red');
+      if (box.classList.contains('hide')) box.classList.remove('hide');
     });
+    if (!selectionButtonView.classList.contains('hide')) selectionButtonView.classList.add('hide');
     summaryScoreValue.textContent = '';
-    if (!writeWordCorrect.classList.contains('hide')) {
-      writeWordCorrect.classList.add('hide');
-    }
-    if (!writeButtonView.classList.contains('hide')) {
-      writeButtonView.classList.add('hide');
-    }
+    if (!writeWordCorrect.classList.contains('hide')) writeWordCorrect.classList.add('hide');
+    if (!writeButtonView.classList.contains('hide')) writeButtonView.classList.add('hide');
+    if (writeFormGlobal.classList.contains('hide')) writeFormGlobal.classList.remove('hide');
     writeFormGlobal.definition.removeAttribute('disabled');
-    if (writeFormGlobal.classList.contains('hide')) {
-      writeFormGlobal.classList.remove('hide');
-    }
   }
 
-  // CLEAR TERMS ARRAY AND THEIR NUMBER
   clearBasicAndSetViewUI() {
     this.terms = [];
     this.numberTotal = 0;
