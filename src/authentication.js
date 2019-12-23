@@ -28,6 +28,7 @@ export default class Authentication {
     }
     auth.createUserWithEmailAndPassword(email, password).then((cred) => db.collection('users').doc(cred.user.uid).set({ // return db.collection ...
       nick,
+      lastSet: false,
     })).then(() => {
       // window.location.reload(true);
       hideModals(modal);

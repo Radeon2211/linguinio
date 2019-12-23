@@ -2,3 +2,4 @@
 .eslintignore
 node_modules
 buildcss
+.vscode

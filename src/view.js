@@ -27,6 +27,7 @@ const summaryScoreValue = summarySection.querySelector('.test-summary__score-val
 
 export default class View {
   constructor() {
+    this.id = '';
     this.terms = []; // TERMS WHICH ARE IN ACTUAL SET
     this.numberTotal = 0; // HOW MANY TERMS ARE IN ACTUAL SET
     this.termsToTest = []; // TERMS WHICH ARE IN ACTUAL TEST GENERALLY
@@ -48,6 +49,7 @@ export default class View {
     const termsNumber = set.getAttribute('data-terms_number');
     const creator = set.getAttribute('data-creator');
 
+    this.id = id;
     setTitle.textContent = title;
     setTermsNumber.textContent = `${termsNumber}`;
     setCreator.textContent = creator;
@@ -275,6 +277,16 @@ export default class View {
         outputValue += 1;
       }
     }, 10);
+
+    // UPDATE LAST SET OF CURRENT USER
+    const userID = auth.currentUser.uid;
+    try {
+      db.collection('users').doc(userID).update({
+        lastSet: this.id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   hideTestSections() {
@@ -318,7 +330,7 @@ export default class View {
     });
     if (!selectionButtonView.classList.contains('hide')) selectionButtonView.classList.add('hide');
     summaryScoreValue.textContent = '';
-    if (!writeWordIncorrect.classList.contains('hide')) writeWordInorrect.classList.add('hide');
+    if (!writeWordIncorrect.classList.contains('hide')) writeWordIncorrect.classList.add('hide');
     if (!writeWordCorrect.classList.contains('hide')) writeWordCorrect.classList.add('hide');
     if (!writeButtonView.classList.contains('hide')) writeButtonView.classList.add('hide');
     if (writeFormGlobal.classList.contains('hide')) writeFormGlobal.classList.remove('hide');

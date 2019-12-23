@@ -8,13 +8,19 @@
   cursor: pointer;
 
   &--big {
-    padding: 3rem;
+    padding: 3.5rem 3rem;
   }
 
   &--small {
+    font-family: var(--font-secondary);
     padding: 2rem;
-    font-size: 2rem;
+    font-size: 2.2rem;
+    text-shadow: 0 0 2px #000;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1px;
     background-image: linear-gradient(to right, var(--color-green-3), var(--color-green-1));
+    justify-self: stretch;
   }
 
   &:hover {
@@ -30,8 +36,8 @@
   }
 
   &__icon {
-    width: 4rem;
-    height: 4rem;
+    width: 4.2rem;
+    height: 4.2rem;
     fill: var(--color-light-3);
     margin-right: .8rem;
   }

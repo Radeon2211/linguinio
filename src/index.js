@@ -191,6 +191,8 @@ listsOfSets.forEach((list) => {
       clickedElement = e.target;
     } else if (e.target.parentElement.classList.contains('set-view-link')) {
       clickedElement = e.target.parentElement;
+    } else if (e.target.parentElement.parentElement.classList.contains('set-view-link')) {
+      clickedElement = e.target.parentElement.parentElement;
     }
     if (clickedElement) {
       hideAllPagesAndShowOne(setViewPage);

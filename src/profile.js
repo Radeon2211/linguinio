@@ -1,23 +1,28 @@
 const credsField = document.querySelector('.profile-heading');
 const setsCreated = document.querySelector('.profile-sets-created');
 const setsCreatedInfo = document.querySelector('.profile-sets-info-created');
+const recentSet = document.querySelector('.home-page__recent-set');
+const recentSetTitle = document.querySelector('.home-page__recent-set-title');
 
 export default class Profile {
   constructor() {
     this.nick = '';
+    this.lastSet = '';
   }
 
-  // SHOW NICK AND EMAIL OF CURRENT USER
   async displayUserCreds(user) {
     try {
-      const data = await db.collection('users').doc(user.uid).get();
+      const info = await db.collection('users').doc(user.uid).get();
+      const data = info.data();
       credsField.innerHTML = `
         <div class="profile-heading__shape">
-          <span class="profile-heading__nick">${data.data().nick}</span>
+          <span class="profile-heading__nick">${data.nick}</span>
           <span class="profile-heading__email">${user.email}</span>
         </div>
       `;
-      this.nick = data.data().nick;
+      this.nick = data.nick;
+      this.lastSet = data.lastSet;
+      this.displayLastSet();
     } catch (error) {
       credsField.innerHTML = `
         <div class="profile-heading__shape">
@@ -27,7 +32,24 @@ export default class Profile {
     }
   }
 
-  // GET AND SHOW CREATED SETS BY CURRENT USER
+  async displayLastSet() {
+    if (this.lastSet) {
+      try {
+        const info = await db.collection('sets').doc(this.lastSet).get();
+        const data = info.data();
+        recentSetTitle.textContent = `${data.title}`;
+        recentSet.setAttribute('data-id', info.id);
+        recentSet.setAttribute('data-title', data.title);
+        recentSet.setAttribute('data-terms_number', data.terms_number);
+        recentSet.setAttribute('data-creator', data.creator);
+        recentSet.classList.remove('hide');
+        recentSet.classList.add('set-view-link');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
   async displayCreatedSets() {
     setsCreated.innerHTML = '';
     try {

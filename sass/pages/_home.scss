@@ -20,11 +20,3 @@
   column-gap: 8rem;
   row-gap: 4rem;
 }
-
-.small-panels {
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
-  column-gap: 4rem;
-  row-gap: 4rem;
-}
