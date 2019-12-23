@@ -14,6 +14,7 @@ const summarySection = document.querySelector('.test-summary');
 const writeCounter = testWriteSection.querySelector('.write-counter');
 const writeWord = testWriteSection.querySelector('.test__word-write');
 const writeWordCorrect = testWriteSection.querySelector('.test__word-write-correct');
+const writeWordIncorrect = testWriteSection.querySelector('.test__word-write-incorrect');
 const writeFormGlobal = testWriteSection.querySelector('.test__form');
 const writeButtonView = testWriteSection.querySelector('.write-button');
 
@@ -39,8 +40,13 @@ export default class View {
   }
 
   // WRITE INFO ABOUT SET
-  async writeSetInfo(id, title, termsNumber, creator) {
+  async writeSetInfo(set) {
     listOfTerms.innerHTML = '';
+
+    const id = set.getAttribute('data-id');
+    const title = set.getAttribute('data-title');
+    const termsNumber = set.getAttribute('data-terms_number');
+    const creator = set.getAttribute('data-creator');
 
     setTitle.textContent = title;
     setTermsNumber.textContent = `${termsNumber}`;
@@ -121,7 +127,6 @@ export default class View {
     writeButtonView.focus();
   }
 
-  // SELECTION TEST - RANDOM TERM AND SETUP UI
   selectionRandomAndDisplayTerm() {
     this.counterGivenAnswers += 1;
     if (this.counterGivenAnswers > this.numberOfActualTerms) {
@@ -189,6 +194,8 @@ export default class View {
       setTimeout(() => {
         testPage.classList.remove('test-page--incorrect');
       }, 600);
+      writeWordIncorrect.textContent = definition;
+      writeWordIncorrect.classList.remove('hide');
       writeWordCorrect.classList.remove('hide');
       writeForm.classList.add('hide');
       writeButtonView.classList.remove('hide');
@@ -227,6 +234,8 @@ export default class View {
 
   writeGoToNextTerm() {
     this.goNextBlocker = true;
+    writeWordIncorrect.classList.add('hide');
+    writeWordIncorrect.textContent = '';
     writeWordCorrect.classList.add('hide');
     writeButtonView.classList.add('hide');
     writeFormGlobal.classList.remove('hide');
@@ -294,6 +303,7 @@ export default class View {
     }
 
     writeCounter.textContent = '';
+    writeWordIncorrect.textContent = '';
     writeWord.textContent = '';
     writeWordCorrect.textContent = '';
     selectionCounter.textContent = '';
@@ -308,6 +318,7 @@ export default class View {
     });
     if (!selectionButtonView.classList.contains('hide')) selectionButtonView.classList.add('hide');
     summaryScoreValue.textContent = '';
+    if (!writeWordIncorrect.classList.contains('hide')) writeWordInorrect.classList.add('hide');
     if (!writeWordCorrect.classList.contains('hide')) writeWordCorrect.classList.add('hide');
     if (!writeButtonView.classList.contains('hide')) writeButtonView.classList.add('hide');
     if (writeFormGlobal.classList.contains('hide')) writeFormGlobal.classList.remove('hide');

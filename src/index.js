@@ -194,11 +194,7 @@ listsOfSets.forEach((list) => {
     }
     if (clickedElement) {
       hideAllPagesAndShowOne(setViewPage);
-      const id = clickedElement.getAttribute('data-id');
-      const title = clickedElement.getAttribute('data-title');
-      const termsNumber = clickedElement.getAttribute('data-terms_number');
-      const creator = clickedElement.getAttribute('data-creator');
-      view.writeSetInfo(id, title, termsNumber, creator);
+      view.writeSetInfo(clickedElement);
     }
   });
 });
