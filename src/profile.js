@@ -50,6 +50,14 @@ export default class Profile {
     }
   }
 
+  getLastSet() {
+    return this.lastSet;
+  }
+
+  setLastSet(lastSet) {
+    this.lastSet = lastSet;
+  }
+
   async displayCreatedSets() {
     setsCreated.innerHTML = '';
     try {

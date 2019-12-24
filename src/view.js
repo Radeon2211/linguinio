@@ -1,3 +1,7 @@
+import Profile from './profile';
+
+const profile = new Profile();
+
 // QUERY THE SET VIEW PAGE ELEMENTS
 const setTitle = document.querySelector('.set-view__heading');
 const setTermsNumber = document.querySelector('.set-view__terms-number');
@@ -279,13 +283,17 @@ export default class View {
     }, 10);
 
     // UPDATE LAST SET OF CURRENT USER
-    const userID = auth.currentUser.uid;
-    try {
-      db.collection('users').doc(userID).update({
-        lastSet: this.id,
-      });
-    } catch (error) {
-      console.log(error);
+    if (profile.getLastSet() !== this.id) {
+      profile.setLastSet(this.id);
+      const userID = auth.currentUser.uid;
+      try {
+        db.collection('users').doc(userID).update({
+          lastSet: this.id,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      profile.displayLastSet();
     }
   }
 
