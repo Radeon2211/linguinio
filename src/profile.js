@@ -1,13 +1,17 @@
 const credsField = document.querySelector('.profile-heading');
 const setsCreated = document.querySelector('.profile-sets-created');
 const setsCreatedInfo = document.querySelector('.profile-sets-info-created');
+const setsStarted = document.querySelector('.profile-sets-started');
+const setsStartedInfo = document.querySelector('.profile-sets-info-started');
 const recentSet = document.querySelector('.home-page__recent-set');
 const recentSetTitle = document.querySelector('.home-page__recent-set-title');
 
 export default class Profile {
   constructor() {
+    this.id = '';
     this.nick = '';
     this.lastSet = '';
+    this.startedSets = [];
   }
 
   async displayUserCreds(user) {
@@ -20,9 +24,12 @@ export default class Profile {
           <span class="profile-heading__email">${user.email}</span>
         </div>
       `;
+      this.id = user.uid;
       this.nick = data.nick;
       this.lastSet = data.lastSet;
+      this.startedSets = data.started_sets;
       this.displayLastSet();
+      this.displayStartedSets();
     } catch (error) {
       credsField.innerHTML = `
         <div class="profile-heading__shape">
@@ -50,12 +57,21 @@ export default class Profile {
     }
   }
 
-  getLastSet() {
-    return this.lastSet;
-  }
-
-  setLastSet(lastSet) {
-    this.lastSet = lastSet;
+  async displayStartedSets() {
+    setsStarted.innerHTML = '';
+    if (this.startedSets.length === 0) {
+      setsStartedInfo.classList.remove('hide');
+      return;
+    }
+    this.startedSets.forEach((set) => {
+      db.collection('sets').doc(set).get().then((info) => {
+        const data = info.data();
+        this.addSetToUI(setsStarted, data, info.id);
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   async displayCreatedSets() {
@@ -63,29 +79,88 @@ export default class Profile {
     try {
       const sets = await db.collection('sets').where('creator', '==', this.nick).orderBy('created_at', 'desc').get();
       if (sets.size === 0) {
-        // SHOW INFO TO USER
         if (setsCreatedInfo.classList.contains('hide')) {
           setsCreatedInfo.classList.remove('hide');
         }
       } else {
-        // HIDE INFO TO USER
         if (!setsCreatedInfo.classList.contains('hide')) {
           setsCreatedInfo.classList.add('hide');
         }
-        // SHOW CURRENT USER'S SETS
-        sets.forEach((doc) => {
-          const data = doc.data();
-          setsCreated.innerHTML += `
-            <div class="set set-view-link" data-id="${doc.id}" data-title="${data.title}" data-terms_number="${data.terms_number}" data-creator="${data.creator}">
-              <div class="set__title">${data.title}</div>
-              <div class="set__terms">${data.terms_number} terms</div>
-              <div class="set__creator">${data.creator}</div>
-            </div>
-          `;
+        sets.forEach((set) => {
+          const data = set.data();
+          this.addSetToUI(setsCreated, data, set.id);
         });
       }
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async updateLastSetAndStartedSets(currentSetId) {
+    // UPDATE LAST SET OF CURRENT USER
+    if (this.lastSet !== currentSetId) {
+      this.lastSet = currentSetId;
+      try {
+        db.collection('users').doc(this.id).update({
+          lastSet: currentSetId,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      this.displayLastSet();
+    }
+
+    // ADD CURRENT SET TO SETS ARRAY IN USER DOCUMENT
+    let isTheSame = false;
+    this.startedSets.forEach((set) => {
+      if (set === currentSetId) {
+        isTheSame = true;
+      }
+    });
+    if (!isTheSame) {
+      this.startedSets.unshift(currentSetId);
+      try {
+        // UPDATE STARTED SETS IN USER DOCUMENT
+        db.collection('users').doc(this.id).update({
+          started_sets: this.startedSets,
+        });
+        // UPDATE UI IN PROFILE PAGE (STARTED SETS)
+        const info = await db.collection('sets').doc(currentSetId).get();
+        const data = info.data();
+        const element = document.createElement('div');
+        element.classList.add('set', 'set-view-link');
+        element.setAttribute('data-id', info.id);
+        element.setAttribute('data-title', data.title);
+        element.setAttribute('data-terms_number', data.terms_number);
+        element.setAttribute('data-creator', data.creator);
+        element.innerHTML = `
+          <div class="set__title">${data.title}</div>
+          <div class="set__terms">${data.terms_number} terms</div>
+          <div class="set__creator">${data.creator}</div>
+        `;
+        setsStarted.prepend(element);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  addSetToUI(container, data, id) {
+    const listOfSets = container;
+    listOfSets.innerHTML += `
+      <div class="set set-view-link" data-id="${id}" data-title="${data.title}" data-terms_number="${data.terms_number}" data-creator="${data.creator}">
+        <div class="set__title">${data.title}</div>
+        <div class="set__terms">${data.terms_number} terms</div>
+        <div class="set__creator">${data.creator}</div>
+      </div>
+    `;
+  }
+
+  getLastSet() {
+    return this.lastSet;
+  }
+
+  setLastSet(lastSet) {
+    this.lastSet = lastSet;
   }
 }

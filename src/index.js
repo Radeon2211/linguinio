@@ -208,12 +208,14 @@ const panelWriteTest = document.querySelector('.panel-write-test');
 panelWriteTest.addEventListener('click', () => {
   hideAllPagesAndShowOne(testPage);
   view.initClassInGeneral('write');
+  profile.updateLastSetAndStartedSets(view.getID());
 });
 
 const panelSelectionTest = document.querySelector('.panel-selection-test');
 panelSelectionTest.addEventListener('click', () => {
   hideAllPagesAndShowOne(testPage);
   view.initClassInGeneral('selection');
+  profile.updateLastSetAndStartedSets(view.getID());
 });
 
 const testBackLinks = document.querySelectorAll('.test-back-link');

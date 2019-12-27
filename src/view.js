@@ -281,20 +281,6 @@ export default class View {
         outputValue += 1;
       }
     }, 10);
-
-    // UPDATE LAST SET OF CURRENT USER
-    if (profile.getLastSet() !== this.id) {
-      profile.setLastSet(this.id);
-      const userID = auth.currentUser.uid;
-      try {
-        db.collection('users').doc(userID).update({
-          lastSet: this.id,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-      profile.displayLastSet();
-    }
   }
 
   hideTestSections() {
@@ -352,5 +338,9 @@ export default class View {
     setTermsNumber.textContent = '';
     setCreator.textContent = '';
     listOfTerms.innerHTML = '';
+  }
+
+  getID() {
+    return this.id;
   }
 }
