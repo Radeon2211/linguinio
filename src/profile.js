@@ -17,7 +17,7 @@ export default class Profile {
   async displayUserCreds(user) {
     try {
       const info = await db.collection('users').doc(user.uid).get();
-      const data = info.data();
+      const data = await info.data();
       credsField.innerHTML = `
         <div class="profile-heading__shape">
           <span class="profile-heading__nick">${data.nick}</span>
@@ -30,6 +30,7 @@ export default class Profile {
       this.startedSets = data.started_sets;
       this.displayLastSet();
       this.displayStartedSets();
+      this.displayCreatedSets();
     } catch (error) {
       credsField.innerHTML = `
         <div class="profile-heading__shape">
@@ -43,7 +44,7 @@ export default class Profile {
     if (this.lastSet) {
       try {
         const info = await db.collection('sets').doc(this.lastSet).get();
-        const data = info.data();
+        const data = await info.data();
         recentSetTitle.textContent = `${data.title}`;
         recentSet.setAttribute('data-id', info.id);
         recentSet.setAttribute('data-title', data.title);
@@ -55,23 +56,6 @@ export default class Profile {
         console.log(error);
       }
     }
-  }
-
-  async displayStartedSets() {
-    setsStarted.innerHTML = '';
-    if (this.startedSets.length === 0) {
-      setsStartedInfo.classList.remove('hide');
-      return;
-    }
-    this.startedSets.forEach((set) => {
-      db.collection('sets').doc(set).get().then((info) => {
-        const data = info.data();
-        this.addSetToUI(setsStarted, data, info.id);
-      })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
   }
 
   async displayCreatedSets() {
@@ -88,12 +72,39 @@ export default class Profile {
         }
         sets.forEach((set) => {
           const data = set.data();
-          this.addSetToUI(setsCreated, data, set.id);
+          this.appendSetToList(setsCreated, data, set.id);
         });
       }
     } catch (error) {
       console.log(error);
     }
+  }
+
+  updateCreatedSets(data) {
+    const info = {
+      id: data.getAttribute('data-id'),
+      title: data.getAttribute('data-title'),
+      terms_number: data.getAttribute('data-terms_number'),
+      creator: data.getAttribute('data-creator'),
+    };
+    this.prependSetToList(setsCreated, info, info.id);
+  }
+
+  async displayStartedSets() {
+    setsStarted.innerHTML = '';
+    if (this.startedSets.length === 0) {
+      setsStartedInfo.classList.remove('hide');
+      return;
+    }
+    this.startedSets.forEach((set) => {
+      db.collection('sets').doc(set).get().then((info) => {
+        const data = info.data();
+        this.appendSetToList(setsStarted, data, info.id);
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   async updateLastSetAndStartedSets(currentSetId) {
@@ -126,26 +137,15 @@ export default class Profile {
         });
         // UPDATE UI IN PROFILE PAGE (STARTED SETS)
         const info = await db.collection('sets').doc(currentSetId).get();
-        const data = info.data();
-        const element = document.createElement('div');
-        element.classList.add('set', 'set-view-link');
-        element.setAttribute('data-id', info.id);
-        element.setAttribute('data-title', data.title);
-        element.setAttribute('data-terms_number', data.terms_number);
-        element.setAttribute('data-creator', data.creator);
-        element.innerHTML = `
-          <div class="set__title">${data.title}</div>
-          <div class="set__terms">${data.terms_number} terms</div>
-          <div class="set__creator">${data.creator}</div>
-        `;
-        setsStarted.prepend(element);
+        const data = await info.data();
+        this.prependSetToList(setsStarted, data, info.id);
       } catch (error) {
         console.log(error);
       }
     }
   }
 
-  addSetToUI(container, data, id) {
+  appendSetToList(container, data, id) {
     const listOfSets = container;
     listOfSets.innerHTML += `
       <div class="set set-view-link" data-id="${id}" data-title="${data.title}" data-terms_number="${data.terms_number}" data-creator="${data.creator}">
@@ -156,11 +156,19 @@ export default class Profile {
     `;
   }
 
-  getLastSet() {
-    return this.lastSet;
-  }
-
-  setLastSet(lastSet) {
-    this.lastSet = lastSet;
+  prependSetToList(container, data, id) {
+    const listOfSets = container;
+    const element = document.createElement('div');
+    element.classList.add('set', 'set-view-link');
+    element.setAttribute('data-id', id);
+    element.setAttribute('data-title', data.title);
+    element.setAttribute('data-terms_number', data.terms_number);
+    element.setAttribute('data-creator', data.creator);
+    element.innerHTML = `
+      <div class="set__title">${data.title}</div>
+      <div class="set__terms">${data.terms_number} terms</div>
+      <div class="set__creator">${data.creator}</div>
+    `;
+    listOfSets.prepend(element);
   }
 }

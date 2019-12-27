@@ -14,10 +14,40 @@ const create = new Create();
 const search = new Search();
 const view = new View();
 
-// GET INTRO AND MAIN CONTAINERS TO SHOW / HIDE THEM
 const introductionContainer = document.querySelector('.introduction-container');
 const mainContainer = document.querySelector('.main-container');
 const adminItems = document.querySelectorAll('.admin-item');
+const buttonsCreateSet = document.querySelectorAll('.create-set-button');
+const formAddTerm = document.querySelector('.create-set__form-add-term');
+const formSetTitle = document.querySelector('.create-set__form-title');
+
+const mainPages = document.querySelectorAll('.main-page');
+const navToggler = document.querySelector('#nav-toggler');
+const setViewPage = document.querySelector('.set-view-page');
+
+const hideAllPagesAndShowOne = (pageToShow) => {
+  mainPages.forEach((page) => {
+    if (!page.classList.contains('hide')) {
+      page.classList.add('hide');
+    }
+  });
+  pageToShow.classList.remove('hide');
+  navToggler.checked = false;
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+
+  // IF PAGE TO SHOW ISN'T A TEST PAGE && TERMS TO TEST IS EMPTY - CLEAR VIEW CLASS && TEST PAGE UI
+  if (!pageToShow.classList.contains('test-page') && view.termsToTest.length > 0) {
+    view.clear();
+  }
+  // IF PAGE TO SHOW ISN'T TEST OR SET VIEW PAGE, VIEW TERMS > 0 - CLEAR TERMS ARRAY && THEIR NUMBER
+  if (!pageToShow.classList.contains('test-page') && !pageToShow.classList.contains('set-view-page') && view.terms.length > 0) {
+    view.clearBasicAndSetViewUI();
+  }
+};
 
 // LISTEN FOR AUTH STATUS CHANGED START
 auth.onAuthStateChanged((user) => {
@@ -34,28 +64,32 @@ auth.onAuthStateChanged((user) => {
 
     profile.displayUserCreds(user);
 
-    // CREATE SET PAGE ACTIONS - LISTEN START
-    const formSetTitle = document.querySelector('.create-set__form-title');
+    // CREATE SET PAGE ACTIONS - START
     formSetTitle.addEventListener('submit', (e) => {
       e.preventDefault();
     });
 
-    const buttonsCreateSet = document.querySelectorAll('.create-set-button');
     buttonsCreateSet.forEach((button) => {
       button.addEventListener('click', () => {
         const title = formSetTitle.title.value.trim();
-        create.createSet(title, user.uid);
+        create.createSet(title, user.uid).then((data) => {
+          if (data) {
+            view.writeSetInfo(data);
+            hideAllPagesAndShowOne(setViewPage);
+            formSetTitle.reset();
+            formAddTerm.reset();
+            profile.updateCreatedSets(data);
+          }
+        });
       });
     });
 
-    const formAddTerm = document.querySelector('.create-set__form-add-term');
     formAddTerm.addEventListener('submit', (e) => {
       e.preventDefault();
       create.addTerm(formAddTerm);
     });
-    // CREATE SET PAGE ACTIONS - LISTEN END
+    // CREATE SET PAGE ACTIONS - END
 
-    // hide introduction page and show main page
     if (!introductionContainer.classList.contains('hide')) {
       introductionContainer.classList.add('hide');
     }
@@ -63,7 +97,6 @@ auth.onAuthStateChanged((user) => {
       mainContainer.classList.remove('hide');
     }
   } else {
-    // show introduction container and hide main page
     if (introductionContainer.classList.contains('hide')) {
       introductionContainer.classList.remove('hide');
     }
@@ -105,33 +138,6 @@ formAddAdmin.addEventListener('submit', (e) => {
 });
 
 // DISPLAYING PAGES AND NAV ITEMS MANAGEMENT
-const mainPages = document.querySelectorAll('.main-page'); // all pages
-const navToggler = document.querySelector('#nav-toggler'); // side navigation toggler
-
-const hideAllPagesAndShowOne = (pageToShow) => {
-  mainPages.forEach((page) => {
-    if (!page.classList.contains('hide')) {
-      page.classList.add('hide');
-    }
-  });
-  pageToShow.classList.remove('hide');
-  navToggler.checked = false;
-  window.scroll({
-    top: 0,
-    left: 0,
-    behavior: 'smooth',
-  });
-
-  // IF PAGE TO SHOW ISN'T A TEST PAGE && TERMS TO TEST IS EMPTY - CLEAR VIEW CLASS && TEST PAGE UI
-  if (!pageToShow.classList.contains('test-page') && view.termsToTest.length > 0) {
-    view.clear();
-  }
-  // IF PAGE TO SHOW ISN'T TEST OR SET VIEW PAGE, VIEW TERMS > 0 - CLEAR TERMS ARRAY && THEIR NUMBER
-  if (!pageToShow.classList.contains('test-page') && !pageToShow.classList.contains('set-view-page') && view.terms.length > 0) {
-    view.clearBasicAndSetViewUI();
-  }
-};
-
 // HOME PAGE
 const linksToHomePage = document.querySelectorAll('.home-link');
 const homePage = document.querySelector('.home-page');
@@ -166,7 +172,6 @@ const profilePage = document.querySelector('.profile-page');
 linksToProfilePage.forEach((link) => {
   link.addEventListener('click', () => {
     hideAllPagesAndShowOne(profilePage);
-    profile.displayCreatedSets();
   });
 });
 
@@ -179,9 +184,7 @@ linksToAdminPage.forEach((link) => {
   });
 });
 
-
-// SET ONCLICK
-const setViewPage = document.querySelector('.set-view-page');
+// SET CLICK
 const listsOfSets = document.querySelectorAll('.list-of-sets');
 listsOfSets.forEach((list) => {
   list.addEventListener('click', (e) => {
@@ -201,7 +204,7 @@ listsOfSets.forEach((list) => {
   });
 });
 
-// SET VIEW ACTIONS
+// SET VIEW & TEST ACTIONS
 const testPage = document.querySelector('.test-page');
 
 const panelWriteTest = document.querySelector('.panel-write-test');

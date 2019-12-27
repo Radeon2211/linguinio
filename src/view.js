@@ -1,20 +1,16 @@
-import Profile from './profile';
-
-const profile = new Profile();
-
-// QUERY THE SET VIEW PAGE ELEMENTS
+// SET VIEW PAGE ELEMENTS
 const setTitle = document.querySelector('.set-view__heading');
 const setTermsNumber = document.querySelector('.set-view__terms-number');
 const setCreator = document.querySelector('.set-view__creator-nick');
 const listOfTerms = document.querySelector('.set-view__list-of-terms');
 
-// QUERY THE GENERAL STRUCTURE OF TEST PAGE
+// GENERAL STRUCTURE OF TEST PAGE
 const testPage = document.querySelector('.test-page');
 const testWriteSection = document.querySelector('.test-write');
 const testSelectionSection = document.querySelector('.test-selection');
 const summarySection = document.querySelector('.test-summary');
 
-// QUERY TEST ELEMENTS
+// TEST ELEMENTS
 const writeCounter = testWriteSection.querySelector('.write-counter');
 const writeWord = testWriteSection.querySelector('.test__word-write');
 const writeWordCorrect = testWriteSection.querySelector('.test__word-write-correct');
@@ -55,7 +51,7 @@ export default class View {
 
     this.id = id;
     setTitle.textContent = title;
-    setTermsNumber.textContent = `${termsNumber}`;
+    setTermsNumber.textContent = termsNumber;
     setCreator.textContent = creator;
 
     // GET TERMS FROM DATABASE AND DISPLAY THEM
