@@ -81,6 +81,9 @@ export default class Profile {
   }
 
   updateCreatedSets(data) {
+    if (!setsCreatedInfo.classList.contains('hide')) {
+      setsCreatedInfo.classList.add('hide');
+    }
     const info = {
       id: data.getAttribute('data-id'),
       title: data.getAttribute('data-title'),
@@ -108,6 +111,9 @@ export default class Profile {
   }
 
   async updateLastSetAndStartedSets(currentSetId) {
+    if (!setsStartedInfo.classList.contains('hide')) {
+      setsStartedInfo.classList.add('hide');
+    }
     // UPDATE LAST SET OF CURRENT USER
     if (this.lastSet !== currentSetId) {
       this.lastSet = currentSetId;
