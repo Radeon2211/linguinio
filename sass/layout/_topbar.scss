@@ -6,7 +6,7 @@
   background-color: var(--color-green-4);
   margin-bottom: 1px solid var(--color-green-6);
   overflow: hidden;
-  padding: 0 3rem;
+  padding: 0 2rem;
   position: fixed;
   z-index: 20;
   top: 0;
@@ -14,26 +14,45 @@
   width: 100%;
   height: 8vh;
 
+  @include size(big-desktop) {
+    padding: 0 3rem;
+  }
+
   @include size(tab-land) {
     padding: 0 1rem;
   }
 
   @include size(tab-port) {
-    padding: 0 3rem;
+    padding: 0 2rem;
     height: 9vh;
+  }
+
+  @media only screen and (max-width: 21.5em){
+    padding: 0 1.2rem;
   }
 
   &__heading {
     cursor: pointer;
   }
+
+  &__back {
+    cursor: pointer;
+    width: 4.4rem;
+    height: 4.4rem;
+    fill: var(--color-light-1);
+
+    @include size(tab-land) {
+      width: 4.1rem;
+      height: 4.1rem;
+    }
+
+    @include size(tab-port) {
+      width: 4.6rem;
+      height: 4.6rem;
+    }
+  }
 }
 
-// HEADING
-#header-link-to-home {
-  cursor: pointer;
-}
-
-// MAIN NAVIGATION
 .top-nav {
   font-size: 1.7rem;
   height: 100%;
@@ -54,7 +73,7 @@
     list-style: none;
     display: grid;
     grid-auto-flow: column;
-    column-gap: 3rem;
+    column-gap: 2.2rem;
     height: 100%;
 
     @include size(big-desktop) {
@@ -62,7 +81,7 @@
     }
 
     @include size(tab-land) {
-      column-gap: .8rem;
+      column-gap: .7rem;
     }
   }
 
@@ -94,17 +113,17 @@
     @include size(tab-land) {
       width: 2.5rem;
       height: 2.5rem;
-      margin-right: .8rem;
+      margin-right: .7rem;
     }
 
     @media only screen and (min-width: 56.25em), only screen and (hover: hover) {
       width: 2.6rem;
       height: 2.6rem;
+      margin-right: .8rem;
     }
   }
 }
 
-// TOGGLER
 .toggler {
   height: 5rem;
   width: 6rem;

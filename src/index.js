@@ -24,8 +24,27 @@ const formSetTitle = document.querySelector('.create-set__form-title');
 const mainPages = document.querySelectorAll('.main-page');
 const navToggler = document.querySelector('#nav-toggler');
 const setViewPage = document.querySelector('.set-view-page');
+const backIcon = document.querySelector('.topbar__back');
+const pagesHistory = ['home-page'];
 
-const hideAllPagesAndShowOne = (pageToShow) => {
+const hideAllPagesAndShowOne = (pageToShow, isBack) => {
+  // HISTORY MANAGEMENT
+  const classOfPageToShow = pageToShow.getAttribute('class').split(' ')[1];
+  if (classOfPageToShow !== pagesHistory[pagesHistory.length - 1]) {
+    pagesHistory.push(classOfPageToShow);
+    if (isBack) {
+      pagesHistory.splice(pagesHistory.length - 3, 2);
+    } else if (pagesHistory[pagesHistory.length - 2] === 'test-page' || pagesHistory[pagesHistory.length - 2] === 'set-view-page') {
+      pagesHistory.splice(pagesHistory.length - 2, 1);
+      if (pagesHistory[pagesHistory.length - 1] === pagesHistory[pagesHistory.length - 2]) {
+        pagesHistory.splice(pagesHistory.length - 1, 1);
+      }
+    }
+  }
+  if (pagesHistory.length > 1) {
+    backIcon.setAttribute('data-target', pagesHistory[pagesHistory.length - 2]);
+  }
+  // HIDING AND SHOWING PAGES
   mainPages.forEach((page) => {
     if (!page.classList.contains('hide')) {
       page.classList.add('hide');
@@ -38,12 +57,11 @@ const hideAllPagesAndShowOne = (pageToShow) => {
     left: 0,
     behavior: 'smooth',
   });
-
-  // IF PAGE TO SHOW ISN'T A TEST PAGE && TERMS TO TEST IS EMPTY - CLEAR VIEW CLASS && TEST PAGE UI
+  // CLEAR ALMOST ALL SET VIEW PAGE UI AND ATTRIBUTES
   if (!pageToShow.classList.contains('test-page') && view.termsToTest.length > 0) {
     view.clear();
   }
-  // IF PAGE TO SHOW ISN'T TEST OR SET VIEW PAGE, VIEW TERMS > 0 - CLEAR TERMS ARRAY && THEIR NUMBER
+  // CLEAR ALL SET VIEW PAGE UI AND ATTRIBUTES
   if (!pageToShow.classList.contains('test-page') && !pageToShow.classList.contains('set-view-page') && view.terms.length > 0) {
     view.clearBasicAndSetViewUI();
   }
@@ -75,7 +93,7 @@ auth.onAuthStateChanged((user) => {
         create.createSet(title, user.uid).then((data) => {
           if (data) {
             view.writeSetInfo(data);
-            hideAllPagesAndShowOne(setViewPage);
+            hideAllPagesAndShowOne(setViewPage, false);
             formSetTitle.reset();
             formAddTerm.reset();
             profile.updateCreatedSets(data);
@@ -143,7 +161,7 @@ const linksToHomePage = document.querySelectorAll('.home-link');
 const homePage = document.querySelector('.home-page');
 linksToHomePage.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(homePage);
+    hideAllPagesAndShowOne(homePage, false);
   });
 });
 
@@ -152,7 +170,7 @@ const linksToCreateSet = document.querySelectorAll('.create-set-link');
 const createSetPage = document.querySelector('.create-set-page');
 linksToCreateSet.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(createSetPage);
+    hideAllPagesAndShowOne(createSetPage, false);
   });
 });
 
@@ -161,7 +179,7 @@ const linksToSearchSets = document.querySelectorAll('.search-sets-link');
 const searchSetsPage = document.querySelector('.search-sets-page');
 linksToSearchSets.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(searchSetsPage);
+    hideAllPagesAndShowOne(searchSetsPage, false);
     search.displayAllSets();
   });
 });
@@ -171,7 +189,7 @@ const linksToProfilePage = document.querySelectorAll('.profile-link');
 const profilePage = document.querySelector('.profile-page');
 linksToProfilePage.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(profilePage);
+    hideAllPagesAndShowOne(profilePage, false);
   });
 });
 
@@ -180,7 +198,7 @@ const linksToAdminPage = document.querySelectorAll('.admin-link');
 const adminPage = document.querySelector('.admin-page');
 linksToAdminPage.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(adminPage);
+    hideAllPagesAndShowOne(adminPage, false);
   });
 });
 
@@ -198,7 +216,7 @@ listsOfSets.forEach((list) => {
       clickedElement = e.target.parentElement.parentElement;
     }
     if (clickedElement) {
-      hideAllPagesAndShowOne(setViewPage);
+      hideAllPagesAndShowOne(setViewPage, false);
       view.writeSetInfo(clickedElement);
     }
   });
@@ -209,14 +227,14 @@ const testPage = document.querySelector('.test-page');
 
 const panelWriteTest = document.querySelector('.panel-write-test');
 panelWriteTest.addEventListener('click', () => {
-  hideAllPagesAndShowOne(testPage);
+  hideAllPagesAndShowOne(testPage, false);
   view.initClassInGeneral('write');
   profile.updateLastSetAndStartedSets(view.getID());
 });
 
 const panelSelectionTest = document.querySelector('.panel-selection-test');
 panelSelectionTest.addEventListener('click', () => {
-  hideAllPagesAndShowOne(testPage);
+  hideAllPagesAndShowOne(testPage, false);
   view.initClassInGeneral('selection');
   profile.updateLastSetAndStartedSets(view.getID());
 });
@@ -224,7 +242,7 @@ panelSelectionTest.addEventListener('click', () => {
 const testBackLinks = document.querySelectorAll('.test-back-link');
 testBackLinks.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(setViewPage);
+    hideAllPagesAndShowOne(setViewPage, true);
   });
 });
 
@@ -255,4 +273,10 @@ selectionButtonIndex.addEventListener('click', () => {
   if (!view.goNextBlocker) {
     view.selectionGoToNextTerm();
   }
+});
+
+// BACK TO PREVIOUS PAGE
+backIcon.addEventListener('click', () => {
+  const pageToShow = document.querySelector(`.${backIcon.getAttribute('data-target')}`);
+  hideAllPagesAndShowOne(pageToShow, true);
 });
