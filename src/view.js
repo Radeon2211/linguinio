@@ -272,7 +272,7 @@ export default class View {
     this.hideTestSections();
     summarySection.classList.remove('hide');
 
-    const percentageScoreValue = Math.ceil((100 / this.numberOfActualTerms) * this.counterCorrect);
+    const percentageScoreValue = Math.floor((100 / this.numberOfActualTerms) * this.counterCorrect);
     let outputValue = 0;
     const timer = setInterval(() => {
       summaryScoreValue.textContent = outputValue;
