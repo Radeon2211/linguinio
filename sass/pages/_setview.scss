@@ -28,6 +28,22 @@
     }
   }
 
+  &__choose-how-many {
+    font-size: 1.9rem;
+    text-align: center;
+  }
+
+  &__choose-how-many-select {
+    margin-left: 1rem;
+    font-size: 1.9rem;
+    padding: .6rem 0 .6rem .2rem;
+    border: var(--color-light-4);
+    outline: none;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow-1);
+    background-color: var(--color-light-2);
+  }
+
   &__creator {
     display: flex;
     justify-content: center;

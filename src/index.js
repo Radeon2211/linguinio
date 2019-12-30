@@ -28,6 +28,9 @@ const backIcon = document.querySelector('.topbar__back');
 const pagesHistory = ['home-page'];
 
 const hideAllPagesAndShowOne = (pageToShow, isBack) => {
+  if (auth.currentUser === null) {
+    return;
+  }
   // HISTORY MANAGEMENT
   const classOfPageToShow = pageToShow.getAttribute('class').split(' ')[1];
   if (classOfPageToShow !== pagesHistory[pagesHistory.length - 1]) {
@@ -58,11 +61,11 @@ const hideAllPagesAndShowOne = (pageToShow, isBack) => {
     behavior: 'smooth',
   });
   // CLEAR ALMOST ALL SET VIEW PAGE UI AND ATTRIBUTES
-  if (!pageToShow.classList.contains('test-page') && view.termsToTest.length > 0) {
+  if (!pageToShow.classList.contains('test-page') && view.getTermsToTest().length > 0) {
     view.clear();
   }
   // CLEAR ALL SET VIEW PAGE UI AND ATTRIBUTES
-  if (!pageToShow.classList.contains('test-page') && !pageToShow.classList.contains('set-view-page') && view.terms.length > 0) {
+  if (!pageToShow.classList.contains('test-page') && !pageToShow.classList.contains('set-view-page') && view.getTerms().length > 0) {
     view.clearBasicAndSetViewUI();
   }
 };
@@ -225,17 +228,30 @@ listsOfSets.forEach((list) => {
 // SET VIEW & TEST ACTIONS
 const testPage = document.querySelector('.test-page');
 
+const howManyTermsForm = document.querySelector('.set-view__choose-how-many');
+howManyTermsForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+});
+
 const panelWriteTest = document.querySelector('.panel-write-test');
 panelWriteTest.addEventListener('click', () => {
+  if (view.getTerms().length <= 0) {
+    return;
+  }
   hideAllPagesAndShowOne(testPage, false);
-  view.initClassInGeneral('write');
+  const numberOfTerms = howManyTermsForm.termsNumber.value;
+  view.initClassInGeneral('write', numberOfTerms);
   profile.updateLastSetAndStartedSets(view.getID());
 });
 
 const panelSelectionTest = document.querySelector('.panel-selection-test');
 panelSelectionTest.addEventListener('click', () => {
+  if (view.getTerms().length <= 0) {
+    return;
+  }
   hideAllPagesAndShowOne(testPage, false);
-  view.initClassInGeneral('selection');
+  const numberOfTerms = howManyTermsForm.termsNumber.value;
+  view.initClassInGeneral('selection', numberOfTerms);
   profile.updateLastSetAndStartedSets(view.getID());
 });
 
@@ -249,7 +265,7 @@ testBackLinks.forEach((link) => {
 const writeForm = document.querySelector('.test__form');
 writeForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (view.termsToTest.length > 0) {
+  if (view.getTermsToTest().length > 0) {
     view.checkWriteAnswer(writeForm);
   }
 });
@@ -263,7 +279,7 @@ writeButtonIndex.addEventListener('click', () => {
 
 const selectionAnswersBox = document.querySelector('.test__answers');
 selectionAnswersBox.addEventListener('click', (e) => {
-  if (e.target.classList.contains('test__answer') && view.termsToTest.length > 0) {
+  if (e.target.classList.contains('test__answer') && view.getTermsToTest().length > 0) {
     view.checkSelectionAnswer(e);
   }
 });

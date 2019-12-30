@@ -15,8 +15,9 @@ export default class Profile {
   }
 
   async displayUserCreds(user) {
+    this.id = user.uid;
     try {
-      const info = await db.collection('users').doc(user.uid).get();
+      const info = await db.collection('users').doc(this.id).get();
       const data = await info.data();
       credsField.innerHTML = `
         <div class="profile-heading__shape">
@@ -24,9 +25,8 @@ export default class Profile {
           <span class="profile-heading__email">${user.email}</span>
         </div>
       `;
-      this.id = user.uid;
       this.nick = data.nick;
-      this.lastSet = data.lastSet;
+      this.lastSet = data.last_set;
       this.startedSets = data.started_sets;
       this.displayLastSet();
       this.displayStartedSets();
@@ -101,8 +101,7 @@ export default class Profile {
     }
     this.startedSets.forEach((set) => {
       db.collection('sets').doc(set).get().then((info) => {
-        const data = info.data();
-        this.appendSetToList(setsStarted, data, info.id);
+        this.appendSetToList(setsStarted, info.data(), info.id);
       })
         .catch((error) => {
           console.log(error);
@@ -119,7 +118,7 @@ export default class Profile {
       this.lastSet = currentSetId;
       try {
         db.collection('users').doc(this.id).update({
-          lastSet: currentSetId,
+          last_set: currentSetId,
         });
       } catch (error) {
         console.log(error);

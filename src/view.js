@@ -1,5 +1,6 @@
 // SET VIEW PAGE ELEMENTS
 const setTitle = document.querySelector('.set-view__heading');
+const setChooseTermsNumber = document.querySelector('.set-view__choose-how-many-select');
 const setTermsNumber = document.querySelector('.set-view__terms-number');
 const setCreator = document.querySelector('.set-view__creator-nick');
 const listOfTerms = document.querySelector('.set-view__list-of-terms');
@@ -51,6 +52,11 @@ export default class View {
 
     this.id = id;
     setTitle.textContent = title;
+    for (let i = termsNumber; i >= 4; i -= 1) {
+      setChooseTermsNumber.innerHTML += `
+        <option value="${i}" class="set-view__choose-how-many-option">${i}</option>
+      `;
+    }
     setTermsNumber.textContent = termsNumber;
     setCreator.textContent = creator;
 
@@ -77,19 +83,17 @@ export default class View {
   }
 
   // INIT GENREAL THE CLASS AFTER CHOOSING THE TEST TYPE
-  initClassInGeneral(type) {
+  initClassInGeneral(type, chosenNumberOfTerms) {
     this.checkBlocker = false;
     this.goNextBlocker = true;
-    // IF TERMS ARE <= 10 COPY ORIGINAL ARRAY TO TERMS TO TEST ARRAY
-    if (this.terms.length <= 10) {
+    if (this.terms.length === chosenNumberOfTerms) {
       this.termsToTest = [...this.terms];
     } else {
-      // ELSE RANDOM 10 TERMS TO TEST
-      const termsToRandomToTest = [...this.terms]; // ARRAY FROM WHICH TERMS WILL BE RANDOMIZING
-      for (let i = 0; i < 10; i += 1) {
-        const indexOfTerm = Math.floor(Math.random() * termsToRandomToTest.length); // RAND INDEX
-        this.termsToTest.push(termsToRandomToTest[indexOfTerm]); // PUSH TERMS TO PROPER ARRAY
-        termsToRandomToTest.splice(indexOfTerm, 1); // DELETE RANDOMED TERM FROM ARRAY TO RANDOMIZE
+      const termsToRandomToTest = [...this.terms];
+      for (let i = 0; i < chosenNumberOfTerms; i += 1) {
+        const indexOfTerm = Math.floor(Math.random() * termsToRandomToTest.length);
+        this.termsToTest.push(termsToRandomToTest[indexOfTerm]);
+        termsToRandomToTest.splice(indexOfTerm, 1);
       }
     }
 
@@ -130,6 +134,7 @@ export default class View {
   }
 
   selectionRandomAndDisplayTerm() {
+    this.checkBlocker = false;
     this.counterGivenAnswers += 1;
     if (this.counterGivenAnswers > this.numberOfActualTerms) {
       this.displaySummary();
@@ -216,7 +221,6 @@ export default class View {
       this.counterCorrect += 1;
       setTimeout(() => {
         selectedAnswer.classList.remove('test__answer--green');
-        this.checkBlocker = false;
         this.selectionRandomAndDisplayTerm();
       }, 300);
     } else {
@@ -264,10 +268,11 @@ export default class View {
   }
 
   displaySummary() {
+    this.checkBlocker = true;
     this.hideTestSections();
     summarySection.classList.remove('hide');
 
-    const percentageScoreValue = (100 / this.numberOfActualTerms) * this.counterCorrect;
+    const percentageScoreValue = Math.ceil((100 / this.numberOfActualTerms) * this.counterCorrect);
     let outputValue = 0;
     const timer = setInterval(() => {
       summaryScoreValue.textContent = outputValue;
@@ -331,6 +336,7 @@ export default class View {
     this.terms = [];
     this.numberTotal = 0;
     setTitle.textContent = '';
+    setChooseTermsNumber.innerHTML = '';
     setTermsNumber.textContent = '';
     setCreator.textContent = '';
     listOfTerms.innerHTML = '';
@@ -338,5 +344,13 @@ export default class View {
 
   getID() {
     return this.id;
+  }
+
+  getTerms() {
+    return this.terms;
+  }
+
+  getTermsToTest() {
+    return this.termsToTest;
   }
 }
