@@ -2,10 +2,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-size: 135%;
   color: var(--color-light-1);
   border-radius: 7px;
   box-shadow: var(--box-shadow-3);
   cursor: pointer;
+  transition: all .12s;
+
+  &:hover {
+    background-position: 100%;
+  }
 
   &--big {
     padding: 3.5rem 3rem;
@@ -21,10 +27,6 @@
     letter-spacing: 1px;
     background-image: linear-gradient(to right, var(--color-green-3), var(--color-green-1));
     justify-self: stretch;
-  }
-
-  &:hover {
-    animation: panels-animation .5s;
   }
 
   &--orange {

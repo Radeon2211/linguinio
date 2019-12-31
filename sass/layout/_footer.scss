@@ -54,20 +54,17 @@
     width: 3.5rem;
     height: 3.5rem;
 
-    // STYLING IN INTRO
     &--intro {
       fill: var(--color-light-4);
     }
 
-    // STYLING IN MAIN
     &--main {
       fill: var(--color-blue-5);
     }
 
     &--1 {
-
       &:hover {
-        animation: icon-animation 1s infinite linear;
+        animation: linkedin-animation 1s infinite linear;
       }
     }
 

@@ -266,7 +266,7 @@ const writeForm = document.querySelector('.test__form');
 writeForm.addEventListener('submit', (e) => {
   e.preventDefault();
   if (view.getTermsToTest().length > 0) {
-    view.checkWriteAnswer(writeForm);
+    view.checkWriteAnswer();
   }
 });
 

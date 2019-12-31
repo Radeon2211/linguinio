@@ -16,7 +16,7 @@ const writeCounter = testWriteSection.querySelector('.write-counter');
 const writeWord = testWriteSection.querySelector('.test__word-write');
 const writeWordCorrect = testWriteSection.querySelector('.test__word-write-correct');
 const writeWordIncorrect = testWriteSection.querySelector('.test__word-write-incorrect');
-const writeFormGlobal = testWriteSection.querySelector('.test__form');
+const writeForm = testWriteSection.querySelector('.test__form');
 const writeButtonView = testWriteSection.querySelector('.write-button');
 
 const selectionCounter = testSelectionSection.querySelector('.selection-counter');
@@ -127,10 +127,11 @@ export default class View {
     this.randomActualTerm();
 
     // WRITE OUT ALL CONTENT
-    writeCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`; // COUNTER
-    writeWord.textContent = this.actualTerm.origin; // ORIGIN WORD
-    writeWordCorrect.textContent = this.actualTerm.definition; // DEFINITION WORD
-    writeButtonView.focus();
+    writeCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`;
+    writeWord.textContent = this.actualTerm.origin;
+    writeWordCorrect.textContent = this.actualTerm.definition;
+    writeForm.definition.removeAttribute('disabled');
+    writeForm.definition.focus();
   }
 
   selectionRandomAndDisplayTerm() {
@@ -177,10 +178,9 @@ export default class View {
 
     selectionCounter.textContent = `${this.counterGivenAnswers} / ${this.numberOfActualTerms}`;
     selectionWord.textContent = this.actualTerm.origin;
-    selectionButtonView.focus();
   }
 
-  checkWriteAnswer(writeForm) {
+  checkWriteAnswer() {
     const definition = writeForm.definition.value.trim().toLowerCase();
     writeForm.reset();
     writeForm.definition.setAttribute('disabled', true);
@@ -190,7 +190,6 @@ export default class View {
       setTimeout(() => {
         testPage.classList.remove('test-page--correct');
       }, 600);
-      writeForm.definition.removeAttribute('disabled');
       this.counterCorrect += 1;
       setTimeout(() => {
         this.writeRandomAndDisplayTerm();
@@ -244,8 +243,8 @@ export default class View {
     writeWordIncorrect.textContent = '';
     writeWordCorrect.classList.add('hide');
     writeButtonView.classList.add('hide');
-    writeFormGlobal.classList.remove('hide');
-    writeFormGlobal.definition.removeAttribute('disabled');
+    writeForm.classList.remove('hide');
+    writeForm.definition.removeAttribute('disabled');
     this.writeRandomAndDisplayTerm();
   }
 
@@ -328,8 +327,8 @@ export default class View {
     if (!writeWordIncorrect.classList.contains('hide')) writeWordIncorrect.classList.add('hide');
     if (!writeWordCorrect.classList.contains('hide')) writeWordCorrect.classList.add('hide');
     if (!writeButtonView.classList.contains('hide')) writeButtonView.classList.add('hide');
-    if (writeFormGlobal.classList.contains('hide')) writeFormGlobal.classList.remove('hide');
-    writeFormGlobal.definition.removeAttribute('disabled');
+    if (writeForm.classList.contains('hide')) writeForm.classList.remove('hide');
+    writeForm.definition.removeAttribute('disabled');
   }
 
   clearBasicAndSetViewUI() {

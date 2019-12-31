@@ -1,19 +1,16 @@
-// EARTH IN INTODUCTION
 @keyframes earth-animation {
-  0% { transform: scale(1); }
-  50% { transform: scale(0.92); }
-  100% { transform: scale(1); }
+  0% { transform: rotateY(0); }
+  50% { transform: rotateY(180deg); }
+  100% { transform: rotateY(360deg); }
 }
 
-// LINKEDIN ICON IN FOOTER
-@keyframes icon-animation {
+@keyframes linkedin-animation {
   0% { transform: rotate(0); }
   25% { transform: rotate(12deg); }
   75% { transform: rotate(-12deg); }
   100% { transform: rotate(0); }
 }
 
-// MODALS
 @keyframes modal-animation-hide {
   0% { opacity: 1; visibility: visible;}
   100% { opacity: 0; visibility: hidden; }
@@ -24,7 +21,6 @@
   100% { opacity: 1; visibility: visible; }
 }
 
-// MODAL-BOXES
 @keyframes modal-box-animation-show {
   0% { opacity: 0; transform: scale(.5); }
   100% { opacity: 1; transform: scale(1); }
@@ -35,14 +31,6 @@
   100% { opacity: 0; transform: scale(.5); }
 }
 
-// PANELS
-@keyframes panels-animation {
-  0% { transform: scale(1); }
-  33% { transform: scale(.99); }
-  100% { transform: scale(1); }
-}
-
-// TEST PAGE BACKGROUND ANIMATIONS
 @keyframes test-background-animation-correct {
   0% { background-color: var(--color-light-3); }
   50% { background-color: rgba(0, 255, 0, 0.25);}
