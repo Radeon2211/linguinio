@@ -81,6 +81,12 @@
     box-shadow: var(--box-shadow-2-light);
   }
 
+  &__form-info {
+    font-size: 1.4rem;
+    color: var(--color-grey-1);
+    text-align: center;
+  }
+
   &__inputs-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(31rem, 1fr));

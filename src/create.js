@@ -2,8 +2,8 @@ const listOfTerms = document.querySelector('.create-set__list-of-terms');
 
 export default class Create {
   constructor() {
-    this.terms = []; // THERE ARE STORED THE TERMS
-    this.counter = 0; // COUNTER OF TERMS
+    this.terms = [];
+    this.counter = 0;
     this.messageFields = { // FIELS WHERE THE ERRORS ARE DISPLAYING
       database: document.querySelector('.create-set-error-database'),
       forms: document.querySelector('.create-set-error-forms'),
@@ -57,24 +57,35 @@ export default class Create {
   addTerm(formAddTerm) {
     const origin = formAddTerm.origin.value.trim();
     const definition = formAddTerm.definition.value.trim();
+    formAddTerm.reset();
+
     // CHECK FOR UNACCEPTABLE THINGS IN FORM
     if (origin.length === 0 || definition.length === 0) {
       this.displayMessage(this.messageFields.forms, 'Both fields must be filled');
       return;
     }
-    if ((!this.regex.start.test(origin)) || (!this.regex.start.test(definition))
-    || (!this.regex.end.test(definition)) || (!this.regex.end.test(definition))
-    || (origin.length > 60) || (definition.length > 60)) {
-      this.displayMessage(this.messageFields.forms, 'Maximum 60 characters expected, strange characters not allowed');
+
+    const splittedOrigin = origin.split(/[,;/]/);
+    const trimmedOrigin = splittedOrigin.map((item) => item.trim());
+    const joinedOrigin = trimmedOrigin.join(' / ');
+
+    const splittedDefinition = definition.split(/[,;/]/);
+    const trimmedDefiniton = splittedDefinition.map((item) => item.trim());
+    const joinedDefinition = trimmedDefiniton.join(' / ');
+
+    if ((!this.regex.start.test(joinedOrigin)) || (!this.regex.start.test(joinedDefinition))
+    || (!this.regex.end.test(joinedDefinition)) || (!this.regex.end.test(joinedDefinition))
+    || (joinedOrigin.length > 60) || (joinedDefinition.length > 60)) {
+      this.displayMessage(this.messageFields.forms, 'Maximum 60 characters expected (including 3 characters for joins), strange characters not allowed');
       return;
     }
-    this.terms.push({ origin, definition });
-    this.counter += 1;
-    this.displayAddedTerm(origin, definition);
-    formAddTerm.reset();
+
+    this.terms.push({ origin: joinedOrigin, definition: joinedDefinition });
+    this.displayAddedTerm(joinedOrigin, joinedDefinition);
   }
 
   displayAddedTerm(origin, definition) {
+    this.counter += 1;
     if (this.counter === 1) {
       listOfTerms.classList.remove('hide');
     }

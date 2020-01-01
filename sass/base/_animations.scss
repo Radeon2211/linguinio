@@ -33,12 +33,18 @@
 
 @keyframes test-background-animation-correct {
   0% { background-color: var(--color-light-3); }
-  50% { background-color: rgba(0, 255, 0, 0.25);}
+  50% { background-color: rgba(0, 255, 0, 0.25); }
+  100% { background-color: var(--color-light-3); }
+}
+
+@keyframes test-background-animation-almost-correct {
+  0% { background-color: var(--color-light-3); }
+  50% { background-color: rgba(255, 123, 0, 0.25); }
   100% { background-color: var(--color-light-3); }
 }
 
 @keyframes test-background-animation-incorrect {
   0% { background-color: var(--color-light-3); }
-  50% { background-color: rgba(255, 0, 0, 0.25);}
+  50% { background-color: rgba(255, 0, 0, 0.25); }
   100% { background-color: var(--color-light-3); }
 }

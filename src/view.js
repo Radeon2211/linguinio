@@ -117,6 +117,11 @@ export default class View {
     this.termsToRandom.splice(indexOfMainTerm, 1);
   }
 
+  restoreTermToRandomizing() {
+    this.counterGivenAnswers -= 1;
+    this.termsToRandom.push(this.actualTerm);
+  }
+
   writeRandomAndDisplayTerm() {
     this.counterGivenAnswers += 1;
     if (this.counterGivenAnswers > this.numberOfActualTerms) {
@@ -181,11 +186,31 @@ export default class View {
   }
 
   checkWriteAnswer() {
-    const definition = writeForm.definition.value.trim().toLowerCase();
-    writeForm.reset();
     writeForm.definition.setAttribute('disabled', true);
+    const definition = writeForm.definition.value.toLowerCase();
+    writeForm.reset();
+    const splittedDefinition = definition.split(/[,;/]/);
+    const trimmedDefinition = splittedDefinition.map((item) => item.trim());
+    const joinedDefinition = trimmedDefinition.join(' / ');
 
-    if (this.actualTerm.definition.toLowerCase() === definition) {
+    const correctDefinition = this.actualTerm.definition.toLowerCase();
+
+    let badCharacterPosition = '';
+    let howManyDifferences = 0;
+    let isFullCorrect = true;
+    if (joinedDefinition.length === correctDefinition.length) {
+      [...joinedDefinition].forEach((letter, i) => {
+        if (letter !== correctDefinition[i]) {
+          howManyDifferences += 1;
+          badCharacterPosition = i;
+          isFullCorrect = false;
+        }
+      });
+    } else {
+      isFullCorrect = false;
+    }
+
+    if (isFullCorrect) {
       testPage.classList.add('test-page--correct'); // GREEN BACKGROUND ANIMATION
       setTimeout(() => {
         testPage.classList.remove('test-page--correct');
@@ -196,11 +221,27 @@ export default class View {
       }, 300);
     } else {
       this.goNextBlocker = false;
-      testPage.classList.add('test-page--incorrect'); // RED BACKGROUND ANIMATION
-      setTimeout(() => {
-        testPage.classList.remove('test-page--incorrect');
-      }, 600);
-      writeWordIncorrect.textContent = definition;
+      if (howManyDifferences === 1) {
+        testPage.classList.add('test-page--almost-correct'); // ORANGE BACKGROUND ANIMATION
+        setTimeout(() => {
+          testPage.classList.remove('test-page--almost-correct');
+        }, 600);
+        writeWordIncorrect.classList.add('test__word-write-incorrect--almost');
+        [...joinedDefinition].forEach((letter, i) => {
+          if (i !== badCharacterPosition) {
+            writeWordIncorrect.innerHTML += letter;
+          } else {
+            writeWordIncorrect.innerHTML += `<span class="test__word-write-correction">${letter}</span>`;
+          }
+        });
+        this.restoreTermToRandomizing();
+      } else {
+        testPage.classList.add('test-page--incorrect'); // RED BACKGROUND ANIMATION
+        setTimeout(() => {
+          testPage.classList.remove('test-page--incorrect');
+        }, 600);
+        writeWordIncorrect.textContent = joinedDefinition;
+      }
       writeWordIncorrect.classList.remove('hide');
       writeWordCorrect.classList.remove('hide');
       writeForm.classList.add('hide');
@@ -240,6 +281,9 @@ export default class View {
   writeGoToNextTerm() {
     this.goNextBlocker = true;
     writeWordIncorrect.classList.add('hide');
+    if (writeWordIncorrect.classList.contains('test__word-write-incorrect--almost')) {
+      writeWordIncorrect.classList.remove('test__word-write-incorrect--almost');
+    }
     writeWordIncorrect.textContent = '';
     writeWordCorrect.classList.add('hide');
     writeButtonView.classList.add('hide');
@@ -325,6 +369,9 @@ export default class View {
     if (!selectionButtonView.classList.contains('hide')) selectionButtonView.classList.add('hide');
     summaryScoreValue.textContent = '';
     if (!writeWordIncorrect.classList.contains('hide')) writeWordIncorrect.classList.add('hide');
+    if (writeWordIncorrect.classList.contains('test__word-write-incorrect--almost')) {
+      writeWordIncorrect.classList.remove('test__word-write-incorrect--almost');
+    }
     if (!writeWordCorrect.classList.contains('hide')) writeWordCorrect.classList.add('hide');
     if (!writeButtonView.classList.contains('hide')) writeButtonView.classList.add('hide');
     if (writeForm.classList.contains('hide')) writeForm.classList.remove('hide');

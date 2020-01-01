@@ -8,6 +8,10 @@
     animation: test-background-animation-correct .4s .1s;
   }
 
+  &--almost-correct {
+    animation: test-background-animation-almost-correct .4s .1s;
+  }
+
   &--incorrect {
     animation: test-background-animation-incorrect .4s .1s;
   }
@@ -125,6 +129,14 @@
   &__word-write-incorrect {
     font-size: 2.1rem;
     color: red;
+
+    &--almost {
+      color: darkorange;
+    }
+  }
+
+  &__word-write-correction {
+    text-decoration: underline;
   }
 
   &__fail-button {

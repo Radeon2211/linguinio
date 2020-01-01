@@ -37,13 +37,16 @@ const hideAllPagesAndShowOne = (pageToShow, isBack) => {
     pagesHistory.push(classOfPageToShow);
     if (isBack) {
       pagesHistory.splice(pagesHistory.length - 3, 2);
-    } else if (pagesHistory[pagesHistory.length - 2] === 'test-page' || pagesHistory[pagesHistory.length - 2] === 'set-view-page') {
+    } else if (pagesHistory[pagesHistory.length - 2] === 'test-page') {
       pagesHistory.splice(pagesHistory.length - 2, 1);
-      if (pagesHistory[pagesHistory.length - 1] === pagesHistory[pagesHistory.length - 2]) {
-        pagesHistory.splice(pagesHistory.length - 1, 1);
+      if (pagesHistory[pagesHistory.length - 2] === 'set-view-page') {
+        pagesHistory.splice(pagesHistory.length - 2, 1);
       }
+    } else if (pagesHistory[pagesHistory.length - 2] === 'set-view-page' && pagesHistory[pagesHistory.length - 1] !== 'test-page') {
+      pagesHistory.splice(pagesHistory.length - 2, 1);
     }
   }
+  console.log(pagesHistory);
   if (pagesHistory.length > 1) {
     backIcon.setAttribute('data-target', pagesHistory[pagesHistory.length - 2]);
   }
