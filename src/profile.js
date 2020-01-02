@@ -90,7 +90,7 @@ export default class Profile {
       terms_number: data.getAttribute('data-terms_number'),
       creator: data.getAttribute('data-creator'),
     };
-    this.prependSetToList(setsCreated, info, info.id);
+    this.prependSetToList(setsCreated, info);
   }
 
   async displayStartedSets() {
@@ -165,7 +165,7 @@ export default class Profile {
     const listOfSets = container;
     const element = document.createElement('div');
     element.classList.add('set', 'set-view-link');
-    element.setAttribute('data-id', id);
+    element.setAttribute('data-id', id || data.id);
     element.setAttribute('data-title', data.title);
     element.setAttribute('data-terms_number', data.terms_number);
     element.setAttribute('data-creator', data.creator);

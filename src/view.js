@@ -1,6 +1,7 @@
 // SET VIEW PAGE ELEMENTS
 const setTitle = document.querySelector('.set-view__heading');
-const setChooseTermsNumber = document.querySelector('.set-view__choose-how-many-select');
+const setChooseTermsNumber = document.querySelector('.set-view__choose-how-many-select-input');
+const setChooseRequireOne = document.querySelector('.set-view__choose-how-many-checkbox-input');
 const setTermsNumber = document.querySelector('.set-view__terms-number');
 const setCreator = document.querySelector('.set-view__creator-nick');
 const listOfTerms = document.querySelector('.set-view__list-of-terms');
@@ -39,11 +40,12 @@ export default class View {
     this.numberOfActualTerms = 0; // CURRENT TEST'S TERMS NUMBER
     this.checkBlocker = false; // BLOCK CHECKING ANSWER JUST AFTER SELECTING ANSWER
     this.goNextBlocker = true; // BLOCK GO NEXT BUTTON WHEN THEY ARE DEFAULT HIDE
+    this.requireOneAnswer = false;
   }
 
   // WRITE INFO ABOUT SET
   async writeSetInfo(set) {
-    listOfTerms.innerHTML = '';
+    this.clearBasicAndSetViewUI();
 
     const id = set.getAttribute('data-id');
     const title = set.getAttribute('data-title');
@@ -84,6 +86,7 @@ export default class View {
 
   // INIT GENREAL THE CLASS AFTER CHOOSING THE TEST TYPE
   initClassInGeneral(type, chosenNumberOfTerms) {
+    this.requireOneAnswer = setChooseRequireOne.checked;
     this.checkBlocker = false;
     this.goNextBlocker = true;
     if (this.terms.length === chosenNumberOfTerms) {
@@ -187,25 +190,54 @@ export default class View {
 
   checkWriteAnswer() {
     writeForm.definition.setAttribute('disabled', true);
-    const definition = writeForm.definition.value.toLowerCase();
+    const givenDefinition = writeForm.definition.value.toLowerCase();
     writeForm.reset();
-    const splittedDefinition = definition.split(/[,;/]/);
-    const trimmedDefinition = splittedDefinition.map((item) => item.trim());
-    const joinedDefinition = trimmedDefinition.join(' / ');
+    const splittedGivenDefinition = givenDefinition.split(/[,;/]/);
+    const trimmedGivenDefinition = splittedGivenDefinition.map((item) => item.trim());
+    const joinedGivenDefinition = trimmedGivenDefinition.join(' / ');
 
     const correctDefinition = this.actualTerm.definition.toLowerCase();
+    const splittedCorrectDefinition = correctDefinition.split(/[,;/]/);
+    const trimmedCorrectDefinition = splittedCorrectDefinition.map((item) => item.trim());
 
     let badCharacterPosition = '';
     let howManyDifferences = 0;
     let isFullCorrect = true;
-    if (joinedDefinition.length === correctDefinition.length) {
-      [...joinedDefinition].forEach((letter, i) => {
-        if (letter !== correctDefinition[i]) {
-          howManyDifferences += 1;
-          badCharacterPosition = i;
+    if (joinedGivenDefinition.length === correctDefinition.length) {
+      if (trimmedCorrectDefinition.length < 2) {
+        [...joinedGivenDefinition].forEach((letter, i) => {
+          if (letter !== correctDefinition[i]) {
+            howManyDifferences += 1;
+            badCharacterPosition = i;
+            isFullCorrect = false;
+          }
+        });
+      } else {
+        let correctWordsCounter = 0;
+        trimmedCorrectDefinition.forEach((correct) => {
+          trimmedGivenDefinition.forEach((given) => {
+            if (given === correct) {
+              correctWordsCounter += 1;
+            }
+          });
+        });
+        if (correctWordsCounter < trimmedCorrectDefinition.length) {
           isFullCorrect = false;
         }
+      }
+    } else if (trimmedGivenDefinition.length <= trimmedCorrectDefinition.length
+      && this.requireOneAnswer) {
+      let isCorrect = false;
+      trimmedCorrectDefinition.forEach((correct) => {
+        trimmedGivenDefinition.forEach((given) => {
+          if (given === correct) {
+            isCorrect = true;
+          }
+        });
       });
+      if (!isCorrect) {
+        isFullCorrect = false;
+      }
     } else {
       isFullCorrect = false;
     }
@@ -227,7 +259,7 @@ export default class View {
           testPage.classList.remove('test-page--almost-correct');
         }, 600);
         writeWordIncorrect.classList.add('test__word-write-incorrect--almost');
-        [...joinedDefinition].forEach((letter, i) => {
+        [...joinedGivenDefinition].forEach((letter, i) => {
           if (i !== badCharacterPosition) {
             writeWordIncorrect.innerHTML += letter;
           } else {
@@ -240,7 +272,7 @@ export default class View {
         setTimeout(() => {
           testPage.classList.remove('test-page--incorrect');
         }, 600);
-        writeWordIncorrect.textContent = joinedDefinition;
+        writeWordIncorrect.textContent = joinedGivenDefinition;
       }
       writeWordIncorrect.classList.remove('hide');
       writeWordCorrect.classList.remove('hide');
@@ -346,6 +378,7 @@ export default class View {
     this.numberOfActualTerms = 0;
     this.checkBlocker = false;
     this.goNextBlocker = true;
+    this.requireOneAnswer = false;
 
     this.hideTestSections();
     if (!summarySection.classList.contains('hide')) {
@@ -379,10 +412,12 @@ export default class View {
   }
 
   clearBasicAndSetViewUI() {
+    this.id = '';
     this.terms = [];
     this.numberTotal = 0;
     setTitle.textContent = '';
     setChooseTermsNumber.innerHTML = '';
+    setChooseRequireOne.checked = false;
     setTermsNumber.textContent = '';
     setCreator.textContent = '';
     listOfTerms.innerHTML = '';

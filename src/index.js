@@ -27,7 +27,7 @@ const setViewPage = document.querySelector('.set-view-page');
 const backIcon = document.querySelector('.topbar__back');
 const pagesHistory = ['home-page'];
 
-const hideAllPagesAndShowOne = (pageToShow, isBack) => {
+const hideAllPagesAndShowOne = (pageToShow, isBack = false) => {
   if (auth.currentUser === null) {
     return;
   }
@@ -39,14 +39,8 @@ const hideAllPagesAndShowOne = (pageToShow, isBack) => {
       pagesHistory.splice(pagesHistory.length - 3, 2);
     } else if (pagesHistory[pagesHistory.length - 2] === 'test-page') {
       pagesHistory.splice(pagesHistory.length - 2, 1);
-      if (pagesHistory[pagesHistory.length - 2] === 'set-view-page') {
-        pagesHistory.splice(pagesHistory.length - 2, 1);
-      }
-    } else if (pagesHistory[pagesHistory.length - 2] === 'set-view-page' && pagesHistory[pagesHistory.length - 1] !== 'test-page') {
-      pagesHistory.splice(pagesHistory.length - 2, 1);
     }
   }
-  console.log(pagesHistory);
   if (pagesHistory.length > 1) {
     backIcon.setAttribute('data-target', pagesHistory[pagesHistory.length - 2]);
   }
@@ -66,10 +60,6 @@ const hideAllPagesAndShowOne = (pageToShow, isBack) => {
   // CLEAR ALMOST ALL SET VIEW PAGE UI AND ATTRIBUTES
   if (!pageToShow.classList.contains('test-page') && view.getTermsToTest().length > 0) {
     view.clear();
-  }
-  // CLEAR ALL SET VIEW PAGE UI AND ATTRIBUTES
-  if (!pageToShow.classList.contains('test-page') && !pageToShow.classList.contains('set-view-page') && view.getTerms().length > 0) {
-    view.clearBasicAndSetViewUI();
   }
 };
 
@@ -99,7 +89,7 @@ auth.onAuthStateChanged((user) => {
         create.createSet(title, user.uid).then((data) => {
           if (data) {
             view.writeSetInfo(data);
-            hideAllPagesAndShowOne(setViewPage, false);
+            hideAllPagesAndShowOne(setViewPage);
             formSetTitle.reset();
             formAddTerm.reset();
             profile.updateCreatedSets(data);
@@ -167,7 +157,7 @@ const linksToHomePage = document.querySelectorAll('.home-link');
 const homePage = document.querySelector('.home-page');
 linksToHomePage.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(homePage, false);
+    hideAllPagesAndShowOne(homePage);
   });
 });
 
@@ -176,7 +166,7 @@ const linksToCreateSet = document.querySelectorAll('.create-set-link');
 const createSetPage = document.querySelector('.create-set-page');
 linksToCreateSet.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(createSetPage, false);
+    hideAllPagesAndShowOne(createSetPage);
   });
 });
 
@@ -185,7 +175,7 @@ const linksToSearchSets = document.querySelectorAll('.search-sets-link');
 const searchSetsPage = document.querySelector('.search-sets-page');
 linksToSearchSets.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(searchSetsPage, false);
+    hideAllPagesAndShowOne(searchSetsPage);
     search.displayAllSets();
   });
 });
@@ -195,7 +185,7 @@ const linksToProfilePage = document.querySelectorAll('.profile-link');
 const profilePage = document.querySelector('.profile-page');
 linksToProfilePage.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(profilePage, false);
+    hideAllPagesAndShowOne(profilePage);
   });
 });
 
@@ -204,7 +194,7 @@ const linksToAdminPage = document.querySelectorAll('.admin-link');
 const adminPage = document.querySelector('.admin-page');
 linksToAdminPage.forEach((link) => {
   link.addEventListener('click', () => {
-    hideAllPagesAndShowOne(adminPage, false);
+    hideAllPagesAndShowOne(adminPage);
   });
 });
 
@@ -222,7 +212,7 @@ listsOfSets.forEach((list) => {
       clickedElement = e.target.parentElement.parentElement;
     }
     if (clickedElement) {
-      hideAllPagesAndShowOne(setViewPage, false);
+      hideAllPagesAndShowOne(setViewPage);
       view.writeSetInfo(clickedElement);
     }
   });
@@ -241,7 +231,7 @@ panelWriteTest.addEventListener('click', () => {
   if (view.getTerms().length <= 0) {
     return;
   }
-  hideAllPagesAndShowOne(testPage, false);
+  hideAllPagesAndShowOne(testPage);
   const numberOfTerms = howManyTermsForm.termsNumber.value;
   view.initClassInGeneral('write', numberOfTerms);
   profile.updateLastSetAndStartedSets(view.getID());
@@ -252,7 +242,7 @@ panelSelectionTest.addEventListener('click', () => {
   if (view.getTerms().length <= 0) {
     return;
   }
-  hideAllPagesAndShowOne(testPage, false);
+  hideAllPagesAndShowOne(testPage);
   const numberOfTerms = howManyTermsForm.termsNumber.value;
   view.initClassInGeneral('selection', numberOfTerms);
   profile.updateLastSetAndStartedSets(view.getID());
