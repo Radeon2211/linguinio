@@ -1,8 +1,13 @@
 const searchSetsContainer = document.querySelector('.search-sets');
 
 export default class Search {
+  constructor() {
+    this.block = false;
+  }
+
   // DISPLAY ALL SETS AT SEARCH SETS PAGE AFTER ENTER THIS PAGE
   async displayAllSets() {
+    this.block = true;
     searchSetsContainer.innerHTML = '';
     try {
       const sets = await db.collection('sets').orderBy('created_at', 'desc').get();
@@ -19,5 +24,13 @@ export default class Search {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  getBlock() {
+    return this.block;
+  }
+
+  setBlock(block) {
+    this.block = block;
   }
 }

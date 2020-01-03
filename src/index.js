@@ -176,7 +176,13 @@ const searchSetsPage = document.querySelector('.search-sets-page');
 linksToSearchSets.forEach((link) => {
   link.addEventListener('click', () => {
     hideAllPagesAndShowOne(searchSetsPage);
-    search.displayAllSets();
+    if (!search.getBlock()) {
+      search.displayAllSets().then(() => {
+        setTimeout(() => {
+          search.setBlock(false);
+        }, 500);
+      });
+    }
   });
 });
 

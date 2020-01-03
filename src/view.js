@@ -26,6 +26,7 @@ const selectionAnswers = testSelectionSection.querySelectorAll('.test__answer');
 const selectionButtonView = testSelectionSection.querySelector('.selection-button');
 
 const summaryScoreValue = summarySection.querySelector('.test-summary__score-value');
+const summaryButton = summarySection.querySelector('.test-summary__button');
 
 export default class View {
   constructor() {
@@ -86,6 +87,7 @@ export default class View {
 
   // INIT GENREAL THE CLASS AFTER CHOOSING THE TEST TYPE
   initClassInGeneral(type, chosenNumberOfTerms) {
+    writeForm.reset();
     this.requireOneAnswer = setChooseRequireOne.checked;
     this.checkBlocker = false;
     this.goNextBlocker = true;
@@ -213,29 +215,29 @@ export default class View {
           }
         });
       } else {
-        let correctWordsCounter = 0;
+        let correctAnswersCounter = 0;
         trimmedCorrectDefinition.forEach((correct) => {
           trimmedGivenDefinition.forEach((given) => {
             if (given === correct) {
-              correctWordsCounter += 1;
+              correctAnswersCounter += 1;
             }
           });
         });
-        if (correctWordsCounter < trimmedCorrectDefinition.length) {
+        if (correctAnswersCounter < trimmedCorrectDefinition.length) {
           isFullCorrect = false;
         }
       }
-    } else if (trimmedGivenDefinition.length <= trimmedCorrectDefinition.length
+    } else if (trimmedGivenDefinition.length < trimmedCorrectDefinition.length
       && this.requireOneAnswer) {
-      let isCorrect = false;
+      let correctAnswersCounter = 0;
       trimmedCorrectDefinition.forEach((correct) => {
         trimmedGivenDefinition.forEach((given) => {
           if (given === correct) {
-            isCorrect = true;
+            correctAnswersCounter += 1;
           }
         });
       });
-      if (!isCorrect) {
+      if (correctAnswersCounter < trimmedGivenDefinition.length) {
         isFullCorrect = false;
       }
     } else {
@@ -346,7 +348,6 @@ export default class View {
     this.checkBlocker = true;
     this.hideTestSections();
     summarySection.classList.remove('hide');
-
     const percentageScoreValue = Math.floor((100 / this.numberOfActualTerms) * this.counterCorrect);
     let outputValue = 0;
     const timer = setInterval(() => {
@@ -357,6 +358,7 @@ export default class View {
         outputValue += 1;
       }
     }, 10);
+    summaryButton.focus();
   }
 
   hideTestSections() {
