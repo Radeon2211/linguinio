@@ -8,9 +8,11 @@ import View from './view';
 
 displayingModals();
 
+const listOfTermsCreate = document.querySelector('.create-set__list-of-terms');
+
 const authentication = new Authentication();
 const profile = new Profile();
-const create = new Create();
+const create = new Create(listOfTermsCreate);
 const search = new Search();
 const view = new View();
 
@@ -294,4 +296,17 @@ selectionButtonIndex.addEventListener('click', () => {
 backIcon.addEventListener('click', () => {
   const pageToShow = document.querySelector(`.${backIcon.getAttribute('data-target')}`);
   hideAllPagesAndShowOne(pageToShow, true);
+});
+
+// DELETE TERM FROM LIST AT CREATE SET PAGE
+listOfTermsCreate.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete-term')) {
+    let termToDelete = null;
+    if (e.target.parentElement.classList.contains('delete-term')) {
+      termToDelete = e.target.parentElement.parentElement;
+    } else {
+      termToDelete = e.target.parentElement;
+    }
+    create.deleteTerm(termToDelete);
+  }
 });

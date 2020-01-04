@@ -21,7 +21,6 @@ export default class Authentication {
     const regex = /^[a-z\d]{4,14}$/;
     const email = form.email.value.trim();
     const password = form.password.value.trim();
-    // if nick is invalid, display error
     if (!regex.test(nick)) {
       this.displayError(errorField, { message: 'Nick should have 4-14 characters, only letters and digits' });
       return;

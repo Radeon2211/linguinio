@@ -1,8 +1,8 @@
-const listOfTerms = document.querySelector('.create-set__list-of-terms');
-
 export default class Create {
-  constructor() {
+  constructor(listOfTerms) {
     this.terms = [];
+    this.termElements = document.getElementsByClassName('term');
+    this.list = listOfTerms;
     this.counter = 0;
     this.messageFields = { // FIELS WHERE THE ERRORS ARE DISPLAYING
       database: document.querySelector('.create-set-error-database'),
@@ -28,6 +28,7 @@ export default class Create {
       return false;
     }
 
+    const termsToSave = this.terms.map(({ origin, definition }) => ({ origin, definition }));
     // PUSH TERMS TO DATABASE
     try {
       const userInfo = await db.collection('users').doc(uid).get();
@@ -38,7 +39,7 @@ export default class Create {
         created_at: firebase.firestore.Timestamp.fromDate(new Date()),
       };
       const setInfo = await db.collection('sets').add(set);
-      this.terms.forEach((term) => {
+      termsToSave.forEach((term) => {
         db.collection('sets').doc(setInfo.id).collection('terms').add(term);
       });
       const element = document.createElement('div');
@@ -80,25 +81,55 @@ export default class Create {
       return;
     }
 
-    this.terms.push({ origin: joinedOrigin, definition: joinedDefinition });
+    this.counter += 1;
+    this.terms.push({ origin: joinedOrigin, definition: joinedDefinition, id: this.counter });
     this.displayAddedTerm(joinedOrigin, joinedDefinition);
   }
 
   displayAddedTerm(origin, definition) {
-    this.counter += 1;
     if (this.counter === 1) {
-      listOfTerms.classList.remove('hide');
+      this.list.classList.remove('hide');
     }
     const element = document.createElement('div');
     element.classList.add('term');
+    element.setAttribute('data-id', this.counter);
     element.innerHTML = `
       <span class="term__number">${this.counter}.</span>
       <div class="term__words">
         <span class="term__word">${origin}</span>
         <span class="term__word">${definition}</span>
       </div>
+      <svg class="term__delete delete-term">
+        <use xlink:href="assets/img/sprite.svg#icon-bin" class="delete-term"></use>
+      </svg>
     `;
-    listOfTerms.prepend(element);
+    this.list.prepend(element);
+  }
+
+  deleteTerm(term) {
+    const termID = parseInt(term.getAttribute('data-id'), 10);
+    term.remove();
+    const indexToDelete = this.terms.findIndex(({ id }) => id === termID);
+    this.terms.splice(indexToDelete, 1);
+    if (this.counter !== termID) {
+      let newNumber = this.terms.length;
+      const elementsArray = Array.from(this.termElements);
+      elementsArray.forEach((element) => {
+        const numberOfTerm = element.querySelector('.term__number');
+        numberOfTerm.textContent = `${newNumber}.`;
+        element.setAttribute('data-id', newNumber);
+        newNumber -= 1;
+      });
+
+      const updatedTerms = this.terms.map(({ origin, definition }, i) => ({
+        origin, definition, id: i + 1,
+      }));
+      this.terms = [...updatedTerms];
+    }
+    this.counter -= 1;
+    if (this.counter === 0) {
+      this.list.classList.add('hide');
+    }
   }
 
   displayMessage(field, message) {
@@ -113,7 +144,7 @@ export default class Create {
   }
 
   clear() {
-    listOfTerms.innerHTML = '';
+    this.list.innerHTML = '';
     this.terms = [];
     this.counter = 0;
   }

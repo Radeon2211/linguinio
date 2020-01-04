@@ -7,22 +7,35 @@
   display: grid;
   background-color: var(--color-light-2);
   padding: .8rem 2rem;
-  font-size: 1.4rem;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: max-content 1fr max-content;
   column-gap: 2rem;
   border: 1px solid var(--color-light-4);
 
   &__number {
     font-weight: bold;
     align-self: center;
+    font-size: 1.6rem;
   }
 
   &__words {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(34rem, 1fr));
     column-gap: 5rem;
     row-gap: .9rem;
     align-items: center;
     word-break: break-all;
+    font-size: 1.4rem;
+
+    @media only screen and (max-width: 30em) {
+      grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+    }
+  }
+
+  &__delete {
+    width: 2.2rem;
+    height: 2.2rem;
+    align-self: center;
+    fill: var(--color-dark-1);
+    cursor: pointer;
   }
 }
