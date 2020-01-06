@@ -120,11 +120,9 @@ export default class Create {
         element.setAttribute('data-id', newNumber);
         newNumber -= 1;
       });
-
-      const updatedTerms = this.terms.map(({ origin, definition }, i) => ({
+      this.terms = this.terms.map(({ origin, definition }, i) => ({
         origin, definition, id: i + 1,
       }));
-      this.terms = [...updatedTerms];
     }
     this.counter -= 1;
     if (this.counter === 0) {
