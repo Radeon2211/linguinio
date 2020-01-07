@@ -60,7 +60,7 @@ const hideAllPagesAndShowOne = (pageToShow, isBack = false) => {
     behavior: 'smooth',
   });
   // CLEAR ALMOST ALL SET VIEW PAGE UI AND ATTRIBUTES
-  if (!pageToShow.classList.contains('test-page') && view.getTermsToTest().length > 0) {
+  if (!pageToShow.classList.contains('test-page') && Object.entries(view.getActualTerm()).length !== 0) {
     view.clear();
   }
 };
@@ -266,21 +266,21 @@ testBackLinks.forEach((link) => {
 const writeForm = document.querySelector('.test__form');
 writeForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (view.getTermsToTest().length > 0) {
+  if (!view.getCheckBlocker()) {
     view.checkWriteAnswer();
   }
 });
 
 const writeButtonIndex = document.querySelector('.write-button');
 writeButtonIndex.addEventListener('click', () => {
-  if (!view.goNextBlocker) {
+  if (!view.getGoNextBlocker()) {
     view.writeGoToNextTerm();
   }
 });
 
 const selectionAnswersBox = document.querySelector('.test__answers');
 selectionAnswersBox.addEventListener('click', (e) => {
-  if (e.target.classList.contains('test__answer') && view.getTermsToTest().length > 0) {
+  if (e.target.classList.contains('test__answer') && !view.getCheckBlocker()) {
     view.checkSelectionAnswer(e);
   }
 });

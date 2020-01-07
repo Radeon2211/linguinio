@@ -33,13 +33,12 @@ export default class View {
     this.id = '';
     this.terms = []; // TERMS WHICH ARE IN ACTUAL SET
     this.numberTotal = 0; // HOW MANY TERMS ARE IN ACTUAL SET
-    this.termsToTest = []; // TERMS WHICH ARE IN ACTUAL TEST GENERALLY
     this.termsToRandom = []; // TERMS AVAILABLE TO RANDOM AS TERM TO DISPLAY
     this.actualTerm = {}; // TERM WHICH ACTUAL DISPLAYS AT TEST PAGE
     this.counterCorrect = 0; // HOW MANY ANSWERS ARE CORRECT
     this.counterGivenAnswers = 0; // HOW MANY ANSWERS ARE GIVEN
     this.numberOfActualTerms = 0; // CURRENT TEST'S TERMS NUMBER
-    this.checkBlocker = false; // BLOCK CHECKING ANSWER JUST AFTER SELECTING ANSWER
+    this.checkBlocker = true; // BLOCK CHECKING ANSWER JUST AFTER SELECTING ANSWER
     this.goNextBlocker = true; // BLOCK GO NEXT BUTTON WHEN THEY ARE DEFAULT HIDE
     this.requireOneAnswer = false;
   }
@@ -89,21 +88,18 @@ export default class View {
   initClassInGeneral(type, chosenNumberOfTerms) {
     writeForm.reset();
     this.requireOneAnswer = setChooseRequireOne.checked;
-    this.checkBlocker = false;
     this.goNextBlocker = true;
     if (this.terms.length === chosenNumberOfTerms) {
-      this.termsToTest = [...this.terms];
+      this.termsToRandom = [...this.terms];
     } else {
       const termsToRandomToTest = [...this.terms];
       for (let i = 0; i < chosenNumberOfTerms; i += 1) {
         const indexOfTerm = Math.floor(Math.random() * termsToRandomToTest.length);
-        this.termsToTest.push(termsToRandomToTest[indexOfTerm]);
+        this.termsToRandom.push(termsToRandomToTest[indexOfTerm]);
         termsToRandomToTest.splice(indexOfTerm, 1);
       }
     }
 
-    // COPY THE TERMS TO TEST, GET LENGTH OF THAT
-    this.termsToRandom = [...this.termsToTest];
     this.numberOfActualTerms = this.termsToRandom.length;
 
     // SHOW PROPER SECTION, RANDOM AND DISPLAY TERM
@@ -120,6 +116,7 @@ export default class View {
     const indexOfMainTerm = Math.floor(Math.random() * this.termsToRandom.length);
     this.actualTerm = this.termsToRandom[indexOfMainTerm];
     this.termsToRandom.splice(indexOfMainTerm, 1);
+    this.checkBlocker = false;
   }
 
   restoreTermToRandomizing() {
@@ -145,7 +142,6 @@ export default class View {
   }
 
   selectionRandomAndDisplayTerm() {
-    this.checkBlocker = false;
     this.counterGivenAnswers += 1;
     if (this.counterGivenAnswers > this.numberOfActualTerms) {
       this.displaySummary();
@@ -372,13 +368,12 @@ export default class View {
 
   // CLEAR CLASS ATTRIBUTES AND DOM ELEMENTS (SOMETIMES EXCEPT ALL TERMS AND THEIR NUMBER)
   clear() {
-    this.termsToTest = [];
     this.termsToRandom = [];
     this.actualTerm = {};
     this.counterCorrect = 0;
     this.counterGivenAnswers = 0;
     this.numberOfActualTerms = 0;
-    this.checkBlocker = false;
+    this.checkBlocker = true;
     this.goNextBlocker = true;
     this.requireOneAnswer = false;
 
@@ -424,7 +419,7 @@ export default class View {
     setCreator.textContent = '';
     listOfTerms.innerHTML = '';
   }
-
+  
   getID() {
     return this.id;
   }
@@ -433,7 +428,15 @@ export default class View {
     return this.terms;
   }
 
-  getTermsToTest() {
-    return this.termsToTest;
+  getActualTerm() {
+    return this.actualTerm;
+  }
+
+  getCheckBlocker() {
+    return this.checkBlocker;
+  }
+
+  getGoNextBlocker() {
+    return this.goNextBlocker;
   }
 }
