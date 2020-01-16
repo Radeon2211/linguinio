@@ -43,10 +43,10 @@ export default class Create {
         db.collection('sets').doc(setInfo.id).collection('terms').add(term);
       });
       const element = document.createElement('div');
-      element.setAttribute('data-id', setInfo.id);
-      element.setAttribute('data-title', title);
-      element.setAttribute('data-terms_number', this.counter);
-      element.setAttribute('data-creator', userInfo.data().nick);
+      element.dataset.id = setInfo.id;
+      element.dataset.title = title;
+      element.dataset.terms_number = this.counter;
+      element.dataset.creator = userInfo.data().nick;
       this.clear();
       return element;
     } catch (error) {

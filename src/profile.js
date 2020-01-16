@@ -46,10 +46,10 @@ export default class Profile {
         const info = await db.collection('sets').doc(this.lastSet).get();
         const data = await info.data();
         recentSetTitle.textContent = `${data.title}`;
-        recentSet.setAttribute('data-id', info.id);
-        recentSet.setAttribute('data-title', data.title);
-        recentSet.setAttribute('data-terms_number', data.terms_number);
-        recentSet.setAttribute('data-creator', data.creator);
+        recentSet.dataset.id = info.id;
+        recentSet.dataset.title = data.title;
+        recentSet.dataset.terms_number = data.terms_number;
+        recentSet.dataset.creator = data.creator;
         recentSet.classList.remove('hide');
         recentSet.classList.add('set-view-link');
       } catch (error) {
@@ -84,11 +84,11 @@ export default class Profile {
     if (!setsCreatedInfo.classList.contains('hide')) {
       setsCreatedInfo.classList.add('hide');
     }
+    const {
+      id, title, terms_number, creator,
+    } = data.dataset;
     const info = {
-      id: data.getAttribute('data-id'),
-      title: data.getAttribute('data-title'),
-      terms_number: data.getAttribute('data-terms_number'),
-      creator: data.getAttribute('data-creator'),
+      id, title, terms_number, creator,
     };
     this.prependSetToList(setsCreated, info);
   }

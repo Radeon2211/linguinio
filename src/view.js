@@ -47,19 +47,18 @@ export default class View {
   async writeSetInfo(set) {
     this.clearBasicAndSetViewUI();
 
-    const id = set.getAttribute('data-id');
-    const title = set.getAttribute('data-title');
-    const termsNumber = set.getAttribute('data-terms_number');
-    const creator = set.getAttribute('data-creator');
+    const {
+      id, title, terms_number, creator,
+    } = set.dataset;
 
     this.id = id;
     setTitle.textContent = title;
-    for (let i = termsNumber; i >= 4; i -= 1) {
+    for (let i = terms_number; i >= 4; i -= 1) {
       setChooseTermsNumber.innerHTML += `
         <option value="${i}" class="set-view__choose-how-many-option">${i}</option>
       `;
     }
-    setTermsNumber.textContent = termsNumber;
+    setTermsNumber.textContent = terms_number;
     setCreator.textContent = creator;
 
     // GET TERMS FROM DATABASE AND DISPLAY THEM
@@ -419,7 +418,7 @@ export default class View {
     setCreator.textContent = '';
     listOfTerms.innerHTML = '';
   }
-  
+
   getID() {
     return this.id;
   }
