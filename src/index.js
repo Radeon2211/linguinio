@@ -210,18 +210,10 @@ linksToAdminPage.forEach((link) => {
 const listsOfSets = document.querySelectorAll('.list-of-sets');
 listsOfSets.forEach((list) => {
   list.addEventListener('click', (e) => {
-    // CHECK IF CLICKED ELEMENT IS A SET
-    let clickedElement = null;
-    if (e.target.classList.contains('set-view-link')) {
-      clickedElement = e.target;
-    } else if (e.target.parentElement.classList.contains('set-view-link')) {
-      clickedElement = e.target.parentElement;
-    } else if (e.target.parentElement.parentElement.classList.contains('set-view-link')) {
-      clickedElement = e.target.parentElement.parentElement;
-    }
-    if (clickedElement) {
+    const set = e.target.closest('.set-view-link');
+    if (set) {
       hideAllPagesAndShowOne(setViewPage);
-      view.writeSetInfo(clickedElement);
+      view.writeSetInfo(set);
     }
   });
 });
@@ -300,13 +292,8 @@ backIcon.addEventListener('click', () => {
 
 // DELETE TERM FROM LIST AT CREATE SET PAGE
 listOfTermsCreate.addEventListener('click', (e) => {
-  if (e.target.classList.contains('delete-term')) {
-    let termToDelete = null;
-    if (e.target.parentElement.classList.contains('delete-term')) {
-      termToDelete = e.target.parentElement.parentElement;
-    } else {
-      termToDelete = e.target.parentElement;
-    }
-    create.deleteTerm(termToDelete);
+  const trash = e.target.closest('svg');
+  if (trash) {
+    create.deleteTerm(trash.parentElement);
   }
 });

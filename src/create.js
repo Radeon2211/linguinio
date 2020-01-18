@@ -99,8 +99,8 @@ export default class Create {
         <span class="term__word">${origin}</span>
         <span class="term__word">${definition}</span>
       </div>
-      <svg class="term__delete delete-term">
-        <use xlink:href="assets/img/sprite.svg#icon-bin" class="delete-term"></use>
+      <svg class="term__delete">
+        <use xlink:href="assets/img/sprite.svg#icon-bin"></use>
       </svg>
     `;
     this.list.prepend(element);
