@@ -27,7 +27,7 @@ export default class Authentication {
     }
     auth.createUserWithEmailAndPassword(email, password).then((cred) => db.collection('users').doc(cred.user.uid).set({ // return db.collection ...
       nick,
-      lastSet: false,
+      last_set: false,
       started_sets: [],
     })).then(() => {
       window.location.reload(true);
