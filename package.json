@@ -22,7 +22,7 @@
   "author": "Radosław Mikrut",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.7.0"
+    "@babel/polyfill": "^7.8.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
